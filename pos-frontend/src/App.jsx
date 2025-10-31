@@ -8,14 +8,12 @@ export default function App() {
     <BrowserRouter>
       <nav>
         <Link to="/">Menu</Link> |{" "}
-        <Link to="/cashier">Cashier</Link> |{" "}
         <Link to="/manager">Manager</Link> |{" "}
         <Link to="/checkout">Checkout</Link>
       </nav>
 
       <Routes>
         <Route path="/" element={<Menu />} />
-        <Route path="/cashier" element={<Cashier />} />
         <Route path="/manager" element={<Manager />} />
         <Route path="/checkout" element={<Checkout />} />
       </Routes>
