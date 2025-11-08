@@ -4,6 +4,10 @@ import Manager from "./pages/ManagerView.jsx";
 import Checkout from "./pages/Checkout.jsx";
 
 export default function App() {
+
+
+
+  
   return (
     <BrowserRouter>
       <nav>
