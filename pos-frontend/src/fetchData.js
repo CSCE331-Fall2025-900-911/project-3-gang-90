@@ -1,18 +1,16 @@
 let server = import.meta.env.VITE_SERVER;
 
-export function getMenu(){
-    fetch(server+'/menu')
-        .then(res =>{
-            if(!res.ok){
-                throw new Error(`Server responed with ${res.status}`);
-            }
+export async function getMenu(){
+    try{
+        let res = await fetch(server+'/menu');
+        if(!res.ok){
+            throw new Error('Network error');
 
-
-           return res.json();
         }
-    ).catch(err=>{
-        console.log("Error fetching item: ", err.message);
-    })
+        return res.json();
+    }catch(err){
+        console.log("error: "+err.message);
+    }
 }
 
 
