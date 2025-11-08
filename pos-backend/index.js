@@ -1,7 +1,9 @@
-import * as express from "express"
+import  express from "express"
 
-import * as helmet from 'helmet'
-import * as cors from 'cors'
+import  helmet from 'helmet'
+import cors from 'cors'
+import router from "./router.js";
+
 
 const app = express();
 
@@ -9,23 +11,31 @@ const port = 3000;
 
 
 app.use(express.json());
-app.use(express.urlencoded({extended:ture}));
+app.use(express.urlencoded({extended:true}));
 
 
 app.use(cors({
-    origin: process.env.SERVER,
+    origin: process.env.CLIENT,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['X-Requested-With', 'Conent-Type', Accept]
+    allowedHeaders: ['X-Requested-With', 'Conent-Type', "Accept"]
 
 }))
 
+app.use("/",router);
+
 
 app.listen(port, (error)=>{
+    console.log("listning on ", port);
     if(error){
         throw error;
     }
 
 })
 
-module.exports = app;
+// app.get('/employees', (req, res)=>{
+//     console.log("in /employees");
+//     res.json({conection:'connectd!'});
+//     }
+// )
+export default app;
 
