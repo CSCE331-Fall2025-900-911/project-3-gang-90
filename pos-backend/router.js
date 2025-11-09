@@ -12,8 +12,16 @@ router.get('/menu', async (req, res)=>{
 )
 
 
-router.post('/menu/TransactionAndDetails', (req, res)=>{
+router.post('/menu/TransactionAndDetails', async (req, res)=>{
+
+    try{
+    let data = await menuQuerys.addTransactionAndDetails(req.body["transaction"], req.body["item"]);
+
+    
     console.log(req);
+    }catch{
+        
+    }
     }
 )
 
