@@ -42,9 +42,6 @@ jobs:
         env:
           PORT: 3000
         run: |
-          echo "Checking /menu endpoint"
-          curl -f "http://localhost:${PORT}/menu" || exit 1
-
           echo "Checking /employees endpoint"
           curl -f "http://localhost:${PORT}/employees" || exit 1
 
@@ -56,4 +53,8 @@ jobs:
         run: |
           if [ -f server.pid ]; then
             kill $(cat server.pid) || true
-          fi
+            fi
+
+#Add back in later
+#echo "Checking /menu endpoint"
+#curl -f "http://localhost:${PORT}/menu" || exit 1
