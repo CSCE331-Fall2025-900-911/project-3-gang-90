@@ -4,6 +4,16 @@ import * as menuQuerys from "./menuQuerys.js"
  const router = express.Router();
 
 
+
+
+ /**
+  * 
+  * 
+  * 
+  * 
+  * 
+  * @returns 
+  */
 router.get('/menu', async (req, res)=>{
     console.log("in get api endpoint");
     let data = await menuQuerys.getMenu();
@@ -11,7 +21,11 @@ router.get('/menu', async (req, res)=>{
     }
 )
 
-
+/**
+ * @praam transaction as {customerName: string, transactionTime: DateTime, employeeId:int, totalPrice:double }
+ * @praam item as [{itemId:int}]
+ * 
+ */
 router.post('/menu/TransactionAndDetails', async (req, res)=>{
 
     try{
@@ -25,11 +39,20 @@ router.post('/menu/TransactionAndDetails', async (req, res)=>{
     }
 )
 
+/**
+ * 
+ * 
+ * fetch /employees
+ * 
+ * 
+ * 
+ * @returns json object in the stlye of [{employee_id: int, name: string, role: string, pay: double, is_active: bolean}]
+ */
+router.get('/employees', async (req, res)=>{
 
-router.get('/employees', (req, res)=>{
-    console.log("in /employees");
-    
-    res.json({conection:'connectd!'});
+        console.log("in /employees");
+        let data = await menuQuerys.getEmployee();
+        res.json(data);
     }
 )
 export default router;

@@ -56,9 +56,6 @@ export async function addTransactionAndDetails(transaction, items){
     if(transaction["employeeId"]== undefined){
         throw new Error("undifined employeeId");
     }
-    if(transaction["transactionTime"]== undefined){
-        throw new Error("undifined transactionTime");
-    }
     if(transaction["totalPrice"]== undefined){
         throw new Error("undifined totalPrice");
     }
