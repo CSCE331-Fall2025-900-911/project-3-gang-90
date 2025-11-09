@@ -4,9 +4,43 @@ import postgres from 'postgres';
 const sql = postgres(process.env.DATABASE_URL);
 
 
+
+export async function getMangers(){
+    let mangers =await sql`SELECT * FROM personnel WHERE role = 'manager' AND is_active = TRUE;`;
+    return mangers;
+}
+
+export async function getEmployee(){
+    let employee = await sql`SELECT * FROM personnel WHERE is_active = TRUE;`;
+    return employee;
+}
+
+export async function addEmployee(name, role, pay, state){
+    if(name == undefined){
+        throw new Error("undifined name");
+    }
+    if(role == undefined){
+        throw new Error("undifined role");
+    }
+    if(pay == undefined){
+        throw new Error("undifined pay");
+    }
+    if(state == undefined){
+        throw new Error("undifined state");
+    }
+
+
+    await sql`INSERT INTO personnel (name, role, pay, is_active) VALUES (${name}, ${role}, ${pay}, ${state});`;
+
+}
+
+
+
+
+
 export async function getMenu(){
     //this sql syntax already handle sql injections see https://github.com/porsager/postgres
-    const items = await sql`SELECT * FROM menu`;
+    const items = await sql`SELECT * FROM menu;`;
     return items;
 }
 
