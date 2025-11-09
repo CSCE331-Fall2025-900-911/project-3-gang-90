@@ -1,0 +1,60 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [ main, sprint_1 ]
+  pull_request:
+    branches: [ main, sprint_1 ]
+
+jobs:
+  backend:
+    name: Node Backend install and endpoint test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pos-backend
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.x
+          cache: npm
+          cache-dependency-path: pos-backend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Start server
+        env:
+          PORT: 3000
+          NODE_ENV: test
+        run: |
+          npm start &
+          echo $! > server.pid
+          echo "Waiting for server to start..."
+          sleep 5
+
+      - name: Test API endpoints
+        env:
+          PORT: 3000
+        run: |
+          echo "Checking /employees endpoint"
+          curl -f "http://localhost:${PORT}/employees" || exit 1
+
+          echo "POST /menu/TransactionAndDetails"
+          curl -f -X POST "http://localhost:${PORT}/menu/TransactionAndDetails" -d '{}' -H "Content-Type: application/json" || exit 1
+
+      - name: Stop server
+        if: always()
+        run: |
+          if [ -f server.pid ]; then
+            kill $(cat server.pid) || true
+            fi
+
+#Add back in later
+#echo "Checking /menu endpoint"
+#curl -f "http://localhost:${PORT}/menu" || exit 1
