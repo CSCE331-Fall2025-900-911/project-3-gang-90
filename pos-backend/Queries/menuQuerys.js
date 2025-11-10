@@ -6,7 +6,7 @@ const sql = postgres(process.env.DATABASE_URL);
 
 
 export async function getMangers(){
-    let mangers =await sql`SELECT * FROM personnel WHERE role = 'manager' AND is_active = TRUE;`;
+    let mangers = await sql`SELECT * FROM personnel WHERE role = 'manager' AND is_active = TRUE;`;
     return mangers;
 }
 
@@ -15,22 +15,22 @@ export async function getEmployee(){
     return employee;
 }
 
-export async function addEmployee(name, role, pay, state){
-    if(name == undefined){
-        throw new Error("undifined name");
+export async function addEmployee(name, role, pay, isActive) {
+    if ((name == undefined) || (typeof name == "string")){
+        throw new Error("Name is either empty or not a string");
     }
-    if(role == undefined){
-        throw new Error("undifined role");
+    if((role == undefined) || (typeof role == "string")){
+        throw new Error("Role is either empty or not a string");
     }
-    if(pay == undefined){
-        throw new Error("undifined pay");
+    if((pay == undefined) || (typeof pay == "number")){
+        throw new Error("Number is either empty or not a number");
     }
-    if(state == undefined){
-        throw new Error("undifined state");
+    if((isActive == undefined) || (typeof isActive == "boolean")){
+        throw new Error("isActive is either empty or not a boolean");
     }
 
 
-    await sql`INSERT INTO personnel (name, role, pay, is_active) VALUES (${name}, ${role}, ${pay}, ${state});`;
+    await sql`INSERT INTO personnel (name, role, pay, is_active) VALUES (${name}, ${role}, ${pay}, ${isActive});`;
 
 }
 
@@ -67,13 +67,13 @@ export async function addTransactionAndDetails(transaction, items){
     }
 
 
-    sql`INSERT INTO transaction_details (transaction_id, item_id) VALUES ${sql(items,  "transaction_id", "itemId")}`;
+    await sql`INSERT INTO transaction_details (transaction_id, item_id) VALUES ${sql(items,  "transaction_id", "itemId")}`;
 
 }
 
 
 async function addTransaction(customerName, transactionTime, employeeId, totalPrice){
-    const transactionId = sql`INSERT INTO transactions (customer_name, transaction_time, employee_id, total_price)
+    const transactionId = await sql`INSERT INTO transactions (customer_name, transaction_time, employee_id, total_price)
                             VALUES (${customerName},${transactionTime},${employeeId},${totalPrice})
     
     `;
