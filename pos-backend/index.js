@@ -25,7 +25,7 @@ app.use("/",router);
 
 
 app.listen(port, (error)=>{
-    console.log("listning on ", port);
+    console.log("Listening on: ", port);
     if(error){
         throw error;
     }

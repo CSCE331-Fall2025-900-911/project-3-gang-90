@@ -1,13 +1,12 @@
 
 import express from "express";
-import * as menuQuerys from "./menuQuerys.js"
+import * as menuQuerys from "./Queries/menuQuerys.js"
  const router = express.Router();
 
-
-
+// MAKE SURE TO FOLLOW FORMAT FOR JSON OBJECTS EXACTLY
 
  /**
-  * 
+  * WHERE API ENDPOINTS ARE
   * 
   * 
   * 
@@ -22,8 +21,8 @@ router.get('/menu', async (req, res)=>{
 )
 
 /**
- * @praam transaction as {customerName: string, transactionTime: DateTime, employeeId:int, totalPrice:double }
- * @praam item as [{itemId:int}]
+ * @param transaction as {customerName: string, transactionTime: DateTime, employeeId:int, totalPrice:double }
+ * @param item as [{itemId:int}]
  * 
  */
 router.post('/menu/TransactionAndDetails', async (req, res)=>{
