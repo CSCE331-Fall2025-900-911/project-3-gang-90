@@ -3,6 +3,8 @@ name: Backend CI
 on:
   push:
     branches: [ main, sprint_1 ]
+    paths:
+      "pos-backend/**"
   pull_request:
     branches: [ main, sprint_1 ]
 
