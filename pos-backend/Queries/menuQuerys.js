@@ -48,16 +48,16 @@ export async function getMenu(){
 
 export async function addTransactionAndDetails(transaction, items){
     if(transaction["customerName"]== undefined){
-        throw new Error("undifined customerName");
+        throw new Error("undefined customerName");
     }
     if(transaction["transactionTime"]== undefined){
-        throw new Error("undifined transactionTime");
+        throw new Error("undefined transactionTime");
     }
     if(transaction["employeeId"]== undefined){
-        throw new Error("undifined employeeId");
+        throw new Error("undefined employeeId");
     }
     if(transaction["totalPrice"]== undefined){
-        throw new Error("undifined totalPrice");
+        throw new Error("undefined totalPrice");
     }
 
     let transactionId = await addTransaction(transaction["customerName"], transaction["transactionTime"], transaction["employeeId"], transaction["totalPrice"]);

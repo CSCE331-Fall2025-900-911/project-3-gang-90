@@ -25,18 +25,19 @@ router.get('/menu', async (req, res)=>{
  * @param item as [{itemId:int}]
  * 
  */
-router.post('/menu/TransactionAndDetails', async (req, res)=>{
+router.post('/menu/TransactionAndDetails', async (req, res) => {
+  try {
+    let data = await menuQuerys.addTransactionAndDetails(
+      req.body.transaction,
+      req.body.item
+    );
 
-    try{
-    let data = await menuQuerys.addTransactionAndDetails(req.body["transaction"], req.body["item"]);
-
-    
-    console.log(req);
-    }catch{
-        
-    }
-    }
-)
+    return res.status(200).json({ success: true, data });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, error: err.toString() });
+  }
+});
 
 /**
  * 
