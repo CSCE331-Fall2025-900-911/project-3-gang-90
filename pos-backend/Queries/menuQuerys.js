@@ -59,22 +59,24 @@ export async function addTransactionAndDetails(transaction, items){
     if(transaction["totalPrice"]== undefined){
         throw new Error("undifined totalPrice");
     }
-
+    console.log("items: ",items);
+    console.log("transactions: ",transaction);
     let transactionId = await addTransaction(transaction["customerName"], transaction["transactionTime"], transaction["employeeId"], transaction["totalPrice"]);
-
-    for(i = 0 ; i < items.length(); i++){
-        items[i]["transactionId"] = transactionId["transaction_id"];
+    console.log(transactionId);
+    for(let i = 0 ; i < items.length; i++){
+        items[i]["transaction_id"] = transactionId[0]["transaction_id"];
+        items[i]["item_id"] = items[i]["itemId"]
     }
 
-
-    await sql`INSERT INTO transaction_details (transaction_id, item_id) VALUES ${sql(items,  "transaction_id", "itemId")}`;
+    console.log(items);
+    await sql`INSERT INTO transaction_details ${sql(items,  "transaction_id", "item_id")}`;
 
 }
 
 
 async function addTransaction(customerName, transactionTime, employeeId, totalPrice){
     const transactionId = await sql`INSERT INTO transactions (customer_name, transaction_time, employee_id, total_price)
-                            VALUES (${customerName},${transactionTime},${employeeId},${totalPrice})
+                            VALUES (${customerName},${transactionTime},${employeeId},${totalPrice}) RETURNING transaction_id;
     
     `;
 

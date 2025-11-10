@@ -31,9 +31,9 @@ router.post('/menu/TransactionAndDetails', async (req, res)=>{
     let data = await menuQuerys.addTransactionAndDetails(req.body["transaction"], req.body["item"]);
 
     
-    console.log(req);
-    }catch{
-        
+    //console.log(req);
+    }catch(e){
+        console.log("got error: ",e);
     }
     }
 )
