@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from './CartContext'
+let server =  import.meta.env.VITE_SERVER;
+
 
 export default function DrinksMenu() {
   const [items, setItems] = useState([])
@@ -9,7 +11,7 @@ export default function DrinksMenu() {
   useEffect(() => {
     async function fetchMenu() {
       try {
-        const res = await fetch('/api/menu')
+        const res = await fetch(server+'/menu')
         const data = await res.json()
         setItems(data)
       } catch (err) {
@@ -37,8 +39,8 @@ export default function DrinksMenu() {
 
         <div className="item-menu">
           {items.map(i => (
-            <Link key={i.id} className="menu-item" to={`/edit/${i.name}`}>
-              <div className="item-button">{i.name}</div>
+            <Link key={i.id} className="menu-item" to={`/edit/${i["item_name"]}`}>
+              <div className="item-button">{i["item_name"]}</div>
             </Link>
           ))}
         </div>
