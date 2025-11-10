@@ -21,8 +21,8 @@ export default function Cart() {
   async function submitTransaction(customerName) {
     const transaction = {
       customerName,
-      transactionTime: new Date(),
-      employeeId: null,
+      transactionTime: new Date().toISOString(),
+      employeeId: 1,
       totalPrice: Number(total.toFixed(2)),
     };
     console.log("Transaction to submit:", transaction);
@@ -48,24 +48,14 @@ export default function Cart() {
 
       clearTimeout(timeout);
 
-      console.log("Fetch completed");
-
       if (!response.ok) {
         console.error("Error:", response.status);
         return;
       }
-
-      console.log("Transaction submitted successfully");
     } 
     catch (err) {
       clearTimeout(timeout);
-
-      if (err.name === "AbortError") {
-        console.error("Request aborted (timeout)");
-      }
-      else {
-        console.error("Error:", err);
-      }
+      console.error("Error:", err);
     }
   }
 
