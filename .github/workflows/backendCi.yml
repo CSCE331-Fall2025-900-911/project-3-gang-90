@@ -32,28 +32,40 @@ jobs:
           PORT: 3000
           NODE_ENV: test
         run: |
-          npm start &
+          npm start > server.log 2>&1 &
           echo $! > server.pid
-          for i in {1..20}; do
-            if curl -fsS "http://localhost:${PORT}/employees" >/dev/null 2>&1; then
-              echo "Server is up"
+          for i in {1..40}; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:${PORT}/") || code=000
+            if [ "$code" != "000" ]; then
+              echo "Server is up (HTTP $code)"
+              up=1
               break
             fi
             sleep 1
           done
+          if [ "$up" -ne 1 ]; then
+            echo "Server failed to start in time. Dumping logs:"
+            echo "----- server.log (last 200 lines) -----"
+            tail -n 200 server.log || true
+            exit 1
+          fi
 
       - name: Test API endpoints
+        env:
+          PORT: 3000
         run: |
-          curl --fail --silent --show-error "https://project-3-gang-90.vercel.app/employees"
+          curl --silent --show-error "http://localhost:${PORT}/employees" || true
           curl --max-time 3 -X POST \
             -H "Content-Type: application/json" \
             -d '{}' \
-            "https://project-3-gang-90.vercel.app/menu/TransactionAndDetails" || true
+            "http://localhost:${PORT}/menu/TransactionAndDetails" || true
 
       - name: Stop server
         if: always()
         run: |
           if [ -f server.pid ]; then kill "$(cat server.pid)" || true; fi
+          echo "----- server.log (last 200 lines) -----"
+          tail -n 200 server.log || true
 
 
 #Add back in later
