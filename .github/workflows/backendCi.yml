@@ -43,14 +43,12 @@ jobs:
           done
 
       - name: Test API endpoints
-        env:
-          PORT: 3000
         run: |
-          curl --fail --silent --show-error "http://localhost:${PORT}/employees"
+          curl --fail --silent --show-error "https://project-3-gang-90.vercel.app/employees"
           curl --max-time 3 -X POST \
             -H "Content-Type: application/json" \
             -d '{}' \
-            "http://localhost:${PORT}/menu/TransactionAndDetails" || true
+            "https://project-3-gang-90.vercel.app/menu/TransactionAndDetails" || true
 
       - name: Stop server
         if: always()
