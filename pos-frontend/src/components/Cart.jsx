@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { useCart } from './CartContext'
 import { useNavigate, Link } from 'react-router-dom'
 
+let server = import.meta.env.VITE_SERVER;
+
 export default function Cart() {
-  const { items, removeItem, clearCart } = useCart()
+  const { items, itemIds, removeItem, clearCart } = useCart()
   const navigate = useNavigate()
   const [showModal, setShowModal] = useState(false)
   const [name, setName] = useState('')
@@ -16,9 +18,64 @@ export default function Cart() {
     setShowModal(true)
   }
 
-  function handleNameSubmit(e) {
+  async function submitTransaction(customerName) {
+    const transaction = {
+      customerName,
+      transactionTime: new Date(),
+      employeeId: null,
+      totalPrice: Number(total.toFixed(2)),
+    };
+    console.log("Transaction to submit:", transaction);
+
+    const item = itemIds.map((id) => ({ itemId: id }));
+    console.log("Items to submit:", item);
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => {
+      console.warn("Fetch timed out");
+      controller.abort();
+    }, 10000);
+
+    try {
+      const response = await fetch(server + "/menu/TransactionAndDetails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        signal: controller.signal,
+        body: JSON.stringify({ transaction, item }),
+      });
+
+      clearTimeout(timeout);
+
+      console.log("Fetch completed");
+
+      if (!response.ok) {
+        console.error("Error:", response.status);
+        return;
+      }
+
+      console.log("Transaction submitted successfully");
+    } 
+    catch (err) {
+      clearTimeout(timeout);
+
+      if (err.name === "AbortError") {
+        console.error("Request aborted (timeout)");
+      }
+      else {
+        console.error("Error:", err);
+      }
+    }
+  }
+
+
+  async function handleNameSubmit(e) {
     e.preventDefault()
     setShowModal(false)
+
+    await submitTransaction(name)
+
     clearCart()
     setName('')
     navigate('/')
@@ -44,7 +101,13 @@ export default function Cart() {
                     <h2 className="cart-item-name">{item.name}</h2>
                     <p className="cart-item-mods">{item.mods}</p>
                     <p className="cart-item-qty">Quantity: {item.quantity}</p>
-                    <p className="cart-item-price">Price: ${item.price.toFixed(2)}</p>
+                    <p className="cart-item-price">
+                      Price: {
+                        typeof item.price === 'number'
+                          ? `$${item.price.toFixed(2)}`
+                          : `$${Number(item.price || 0).toFixed(2)}`
+                      }
+                    </p>
                   </div>
                   <div className="cart-item-actions">
                     <a className="cart-item-action" onClick={() => removeItem(idx)} style={{cursor:'pointer'}}>Remove</a>
@@ -54,6 +117,7 @@ export default function Cart() {
             </>
           )}
         </div>
+
         <div style={{
           background:'#f5f5f5',
           borderRadius:'12px',
@@ -73,6 +137,7 @@ export default function Cart() {
             <span>${total.toFixed(2)}</span>
           </div>
         </div>
+
         <div style={{display:'flex', gap:'10px', marginTop:'20px'}}>
           <button className="bottom-button" style={{flex:1}} onClick={handleCheckout}>Checkout</button>
           <Link className="bottom-button" style={{flex:1, textAlign:'center', lineHeight:'38px'}} to="/">Back to Menu</Link>

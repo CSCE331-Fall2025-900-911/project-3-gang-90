@@ -133,7 +133,8 @@
 .item-menu {
   flex: 1;
   padding: 20px;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
   gap: 20px;
   align-items: flex-start;
 }
@@ -145,10 +146,13 @@
   border: none;
   cursor: pointer;
   font-size: 1.5rem;
-  color:rgb(58, 58, 58);
+  color: rgb(58, 58, 58);
   text-decoration: none;
   text-align: center;
-  line-height: 140px;
+  line-height: 1.2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .drink-button:hover {
