@@ -8,6 +8,10 @@ export default function Cart() {
   const [showModal, setShowModal] = useState(false)
   const [name, setName] = useState('')
 
+  const subtotal = items.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0)
+  const tax = subtotal * 0.0825
+  const total = subtotal + tax
+
   function handleCheckout() {
     setShowModal(true)
   }
@@ -49,6 +53,25 @@ export default function Cart() {
               ))}
             </>
           )}
+        </div>
+        <div style={{
+          background:'#f5f5f5',
+          borderRadius:'12px',
+          padding:'18px 24px',
+          alignSelf:'center',
+          fontSize:'1.15rem',
+        }}>
+          <div style={{display:'flex', justifyContent:'space-between', marginBottom:'8px'}}>
+            <span>Subtotal: ${subtotal.toFixed(2)}</span>
+          </div>
+          <div style={{display:'flex', justifyContent:'space-between', marginBottom:'8px'}}>
+            <span>Tax:</span>
+            <span>${tax.toFixed(2)}</span>
+          </div>
+          <div style={{display:'flex', justifyContent:'space-between', fontWeight:'bold'}}>
+            <span>Total:</span>
+            <span>${total.toFixed(2)}</span>
+          </div>
         </div>
         <div style={{display:'flex', gap:'10px', marginTop:'20px'}}>
           <button className="bottom-button" style={{flex:1}} onClick={handleCheckout}>Checkout</button>

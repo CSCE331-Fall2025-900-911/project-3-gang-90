@@ -7,7 +7,7 @@ import router from "./router.js";
 
 const app = express();
 
-const port = 3000;
+const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 
 app.use(express.json());
@@ -17,7 +17,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(cors({
     origin: process.env.CLIENT,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['X-Requested-With', 'Conent-Type', "Accept"]
+    allowedHeaders: ['X-Requested-With', 'Content-Type', 'Accept']
 
 }))
 
