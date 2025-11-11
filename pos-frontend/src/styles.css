@@ -142,6 +142,7 @@
 .item-button {
   width: 150px;
   height: 150px;
+  padding: 5px;
   background-color: #d3d3d3;
   border: none;
   cursor: pointer;
