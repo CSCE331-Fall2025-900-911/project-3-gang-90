@@ -1,6 +1,6 @@
 
 import express from "express";
-import * as menuQuerys from "./Queries/menuQuerys.js"
+import * as menuQuerys from "./menuQuerys.js"
  const router = express.Router();
 
 // MAKE SURE TO FOLLOW FORMAT FOR JSON OBJECTS EXACTLY

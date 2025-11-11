@@ -37,7 +37,7 @@ export default function Cart() {
     }, 10000);
 
     try {
-      const response = await fetch(server + "/menu/TransactionAndDetails", {
+      const response = await fetch("api//menu/TransactionAndDetails", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
