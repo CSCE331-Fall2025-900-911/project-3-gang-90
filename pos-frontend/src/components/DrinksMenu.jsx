@@ -10,7 +10,7 @@ export default function DrinksMenu() {
   useEffect(() => {
     async function fetchMenu() {
       try {
-        const res = await fetch('/api/menu');
+        const res = await fetch('/menu');
         const data = await res.json();
 
         const toTitle = (str = "") =>
