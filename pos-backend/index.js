@@ -29,9 +29,6 @@ app.use(cors({
 
 app.use("/", router);
 
-app.use("/",router);
-
-
 app.listen(port, (error)=>{
     console.log("Listening on: ", port);
     if (error) {
