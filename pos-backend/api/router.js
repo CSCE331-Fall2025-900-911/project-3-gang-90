@@ -14,9 +14,14 @@ import * as menuQuerys from "./menuQuerys.js"
   * @returns 
   */
 router.get('/menu', async (req, res)=>{
+  try{
     console.log("in get api endpoint");
     let data = await menuQuerys.getMenu();
-    res.json(data);
+    res.status(200).json({success:true, data});
+  }catch(err){
+    console.error(err);
+    res.status(500).json({success:false, erorr:err.toString()})
+  }
     }
 )
 
@@ -50,10 +55,14 @@ router.post('/menu/TransactionAndDetails', async (req, res) => {
  * @returns json object in the stlye of [{employee_id: int, name: string, role: string, pay: double, is_active: bolean}]
  */
 router.get('/employees', async (req, res)=>{
-
-        console.log("in /employees");
+      try{
+        //console.log("in /employees");
         let data = await menuQuerys.getEmployee();
-        res.json(data);
+        return res.status(200).json({sucess:true, data});
+      }catch(err){
+        console.error(err)
+        return res.status(500).json({success:true, error:err.toString()})
+      }
     }
 )
 export default router;
