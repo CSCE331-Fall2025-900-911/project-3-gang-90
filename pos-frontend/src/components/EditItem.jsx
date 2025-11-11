@@ -23,7 +23,7 @@ export default function EditItem() {
   useEffect(() => {
     async function fetchItem() {
       try {
-        const res = await fetch('/menu')
+        const res = await fetch(server + '/menu')
         const data = await res.json()
 
         const found = Array.isArray(data)
