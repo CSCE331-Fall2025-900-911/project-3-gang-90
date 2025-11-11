@@ -1,41 +1,39 @@
-import  express from "express"
-
-import  helmet from 'helmet'
-import cors from 'cors'
+import express from "express";
+import helmet from 'helmet';
+import cors from 'cors';
 import router from "./api/router.js";
 
-
 const app = express();
-
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 
-
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://project-3-gang-90.vercel.app"
+];
 
 app.use(cors({
-    origin: process.env.CLIENT,
+    origin: function(origin, callback) {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error(`CORS policy: Origin ${origin} not allowed`));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['X-Requested-With', 'Content-Type', 'Accept']
+}));
 
-}))
+app.use("/", router);
 
-app.use("/",router);
-
-
-app.listen(port, (error)=>{
+app.listen(port, (error) => {
     console.log("Listening on: ", port);
-    if(error){
+    if (error) {
         throw error;
     }
+});
 
-})
-
-// app.get('/employees', (req, res)=>{
-//     console.log("in /employees");
-//     res.json({conection:'connectd!'});
-//     }
-// )
 export default app;
-
