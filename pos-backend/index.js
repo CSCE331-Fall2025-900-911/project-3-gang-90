@@ -15,7 +15,7 @@ app.use(express.urlencoded({extended:true}));
 
 
 app.use(cors({
-    origin: process.env.CLIENT,
+    origin: process.env.CLIENT || '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['X-Requested-With', 'Content-Type', 'Accept']
 
@@ -24,18 +24,14 @@ app.use(cors({
 app.use("/",router);
 
 
-app.listen(port, (error)=>{
-    console.log("Listening on: ", port);
-    if(error){
-        throw error;
-    }
+if(!process.env.VERCEL){
+    app.listen(port, (error)=>{
+        console.log("Listening on:", port);
+        if(error){
+            throw error;
+        }
+    })
+}
 
-})
-
-// app.get('/employees', (req, res)=>{
-//     console.log("in /employees");
-//     res.json({conection:'connectd!'});
-//     }
-// )
-export default app;
+export default (req, res) => app(req, res);
 
