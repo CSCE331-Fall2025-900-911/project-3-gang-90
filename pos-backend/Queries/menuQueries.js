@@ -5,7 +5,7 @@ const sql = postgres(process.env.DATABASE_URL);
 
 
 
-export async function getMangers(){
+export async function getManagers(){
     let mangers = await sql`SELECT * FROM personnel WHERE role = 'manager' AND is_active = TRUE;`;
     return mangers;
 }
@@ -16,16 +16,16 @@ export async function getEmployee(){
 }
 
 export async function addEmployee(name, role, pay, isActive) {
-    if ((name == undefined) || (typeof name == "string")){
+    if ((name == undefined) || (typeof name != "string")){
         throw new Error("Name is either empty or not a string");
     }
-    if((role == undefined) || (typeof role == "string")){
+    if((role == undefined) || (typeof role != "string")){
         throw new Error("Role is either empty or not a string");
     }
-    if((pay == undefined) || (typeof pay == "number")){
+    if((pay == undefined) || (typeof pay != "number")){
         throw new Error("Number is either empty or not a number");
     }
-    if((isActive == undefined) || (typeof isActive == "boolean")){
+    if((isActive == undefined) || (typeof isActive != "boolean")){
         throw new Error("isActive is either empty or not a boolean");
     }
 
@@ -48,21 +48,21 @@ export async function getMenu(){
 
 export async function addTransactionAndDetails(transaction, items){
     if(transaction["customerName"]== undefined){
-        throw new Error("undifined customerName");
+        throw new Error("undefined customerName");
     }
     if(transaction["transactionTime"]== undefined){
-        throw new Error("undifined transactionTime");
+        throw new Error("undefined transactionTime");
     }
     if(transaction["employeeId"]== undefined){
-        throw new Error("undifined employeeId");
+        throw new Error("undefined employeeId");
     }
     if(transaction["totalPrice"]== undefined){
-        throw new Error("undifined totalPrice");
+        throw new Error("undefined totalPrice");
     }
 
     let transactionId = await addTransaction(transaction["customerName"], transaction["transactionTime"], transaction["employeeId"], transaction["totalPrice"]);
 
-    for(i = 0 ; i < items.length(); i++){
+    for(let i = 0 ; i < items.length; i++){
         items[i]["transactionId"] = transactionId["transaction_id"];
     }
 

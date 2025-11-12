@@ -1,6 +1,6 @@
 
 import express from "express";
-import * as menuQuerys from "./Queries/menuQuerys.js"
+import * as menuQueries from "./Queries/menuQueries.js"
  const router = express.Router();
 
 // MAKE SURE TO FOLLOW FORMAT FOR JSON OBJECTS EXACTLY
@@ -15,7 +15,7 @@ import * as menuQuerys from "./Queries/menuQuerys.js"
   */
 router.get('/menu', async (req, res)=>{
     console.log("in get api endpoint");
-    let data = await menuQuerys.getMenu();
+    let data = await menuQueries.getMenu();
     res.json(data);
     }
 )
@@ -28,7 +28,7 @@ router.get('/menu', async (req, res)=>{
 router.post('/menu/TransactionAndDetails', async (req, res)=>{
 
     try{
-    let data = await menuQuerys.addTransactionAndDetails(req.body["transaction"], req.body["item"]);
+    let data = await menuQueries.addTransactionAndDetails(req.body["transaction"], req.body["item"]);
 
     
     console.log(req);
@@ -50,7 +50,7 @@ router.post('/menu/TransactionAndDetails', async (req, res)=>{
 router.get('/employees', async (req, res)=>{
 
         console.log("in /employees");
-        let data = await menuQuerys.getEmployee();
+        let data = await menuQueries.getEmployee();
         res.json(data);
     }
 )
