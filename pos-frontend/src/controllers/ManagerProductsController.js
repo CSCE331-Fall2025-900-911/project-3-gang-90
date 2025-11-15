@@ -1,4 +1,3 @@
-//Decrepit file, may be deleted later
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -57,7 +56,7 @@ export function useManagerProductsController() {
 
       setProducts(
         data.map((item) => ({
-          id: item.id,
+          id: -item.id,
           name: item.name,
           price: item.price,
           quantity: item.popularity ?? 0
