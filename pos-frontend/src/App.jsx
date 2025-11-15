@@ -10,6 +10,8 @@ import Cart from './components/Cart'
 import EditItem from './components/EditItem'
 import Settings from './components/Settings'
 
+import ManagerProducts from "./Project2/ManagerProducts"
+
 export default function App() {
   return (
     <AccessibilityProvider>
@@ -23,6 +25,8 @@ export default function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/edit/:id" element={<EditItem />} />
             <Route path="/settings" element={<Settings />} />
+
+            <Route path="/products" element={<ManagerProducts />} />
           </Routes>
         </div>
       </CartProvider>

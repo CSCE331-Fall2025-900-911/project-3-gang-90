@@ -44,6 +44,10 @@ export async function getMenu(){
     return items;
 }
 
+export async function getSeasonalMenu() {
+  const items = await sql`SELECT * FROM seasonal_menu;`;
+  return items;
+}
 
 
 export async function addTransactionAndDetails(transaction, items){
@@ -88,4 +92,22 @@ async function addTransaction(customerName, transactionTime, employeeId, totalPr
 
 
 
+}
+
+export async function addMenuItem({ name, price, quantity }) {
+    const rows = await sql`
+        INSERT INTO menu (name, price, popularity)
+        VALUES (${name}, ${price}, ${quantity})
+        RETURNING id;
+    `;
+    return rows[0].id;
+}
+
+export async function addSeasonalMenuItem({ name, price, quantity }) {
+    const rows = await sql`
+        INSERT INTO seasonal_menu (name, price, popularity)
+        VALUES (${name}, ${price}, ${quantity})
+        RETURNING id;
+    `;
+    return rows[0].id;
 }
