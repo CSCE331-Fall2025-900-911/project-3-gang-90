@@ -32,6 +32,7 @@ export default function DrinksMenu() {
         setItems(items);
 
       } catch (err) {
+        console.log("Could not retrieve menu items")
         setItems([]);
       }
     }
