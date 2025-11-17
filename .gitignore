@@ -3,13 +3,6 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
-/package.json
-/package-lock.json
-
-/pos-frontend/package.json
-/pos-frontend/package-lock.json
-/pos-backend/package.json
-/pos-backend/package-lock.json
 
 # Build output
 dist/
