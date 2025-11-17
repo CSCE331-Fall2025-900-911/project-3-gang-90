@@ -15,8 +15,12 @@ import * as menuQuerys from "./menuQuerys.js"
   */
 router.get('/menu', async (req, res)=>{
     console.log("in get api endpoint");
-    let data = await menuQuerys.getMenu();
-    res.json(data);
+    try {
+      let data = await menuQuerys.getMenu();
+      res.json(data);
+    } catch (error) {
+      console.error("Could not get menu: ",error);
+    }
     }
 )
 
@@ -31,7 +35,6 @@ router.post('/menu/TransactionAndDetails', async (req, res) => {
       req.body.transaction,
       req.body.item
     );
-
     return res.status(200).json({ success: true, data });
   } catch (err) {
     console.error(err);
@@ -50,10 +53,12 @@ router.post('/menu/TransactionAndDetails', async (req, res) => {
  * @returns json object in the stlye of [{employee_id: int, name: string, role: string, pay: double, is_active: bolean}]
  */
 router.get('/employees', async (req, res)=>{
-
-        console.log("in /employees");
-        let data = await menuQuerys.getEmployee();
-        res.json(data);
+        try {
+          let data = await menuQuerys.getEmployee();
+          res.json(data);
+        } catch (error) {
+          console.error("Issue getting employees: ", error)
+        }
     }
 )
 

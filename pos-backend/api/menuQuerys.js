@@ -6,13 +6,21 @@ const sql = postgres(process.env.DATABASE_URL);
 
 
 export async function getMangers(){
-    let mangers = await sql`SELECT * FROM personnel WHERE role = 'manager' AND is_active = TRUE;`;
-    return mangers;
+  try {
+    let managers = await sql`SELECT * FROM personnel WHERE role = 'manager' AND is_active = TRUE;`;
+    return managers;
+  } catch (error) {
+    console.log("ERROR: ", error)
+  }
 }
 
 export async function getEmployee(){
+  try {
     let employee = await sql`SELECT * FROM personnel WHERE is_active = TRUE;`;
     return employee;
+  } catch (error) {
+    console.log("ERROR: ", error)
+  }
 }
 
 export async function addEmployee(name, role, pay, isActive) {
@@ -29,7 +37,6 @@ export async function addEmployee(name, role, pay, isActive) {
         throw new Error("isActive is either empty or not a boolean");
     }
 
-
     await sql`INSERT INTO personnel (name, role, pay, is_active) VALUES (${name}, ${role}, ${pay}, ${isActive});`;
 
 }
@@ -40,13 +47,21 @@ export async function addEmployee(name, role, pay, isActive) {
 
 export async function getMenu(){
     //this sql syntax already handle sql injections see https://github.com/porsager/postgres
-    const items = await sql`SELECT * FROM menu;`;
-    return items;
+    try {
+      const items = await sql`SELECT * FROM menu;`;
+      return items;
+    } catch (error){
+      throw new Error("Error in database interaction: " + error)
+    }
 }
 
 export async function getSeasonalMenu() {
-  const items = await sql`SELECT * FROM seasonal_menu;`;
-  return items;
+  try {
+    const items = await sql`SELECT * FROM seasonal_menu;`;
+    return items;
+  } catch (error) {
+    throw new Error("Error in database interaction: " + error)
+  }
 }
 
 
@@ -80,18 +95,8 @@ export async function addTransactionAndDetails(transaction, items){
 
 async function addTransaction(customerName, transactionTime, employeeId, totalPrice){
     const transactionId = await sql`INSERT INTO transactions (customer_name, transaction_time, employee_id, total_price)
-                            VALUES (${customerName},${transactionTime},${employeeId},${totalPrice}) RETURNING transaction_id;
-    
-    `;
-
-
+                            VALUES (${customerName},${transactionTime},${employeeId},${totalPrice}) RETURNING transaction_id;`;
     return transactionId;
-
-
-
-
-
-
 }
 
 export async function addMenuItem({ name, price, quantity }) {
