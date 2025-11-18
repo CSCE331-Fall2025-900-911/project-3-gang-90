@@ -1,4 +1,3 @@
-import Button from "@mui/material/Button";
 import MangerPage from "./MangerPage"
 import { BarChart } from '@mui/x-charts/BarChart';
 import { DataGrid } from '@mui/x-data-grid';
@@ -8,11 +7,6 @@ import { useEffect, useState } from "react";
 
 const API_ROUTE = import.meta.env.VITE_SERVER;;
 export default function SalesReport(){
-    const [rows, setRows] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [beginDate, setBeginDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [refresh, setRefresh] = useState(false);
 
 
 

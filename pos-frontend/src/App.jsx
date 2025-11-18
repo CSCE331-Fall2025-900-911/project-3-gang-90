@@ -27,6 +27,7 @@ import Transactions from './components/MangerComponets/Transaction';
 import LoginTest from './components/LoginButton'
 
 import ManagerProducts from "./Project2/ManagerProducts"
+import SalesReport from './components/MangerComponets/SalesReport'
 
 export default function App() {
   
