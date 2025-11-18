@@ -11,6 +11,7 @@ import EditItem from './components/EditItem'
 import Settings from './components/Settings'
 
 import ManagerProducts from "./Project2/ManagerProducts"
+import SalesReport from './components/MangerComponets/SalesReport'
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="/settings" element={<Settings />} />
 
             <Route path="/products" element={<ManagerProducts />} />
+            <Route path="/salesReport" element={<SalesReport/>}/>
           </Routes>
         </div>
       </CartProvider>
