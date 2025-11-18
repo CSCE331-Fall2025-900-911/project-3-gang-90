@@ -33,10 +33,10 @@ jobs:
       - name: Install dependencies (clean)
         run: npm ci
 
-      - name: Lint (optional)
+      - name: Lint code
         run: npm run lint --if-present
 
-      - name: Test (optional)
+      - name: Test (CI mode)
         run: npm test --if-present -- --ci
 
       - name: Build

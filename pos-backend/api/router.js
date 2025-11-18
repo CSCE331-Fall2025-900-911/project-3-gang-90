@@ -21,9 +21,8 @@ router.get('/menu', async (req, res)=>{
   }catch(err){
     console.error(err);
     res.status(500).json({success:false, erorr:err.toString()})
-  }
-    }
-)
+  }})
+
 
 /**
  * @param transaction as {customerName: string, transactionTime: DateTime, employeeId:int, totalPrice:double }
@@ -36,7 +35,6 @@ router.post('/menu/TransactionAndDetails', async (req, res) => {
       req.body.transaction,
       req.body.item
     );
-
     return res.status(200).json({ success: true, data });
   } catch (err) {
     console.error(err);
@@ -62,7 +60,41 @@ router.get('/employees', async (req, res)=>{
       }catch(err){
         console.error(err)
         return res.status(500).json({success:true, error:err.toString()})
-      }
-    }
-)
+      }})
+
+
+//seasonal menu endpoint
+router.get("/menu/seasonal", async (req, res) => {
+  try {
+    const data = await menuQuerys.getSeasonalMenu();
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to load seasonal menu" });
+  }
+});
+
+//add menu item endpoint
+router.post("/menu", async (req, res) => {
+  try {
+    const { name, price, quantity } = req.body;
+    const newId = await menuQuerys.addMenuItem({ name, price, quantity });
+    res.status(201).json({ id: newId });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to add menu item" });
+  }
+});
+
+//add seasonal menu item
+router.post("/menu/seasonal", async (req, res) => {
+  try {
+    const { name, price, quantity } = req.body;
+    const newId = await menuQuerys.addSeasonalMenuItem({ name, price, quantity }); //todo
+    res.status(201).json({ id: newId });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to add seasonal item" });
+  }
+});
 export default router;
