@@ -56,7 +56,7 @@ export function useManagerProductsController() {
 
       setProducts(
         data.map((item) => ({
-          id: -item.id,
+          id: item.id,
           name: item.name,
           price: item.price,
           quantity: item.popularity ?? 0
