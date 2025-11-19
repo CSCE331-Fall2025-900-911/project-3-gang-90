@@ -1,3 +1,4 @@
+import Button from "@mui/material/Button";
 import MangerPage from "./MangerPage"
 import { BarChart } from '@mui/x-charts/BarChart';
 import { DataGrid } from '@mui/x-data-grid';
