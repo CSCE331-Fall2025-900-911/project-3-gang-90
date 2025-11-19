@@ -7,11 +7,20 @@ import { Link } from 'react-router-dom'
 export default function MangerSideBar(){
 
     return(
-        <div >
-            <Link>sales report</Link>
-            <Link>cashire</Link>
-            <Link></Link>
-            <Link></Link>
+        <div className='mangerSideBar' >
+            <div className='mangerLinkPadding'>
+                <Link className='mangerLink'>sales report</Link>
+            </div>
+            <div className='mangerLinkPadding'>
+                <Link className='mangerLink'>cashire</Link>
+            </div>
+            <div className='mangerLinkPadding'>
+                <Link className='mangerLink'></Link>
+            </div>
+            <div className='mangerLinkPadding'>
+                <Link className='mangerLink'></Link>
+            </div>
+            
         </div>
     )
 

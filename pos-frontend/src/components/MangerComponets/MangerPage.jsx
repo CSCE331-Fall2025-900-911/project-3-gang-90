@@ -13,12 +13,11 @@ export default function MangerPage({
 
     return(
 
-        <div>
-            test
-            <div>
+        <div className="managerPage">
+            <div className="managerSideBarMargins">
                 <MangerSideBar/>
             </div>
-            <div>
+            <div className="mangerMainPageMargins">
                 <div>
                     {child}
                 </div>
