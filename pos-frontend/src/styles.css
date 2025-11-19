@@ -272,3 +272,43 @@
 .managerButtons:hover {
   background-color: #f3f4f6;
 }
+
+
+.managerPage{
+   background-color: #ffffff;
+   display: flex;
+  flex-direction: row;
+  height: 100vh;
+
+}
+
+.managerSideBarMargins{
+  height: 100%;
+  background-color: #555;
+  padding: 1vh;
+  width: 15vh;
+}
+
+.mangerMainPageMargins{
+  margin-top: 10px;
+  margin-left:100px;
+}
+
+.mangerSideBar{
+  display: flex;
+  flex-direction: column;
+  padding: 1vh;
+}
+
+.mangerLink{
+  padding: 1vh;
+  background-color: #b6b6b6;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #000000;
+  display: inline-block;
+}
+
+.mangerLinkPadding{
+  padding:2vh;
+}
