@@ -283,9 +283,9 @@
 
 .managerSideBarMargins{
   height: 100%;
-  background-color: #555;
+  background-color: #cecccc;
   padding: 1vh;
-  width: 15vh;
+  width: 25vh;
 }
 
 .mangerMainPageMargins{
@@ -301,7 +301,10 @@
 
 .mangerLink{
   padding: 1vh;
-  background-color: #b6b6b6;
+  width:15vh;
+  text-align: center;
+  box-shadow: #878686;
+  background-color: #fdf7f7;
   border-radius: 10px;
   text-decoration: none;
   color: #000000;
@@ -310,4 +313,18 @@
 
 .mangerLinkPadding{
   padding:2vh;
+}
+
+.mangerTopBar{
+  padding:5vh;
+  width:100%;
+  height: 5vh;
+  background-color: #282727;
+  color:#e2e1e1;
+  display: flex;
+ 
+}
+
+.mangerRightAlign{
+   margin-left: auto
 }
