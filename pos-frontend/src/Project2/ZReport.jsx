@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ReportTable from './ReportTable'
 import MangerPage from '../components/MangerComponets/MangerPage'
 
 const ZReport = () => {
+  const [refreshKey, setRefreshKey] = useState(0);
   return (
 <MangerPage 
 pageName={"Z-Report"}
