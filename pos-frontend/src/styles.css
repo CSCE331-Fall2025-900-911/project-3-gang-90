@@ -31,10 +31,6 @@
 .cart-btn {
   right: 32px;
 }
-* {
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
 
 .top-bar {
   background-color: #3a3a3a;
