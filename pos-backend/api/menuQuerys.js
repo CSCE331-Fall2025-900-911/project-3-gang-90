@@ -139,3 +139,12 @@ export async function getIngredientUsage(start, end){
 
   return rows;
 }
+
+export async function getTransactions(){
+  try {
+    const rows = await sql`SELECT transaction_id, customer_name, transaction_time, employee_id, total_price FROM transactions ORDER BY transaction_time DESC;`;
+    return rows;
+  } catch (error) {
+    throw new Error("Error fetching transactions: " + error);
+  }
+}

@@ -112,4 +112,14 @@ router.post('/usage', async (req, res) => {
   }
 });
 
+router.get('/transactions', async (req, res) => {
+  try {
+    const data = await menuQuerys.getTransactions();
+    return res.status(200).json({ success: true, data });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, error: err.toString() });
+  }
+});
+
 export default router;
