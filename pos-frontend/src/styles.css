@@ -1,4 +1,5 @@
-@import 'tailwindcss';
+
+@import "tailwindcss";
 
 .cart-navigation-options {
   display: flex;
@@ -29,10 +30,6 @@
 
 .cart-btn {
   right: 32px;
-}
-* {
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
 }
 
 .top-bar {
