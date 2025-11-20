@@ -97,4 +97,19 @@ router.post("/menu/seasonal", async (req, res) => {
     res.status(500).json({ error: "Failed to add seasonal item" });
   }
 });
+
+
+router.post('/usage', async (req, res) => {
+  try {
+    let data = await menuQuerys.getIngredientUsage(
+      req.body.start,
+      req.body.end
+    );
+    return res.status(200).json({ success: true, data });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, error: err.toString() });
+  }
+});
+
 export default router;

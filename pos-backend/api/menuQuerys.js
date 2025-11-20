@@ -115,4 +115,27 @@ export async function addSeasonalMenuItem({ name, price, quantity }) {
         RETURNING id;
     `;
     return rows[0].id;
+
+
+}
+
+
+export async function getIngredientUsage(start, end){
+  if(start == undefined){
+    throw new Error("undefined start time");
+  }
+  if(end == undefined){
+    throw new Error("undefined end time");
+  }
+  
+  const rows = await sql`SELECT i.ingredient_name, COUNT(*) AS times_used 
+                        FROM transactions t 
+                        JOIN transaction_details td ON td.transaction_id = t.transaction_id 
+                        JOIN ingredients_map im ON im.item_id = td.item_id 
+                        JOIN ingredients i ON i.ingredient_id = im.ingredient_id 
+                        WHERE t.transaction_time >= ${start} AND t.transaction_time <= ${end} 
+                        GROUP BY i.ingredient_name
+                        ORDER BY times_used DESC, i.ingredient_name`;
+
+  return rows;
 }
