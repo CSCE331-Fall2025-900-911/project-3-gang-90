@@ -220,17 +220,13 @@ function ManagerProductsContent() {
               onChange={handleSeasonToggle}
               color="primary"
             />
-          </div>
+          }
+          label={season ? "Seasonal (On)" : "Seasonal (Off)"}
+        />
+      </Stack>
 
-          <div className="flex flex-col">
-            <label>Price $</label>
-            <input
-              className="border p-1 rounded"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              placeholder="5.50"
-            />
-          </div>
+      {loading && <div>Loading...</div>}
+      {error && <div style={{ color: "red" }}>{error}</div>}
 
       {/* Products table */}
       <Table size="small">
@@ -272,60 +268,12 @@ function ManagerProductsContent() {
         </TableBody>
       </Table>
 
-          <div className="flex gap-2 items-end">
-            <button className="managerButtons" onClick={handleSave}>
-              Add
-            </button>
-            <button className="managerButtons" onClick={handleClear}>
-              Clear
-            </button>
-          </div>
-        </div>
-
-        <table className="min-w-full border bg-white">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-2 border">Name</th>
-              <th className="p-2 border">Price</th>
-              <th className="p-2 border">Quantity</th>
-              <th className="p-2 border">Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {loading ? (
-              <tr>
-                <td colSpan={4} className="p-2 border text-center">
-                  Loading...
-                </td>
-              </tr>
-            ) : error ? (
-              <tr>
-                <td colSpan={4} className="p-2 border text-center text-red-600">
-                  {error}
-                </td>
-              </tr>
-            ) : products.length === 0 ? (
-              <tr>
-                <td colSpan={4} className="p-2 border text-center">
-                  No products yet.
-                </td>
-              </tr>
-            ) : (
-              products.map((p) => (
-                <tr key={p.id}>
-                  <td className="p-2 border">{p.name}</td>
-                  <td className="p-2 border">${p.price}</td>
-                  <td className="p-2 border">{p.quantity}</td>
-                  <td className="p-2 border">
-                    actions later
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </main>
+      <ItemEditorDialog
+        open={editorOpen}
+        product={editingProduct}
+        onClose={handleCloseEditor}
+        onSave={handleSaveEditor}
+      />
     </div>
   );
 }
