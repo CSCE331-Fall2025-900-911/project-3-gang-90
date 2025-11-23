@@ -2,12 +2,23 @@ import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
 
-const app = express()
+import employeesRouter from './api/routes/employees.js'
+import { errorHandler } from './middleware/errorHandler.js'
+import { requestLogger } from './middleware/logging.js'
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(cors())
-app.use(helmet())
+
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(helmet());
+app.use(requestLogger);
+
+// Routes from api/routes
+app.use('/api/employees', employeesRouter);
+
+app.use(errorHandler);
 
 app.get('/', (req, res) => {
     res.status(200).send('IM RUNNING FINE BITCH FUCK YOU LOOKING AT');
