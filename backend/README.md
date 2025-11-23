@@ -100,7 +100,37 @@ npm install
 
 ## Environment Variables
 
-Create a `.env` in `backend/`. Ask our team for more specifics!
+Create a `.env` in `backend/` (or configure your environment) with at
+least:
+
+``` env
+# PostgreSQL connection string
+DATABASE_URL=postgresql://user:password@host:port/dbname
+
+# Optional
+PORT=3000
+NODE_ENV=development
+```
+
+The `DATABASE_URL` should include credentials and host for the AWS
+database.\
+`db.js` uses SSL, something like:
+
+``` js
+import postgres from "postgres";
+
+const { DATABASE_URL, NODE_ENV } = process.env;
+
+export const sql = postgres(DATABASE_URL, {
+  ssl: {
+    require: true,
+    rejectUnauthorized: false, // AWS RDS / managed PG often requires this
+  },
+});
+```
+
+> Note: The actual config may differ slightly; update this README if db
+> config changes.
 
 ------------------------------------------------------------------------
 
@@ -108,10 +138,14 @@ Create a `.env` in `backend/`. Ask our team for more specifics!
 
 ### Development
 
+Typically using `nodemon`:
 
 ``` bash
 npm run dev
 ```
+
+(Assumes a script like `"dev": "nodemon src/server.js"` in
+`package.json`.)
 
 ### Production / plain Node
 
@@ -160,6 +194,11 @@ and exit without errors.
 ------------------------------------------------------------------------
 
 ## API Overview (High Level)
+
+### Health
+
+-   `GET /health`\
+    Simple health check endpoint (if implemented in `app.js`).
 
 ### Employees
 
@@ -271,3 +310,13 @@ npm test
 ```
 
 For now, `src/tests/dbTest.js` can be used for manual DB verification.
+
+------------------------------------------------------------------------
+
+## Notes
+
+-   The PostgreSQL schema is hosted in AWS and already populated.
+-   There are no migrations in this backend; schema changes are
+    currently managed outside the app.
+-   Keep secrets (DB URL, passwords) in environment variables or `.env`
+    files, never committed to git.
