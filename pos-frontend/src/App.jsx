@@ -29,6 +29,7 @@ import LoginTest from './components/LoginButton'
 import ManagerProducts from "./Project2/ManagerProducts"
 import SalesReport from './components/MangerComponets/SalesReport'
 import ZReport from './Project2/ZReport'
+import XReport from './Project2/XReport'
 
 export default function App() {
   
@@ -48,6 +49,7 @@ export default function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/edit/:id" element={<EditItem />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/reportx" element={<XReport />} />
             <Route path="/reportz" element ={<ZReport/>} />
             <Route path="/products" element={<ManagerProducts />} />
             <Route path="/salesReport" element={<SalesReport/>}/>
