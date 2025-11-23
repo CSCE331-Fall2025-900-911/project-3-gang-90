@@ -49,6 +49,7 @@ export async function getMenu(){
     //this sql syntax already handle sql injections see https://github.com/porsager/postgres
     try {
       const items = await sql`SELECT * FROM menu;`;
+      // console.table(items)
       return items;
     } catch (error){
       throw new Error("Error in database interaction: " + error)

@@ -17,6 +17,7 @@ router.get('/menu', async (req, res)=>{
   try{
     console.log("in get api endpoint");
     let data = await menuQuerys.getMenu();
+    console.log("finished api")
     res.status(200).json({success:true, data});
   }catch(err){
     console.error(err);

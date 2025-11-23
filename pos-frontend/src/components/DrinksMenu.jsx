@@ -5,13 +5,16 @@ let server = import.meta.env.VITE_SERVER;
 
 export default function DrinksMenu() {
   const [items, setItems] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
   const { items: cartItems } = useCart()
 
   useEffect(() => {
     async function fetchMenu() {
       try {
         const res = await fetch(server + '/menu');
-        const data = await res.json();
+        const body = await res.json();
+        const data = body.data;
+
 
         const toTitle = (str = "") =>
           str
@@ -29,10 +32,12 @@ export default function DrinksMenu() {
           : [];
 
         setItems(items);
+        setIsLoading(false)
 
       } catch (err) {
         console.log("Could not retrieve menu items")
         setItems([]);
+        setIsLoading(false)
       }
     }
     fetchMenu();
@@ -54,6 +59,9 @@ export default function DrinksMenu() {
           </div>
         </div>
 
+        {isLoading ? (
+          <p>Loading...</p>
+        ):
         <div className="item-menu">
           {items.map(i => (
             <Link
@@ -81,6 +89,9 @@ export default function DrinksMenu() {
             </Link>
           ))}
         </div>
+        }
+
+        
       </div>
 
       <Link className="floating-btn settings-btn" to="/settings" title="Settings">⚙️</Link>
