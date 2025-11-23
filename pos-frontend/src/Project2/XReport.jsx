@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import ReportTable from './ReportTable'
 
 
-const ZReport = () => {
+const XReport = () => {
   const [refreshKey, setRefreshKey] = useState(0);
   return (
     <div className='flex flex-col w-full h-screen'>
@@ -47,4 +47,4 @@ const ZReport = () => {
   )
 }
 
-export default ZReport
+export default XReport
