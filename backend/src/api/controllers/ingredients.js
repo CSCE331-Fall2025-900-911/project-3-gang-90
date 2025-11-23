@@ -258,14 +258,6 @@ export async function getSalesReport(req, res, next) {
       return res.status(400).json({ error: "Query parameters 'start' and 'end' are required" });
     }
 
-    if (Number.isNaN(start) || Number.isNaN(end)) {
-      return res.status(400).json({ error: "Query parameters 'start' and 'end' must be numbers" });
-    }
-
-    if (start > end) {
-      return res.status(400).json({ error: "Query parameter 'start' must be less than 'end'" });
-    }
-
     const report = await ingredientsService.getSalesReport(start, end);
     return res.status(200).json(report);
   } catch (err) {
