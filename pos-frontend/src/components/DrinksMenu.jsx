@@ -14,6 +14,7 @@ export default function DrinksMenu() {
         const res = await fetch(server + '/menu');
         const body = await res.json();
         const data = body.data;
+        
 
 
         const toTitle = (str = "") =>
@@ -21,17 +22,17 @@ export default function DrinksMenu() {
             .toLowerCase()
             .replace(/\b\w/g, c => c.toUpperCase());
 
-        const items = Array.isArray(data)
-          ? data
-              .filter(i => i.is_active)
-              .map(i => ({
-                ...i,
-                item_name: toTitle(i.item_name),
-                item_id: i.item_id
-              }))
-          : [];
+        // const items = Array.isArray(data)
+        //   ? data
+        //       .filter(i => i.is_active)
+        //       .map(i => ({
+        //         ...i,
+        //         item_name: toTitle(i.item_name),
+        //         item_id: i.item_id
+        //       }))
+        //   : [];
 
-        setItems(items);
+        setItems(data);
         setIsLoading(false)
 
       } catch (err) {
