@@ -30,7 +30,7 @@ app.use('/api/transactions', transactionsRouter);
 app.use(errorHandler);
 
 app.get('/', (req, res) => {
-    res.status(200).send('IM RUNNING FINE BITCH FUCK YOU LOOKING AT');
+    res.status(200).send('Backend works!');
 })
 
 export default app
