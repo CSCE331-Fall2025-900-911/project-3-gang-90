@@ -95,7 +95,7 @@ export async function addEmployee(name, role, pay, state = true) {
  * @throws {Error} If the id is not provided.
  */
 export async function updateEmployee(id, name, role, pay, state) {
-    if (!id) { throw new Error("Missing employee id!"); }
+    if (id == null) { throw new Error("Missing employee id!"); }
 
     const rows = await sql`
     UPDATE personnel
@@ -126,7 +126,7 @@ export async function updateEmployee(id, name, role, pay, state) {
  * @returns {Promise<Object|null>} A promise that resolves to an object containing the employee_id of the deleted employee, or null if no employee with that id exists.
  */
 export async function deleteEmployee(id) {
-    if (!id) { throw new Error("Missing employee id!"); }
+    if (id == null) { throw new Error("Missing employee id!"); }
     const res = await sql`
     DELETE FROM personnel
     WHERE employee_id = ${id}
