@@ -31,7 +31,7 @@ app.use('/auth/google', authenticationRouter)
 app.use(errorHandler);
 
 app.get('/', (req, res) => {
-    res.status(200).send('Backend works!');
+    res.status(200).send('IM RUNNING FINE BITCH FUCK YOU LOOKING AT');
 })
 
 export default app
