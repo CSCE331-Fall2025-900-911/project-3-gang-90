@@ -5,6 +5,8 @@ import helmet from 'helmet'
 import employeesRouter from './api/routes/employees.js'
 import menuRouter from './api/routes/menu.js'
 import seasonalMenuRouter from './api/routes/seasonalMenu.js'
+import ingredientsRouter from './api/routes/ingredients.js'
+
 import { errorHandler } from './middleware/errorHandler.js'
 import { requestLogger } from './middleware/logging.js'
 
@@ -21,6 +23,7 @@ app.use(requestLogger);
 app.use('/api/employees', employeesRouter);
 app.use('/api/menu', menuRouter);
 app.use('/api/seasonal-menu', seasonalMenuRouter);
+app.use('/api/ingredients', ingredientsRouter);
 
 app.use(errorHandler);
 
