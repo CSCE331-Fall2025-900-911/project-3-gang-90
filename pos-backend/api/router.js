@@ -18,7 +18,7 @@ router.get('/menu', async (req, res)=>{
     console.log("in get api endpoint");
     let data = await menuQuerys.getMenu();
     console.log("finished api")
-    res.status(200).json({success:true, data});
+    res.status(201).json({success:true, data});
   }catch(err){
     console.error(err);
     res.status(500).json({success:false, erorr:err.toString()})
@@ -36,7 +36,7 @@ router.post('/menu/TransactionAndDetails', async (req, res) => {
       req.body.transaction,
       req.body.item
     );
-    return res.status(200).json({ success: true, data });
+    return res.status(201).json({ success: true, data });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ success: false, error: err.toString() });
