@@ -28,6 +28,7 @@ const ZReport = () => {
           <p className='font-bold text-3xl pb-5'>Z Report</p>
           <div className='flex flex-row w-1/2 items-center gap-7 pb-5'>
             <button onClick={()=>setRefreshKey(k=>k+1)} className='border-2 p-1 rounded-lg bg-gray-200 hover:bg-gray-300 cursor-pointer'>Refresh</button>
+            {/* havent implemented the reset logic yet */}
             <button className='border-2 p-1 rounded-lg bg-gray-200 hover:bg-gray-300 cursor-pointer'>Finalize (Reset)</button>
           </div>
           <p className='font-bold'>Total Sales:</p>
