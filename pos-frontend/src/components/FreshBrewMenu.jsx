@@ -15,6 +15,7 @@ export default function DrinksMenu() {
         const res = await fetch(server + '/menu');
         const body = await res.json();
         const data = body.data;
+        
 
 
         const toTitle = (str = "") =>
@@ -33,7 +34,7 @@ export default function DrinksMenu() {
               }))
           : [];
 
-        setItems(items);
+        setItems(data);
         setIsLoading(false)
 
       } catch (err) {
