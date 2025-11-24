@@ -1,0 +1,183 @@
+.cashier-root,
+.cashier-root * {
+    font-size: 16px;
+    font-family: sans-serif;
+}
+
+.top-bar {
+    background-color: #3a3a3a;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+}
+
+.top-title {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.top-time {
+    color: white;
+    font-size: 16px;
+}
+
+.spacer {
+    flex-grow: 1;
+}
+
+.layout {
+    display: flex;
+    height: calc(100vh - 50px);
+}
+
+.sidebar {
+    background-color: #d3d3d3;
+    padding: 15px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.drink-menu {
+    flex-grow: 1;
+    background: #e0e0e0;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.drink-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-gap: 12px;
+}
+
+.drink-button {
+    width: 120px;
+    height: 120px;
+    background-color: #d3d3d3;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    white-space: normal;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.drink-button:hover {
+    background-color: #c5c5c5;
+}
+
+.order-panel {
+    background-color: #d3d3d3;
+    padding: 15px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+.order-title {
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.order-item-box {
+    background-color: #b3b3b3;
+    padding: 10px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.order-item {
+    margin-bottom: 10px;
+}
+
+.mods {
+    font-size: 11px;
+    color: #555;
+}
+
+.order-summary {
+    padding-top: 10px;
+}
+
+.order-summary .line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.charge-button {
+    background-color: #9e9e9e;
+    font-size: 16px;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    border: none;
+}
+
+.charge-button:hover {
+    background-color: #a5a5a5;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup {
+    background: #e0e0e0;
+    padding: 20px;
+    border-radius: 10px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup h2 {
+    margin: 0 0 10px 0;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.popup button {
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+}
+
+.confirm-btn {
+    background-color: #444;
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #aaa;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+}
