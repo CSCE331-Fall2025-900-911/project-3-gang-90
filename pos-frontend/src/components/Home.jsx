@@ -16,14 +16,14 @@ export default function Home() {
         <Link className="menu-option" to="/entrees"><b>Entrees</b></Link>
         <Link className="menu-option" to="/sides"><b>Sides</b></Link>
       </div>
-      <Link className="floating-btn settings-btn" to="/settings" title="Settings">⚙️</Link>
-      <Link className="floating-btn cart-btn" to="/cart" title="Cart" style={{position:'fixed', right:'32px', bottom:'32px'}}>
+      <Link className="floating-btn settings-btn" to="/settings" title="Settings" alt="Settings">⚙️</Link>
+      <Link className="floating-btn cart-btn" to="/cart" title="Cart" style={{position:'fixed', right:'32px', bottom:'32px'}} alt="Cart">
         🛒
         {cartItems.length > 0 && (
           <span style={{
             position:'absolute',
-            top:'-10px',
-            right:'-10px',
+            top:'0px',
+            right:'0px',
             background:'#f5f5f5',
             color:'#3a3a3a',
             borderRadius:'50%',
