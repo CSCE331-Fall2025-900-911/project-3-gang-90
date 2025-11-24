@@ -3,11 +3,104 @@ import MangerPage from "./MangerPage"
 import { BarChart } from '@mui/x-charts/BarChart';
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
-
+const API_ROUTE = "https://localhost:3000";
 export default function SalesReport(){
+    const [row, setRow] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [beginDate, setBeginDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [refresh, setRefresh] = useState(false);
+
+
+
+    function applyToday(){
+        const startDay = new Date();
+        const endDay = new Date();
+
+        startDay.setDate(startDay.getDate()-1);
+
+        const databaseStart = startOfMonth.toDateString().split("T")[0];
+        const databaseEnd = endOfMonth.toDateString().split("T")[0];
+
+        setEndDate(databaseEnd);
+        setBeginDate(databaseStart);
+
+        setRefresh(!refresh);
+    }
+
+    function applyMonth(){
+
+                const now = new Date();
+
+
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth() -1, now.getDay());
+        const endOfMonth = new Date(now.getFullYear(), now.getMonth(), now.getDay());
+
+
+        const databaseStart = startOfMonth.toDateString().split("T")[0];
+        const databaseEnd = endOfMonth.toDateString().split("T")[0];
+
+        setEndDate(databaseEnd);
+        setBeginDate(databaseStart);
+        setRefresh(!refresh);
+    }
+
+    function apply30Days(){
+         const startDay = new Date();
+        const endDay = new Date();
+
+        startDay.setDate(startDay.getDate()-30);
+
+        const databaseStart = startOfMonth.toDateString().split("T")[0];
+        const databaseEnd = endOfMonth.toDateString().split("T")[0];
+        
+        setEndDate(databaseEnd);
+        setBeginDate(databaseStart);
+
+        setRefresh(!refresh);
+    }
+
+    function apply7Days(){
+         const startDay = new Date();
+        const endDay = new Date();
+
+        startDay.setDate(startDay.getDate()-7);
+
+        const databaseStart = startOfMonth.toDateString().split("T")[0];
+        const databaseEnd = endOfMonth.toDateString().split("T")[0];
+        
+        setEndDate(databaseEnd);
+        setBeginDate(databaseStart);
+
+        setRefresh(!refresh);
+    }
+
+
+
+
+
+    useEffect(()=>{
+         async function fetchRows(){
+            
+            try{
+                const res =  await fetch(`${API_ROUTE}/api/ingredients/sales-report?startDate=${beginDate}&endDate=${endDate}`);
+                if(!res.ok){
+                    throw new Error("response not ok: ", res.status);
+                }
+                const json =  await res.json();
+                console.log(json);
+                setRow(json);
+            }catch(e){
+                console.error("faild to fetch rows", e);
+            }
+        }
+
+        fetchRows();
+
+    },[refresh]);
 
     const columns = [
   { field: 'id', headerName: 'ID', width: 100 },
@@ -44,6 +137,7 @@ const rows = [
 
 
 
+
     // useEffect({
 
 
@@ -62,14 +156,16 @@ const rows = [
                         <p className="p-10">
                         Start date:
                         </p>
-                        <input type="date"></input>
+                        <input type="date" onInput={(e)=>{setBeginDate(e.target.value)}}></input>
                     </div>
                     <div className="p-5 flex">
                         <p className="p-10 ">
                         End date:
                         </p>
-                        <input  type="date"></input>
+                        <input  type="date" onInput={(e)=>{setEndDate(e.target.value)}}></input>
                     </div>
+
+                    <Button onClick={()=>{setRefresh(!refresh)}}></Button>
                     
                 </div>
                 <div className="flex">
