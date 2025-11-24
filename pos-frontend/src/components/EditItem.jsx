@@ -24,15 +24,11 @@ export default function EditItem() {
     async function fetchItem() {
       try {
         const res = await fetch(server + '/menu')
-        const body = await res.json()
-        const data = body.data
+        const data = await res.json()
 
-        const found = data.find(i=>String(i.item_id) === String(id))
-
-        // const found = Array.isArray(data)
-        //   ? data.find(i => String(i.item_id) === String(id))
-        //   : null
-
+        const found = Array.isArray(data)
+          ? data.find(i => String(i.item_id) === String(id))
+          : null
         
         if (found) {
           setItem({
@@ -49,17 +45,12 @@ export default function EditItem() {
 
   if (!item) {
     return (
-      <>
       <div className="main-page">
         <div className="top-bar">
           <h1>Loading...</h1>
           <div className="time">5:00 PM</div>
         </div>
       </div>
-      <div>
-        Couldnt find anything
-      </div>
-      </>
     )
   }
 

@@ -5,40 +5,33 @@ let server = import.meta.env.VITE_SERVER;
 
 export default function DrinksMenu() {
   const [items, setItems] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
   const { items: cartItems } = useCart()
 
   useEffect(() => {
     async function fetchMenu() {
       try {
         const res = await fetch(server + '/menu');
-        const body = await res.json();
-        const data = body.data;
-        
-
+        const data = await res.json();
 
         const toTitle = (str = "") =>
           str
             .toLowerCase()
             .replace(/\b\w/g, c => c.toUpperCase());
 
-        // const items = Array.isArray(data)
-        //   ? data
-        //       .filter(i => i.is_active)
-        //       .map(i => ({
-        //         ...i,
-        //         item_name: toTitle(i.item_name),
-        //         item_id: i.item_id
-        //       }))
-        //   : [];
+        const items = Array.isArray(data)
+          ? data
+              .filter(i => i.is_active)
+              .map(i => ({
+                ...i,
+                item_name: toTitle(i.item_name),
+                item_id: i.item_id
+              }))
+          : [];
 
-        setItems(data);
-        setIsLoading(false)
+        setItems(items);
 
       } catch (err) {
-        console.log("Could not retrieve menu items")
         setItems([]);
-        setIsLoading(false)
       }
     }
     fetchMenu();
@@ -60,9 +53,6 @@ export default function DrinksMenu() {
           </div>
         </div>
 
-        {isLoading ? (
-          <p>Loading...</p>
-        ):
         <div className="item-menu">
           {items.map(i => (
             <Link
@@ -90,9 +80,6 @@ export default function DrinksMenu() {
             </Link>
           ))}
         </div>
-        }
-
-        
       </div>
 
       <Link className="floating-btn settings-btn" to="/settings" title="Settings">
