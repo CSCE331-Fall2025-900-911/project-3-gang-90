@@ -11,19 +11,96 @@ export default function SalesReport(){
     const [row, setRow] = useState([]);
     const [loading, setLoading] = useState(false);
     const [beginDate, setBeginDate] = useState(null);
-    const [endDate, setEndDate] = useState(null)
+    const [endDate, setEndDate] = useState(null);
+    const [refresh, setRefresh] = useState(false);
+
+
+
+    function applyToday(){
+        const startDay = new Date();
+        const endDay = new Date();
+
+        startDay.setDate(startDay.getDate()-1);
+
+        const databaseStart = startOfMonth.toDateString().split("T")[0];
+        const databaseEnd = endOfMonth.toDateString().split("T")[0];
+
+        setEndDate(databaseEnd);
+        setBeginDate(databaseStart);
+
+        setRefresh(!refresh);
+    }
+
+    function applyMonth(){
+
+                const now = new Date();
+
+
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth() -1, now.getDay());
+        const endOfMonth = new Date(now.getFullYear(), now.getMonth(), now.getDay());
+
+
+        const databaseStart = startOfMonth.toDateString().split("T")[0];
+        const databaseEnd = endOfMonth.toDateString().split("T")[0];
+
+        setEndDate(databaseEnd);
+        setBeginDate(databaseStart);
+        setRefresh(!refresh);
+    }
+
+    function apply30Days(){
+         const startDay = new Date();
+        const endDay = new Date();
+
+        startDay.setDate(startDay.getDate()-30);
+
+        const databaseStart = startOfMonth.toDateString().split("T")[0];
+        const databaseEnd = endOfMonth.toDateString().split("T")[0];
+        
+        setEndDate(databaseEnd);
+        setBeginDate(databaseStart);
+
+        setRefresh(!refresh);
+    }
+
+    function apply7Days(){
+         const startDay = new Date();
+        const endDay = new Date();
+
+        startDay.setDate(startDay.getDate()-7);
+
+        const databaseStart = startOfMonth.toDateString().split("T")[0];
+        const databaseEnd = endOfMonth.toDateString().split("T")[0];
+        
+        setEndDate(databaseEnd);
+        setBeginDate(databaseStart);
+
+        setRefresh(!refresh);
+    }
 
 
 
 
 
-    useEffect({
-        async () => fetch()
+    useEffect(()=>{
+         async function fetchRows(){
+            
+            try{
+                const res =  await fetch(`${API_ROUTE}/api/ingredients/sales-report?startDate=${beginDate}&endDate=${endDate}`);
+                if(!res.ok){
+                    throw new Error("response not ok: ", res.status);
+                }
+                const json =  await res.json();
+                console.log(json);
+                setRow(json);
+            }catch(e){
+                console.error("faild to fetch rows", e);
+            }
+        }
 
+        fetchRows();
 
-
-
-    },[])
+    },[refresh]);
 
     const columns = [
   { field: 'id', headerName: 'ID', width: 100 },
@@ -179,6 +256,7 @@ const paginationModel = { page: 0, pageSize: 5 };
 
     // },[]);
 
+
     // useEffect({
 
 
@@ -208,6 +286,8 @@ const paginationModel = { page: 0, pageSize: 5 };
                     <div className="content-center">
                         <Button onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
                     </div>
+
+                    <Button onClick={()=>{setRefresh(!refresh)}}></Button>
                     
                 </div>
                 <div className="flex">
