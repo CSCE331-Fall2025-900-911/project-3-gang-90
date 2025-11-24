@@ -10,6 +10,7 @@ import Cart from './components/Cart'
 import EditItem from './components/EditItem'
 import Settings from './components/Settings'
 
+import CashierMenu from './Project2/CashierMenu'
 import ManagerProducts from "./Project2/ManagerProducts"
 import SalesReport from './components/MangerComponets/SalesReport'
 import ZReport from './Project2/ZReport'
@@ -32,6 +33,7 @@ export default function App() {
             <Route path="/reportz" element ={<ZReport/>} />
             <Route path="/products" element={<ManagerProducts />} />
             <Route path="/salesReport" element={<SalesReport/>}/>
+            <Route path="/cashier" element={<CashierMenu />} />
           </Routes>
         </div>
       </CartProvider>

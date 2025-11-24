@@ -1,3 +1,7 @@
+.customize-option.selected, .modification.selected {
+  background-color: #131313 !important;
+  color: #1d1d1d !important;
+}
 .cart-navigation-options {
   display: flex;
   padding: 20px 30px;
