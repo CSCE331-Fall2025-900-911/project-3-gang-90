@@ -3,11 +3,27 @@ import MangerPage from "./MangerPage"
 import { BarChart } from '@mui/x-charts/BarChart';
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 
 export default function SalesReport(){
+    const [row, setRow] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [beginDate, setBeginDate] = useState(null);
+    const [endDate, setEndDate] = useState(null)
+
+
+
+
+
+    useEffect({
+        async () => fetch()
+
+
+
+
+    },[])
 
     const columns = [
   { field: 'id', headerName: 'ID', width: 100 },
