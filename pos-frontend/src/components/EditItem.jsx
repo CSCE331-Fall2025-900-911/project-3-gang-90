@@ -45,17 +45,12 @@ export default function EditItem() {
 
   if (!item) {
     return (
-      <>
       <div className="main-page">
         <div className="top-bar">
           <h1>Loading...</h1>
           <div className="time">5:00 PM</div>
         </div>
       </div>
-      <div>
-        Couldnt find anything
-      </div>
-      </>
     )
   }
 
