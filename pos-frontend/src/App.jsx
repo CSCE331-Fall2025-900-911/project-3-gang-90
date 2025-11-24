@@ -26,6 +26,7 @@ import { useEffect } from 'react'
 import Transactions from './components/MangerComponets/Transaction';
 import LoginTest from './components/LoginButton'
 
+import CashierMenu from './Project2/CashierMenu'
 import ManagerProducts from "./Project2/ManagerProducts"
 import SalesReport from './components/MangerComponets/SalesReport'
 import ZReport from './Project2/ZReport'

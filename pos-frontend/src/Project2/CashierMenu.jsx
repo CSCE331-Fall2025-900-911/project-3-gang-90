@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./cashier.css";
-import { Link } from "react-router-dom";
 let server = import.meta.env.VITE_SERVER;
 
 
@@ -30,22 +29,21 @@ export default function Cashier() {
 
   async function fetchMenu() {
     try {
-      const res = await fetch(server + '/api/menu');
+      const res = await fetch(server + '/menu');
       const data = await res.json();
       const toTitle = (str = "") =>
         str
           .toLowerCase()
           .replace(/\b\w/g, c => c.toUpperCase());
       const items = Array.isArray(data)
-          ? data
-              .filter(i => i.stat)
-              .map(i => ({
-                ...i,
-                item_name: toTitle(i.name),
-                item_id: i.id,
-                price: Number(i.price)
-              }))
-          : [];
+        ? data
+            .filter(i => i.is_active)
+            .map(i => ({
+              name: toTitle(i.item_name),
+              price: i.price,
+              id: i.item_id
+            }))
+        : [];
       return items;
     } catch (err) {
       return [];
@@ -54,7 +52,7 @@ export default function Cashier() {
 
   async function fetchEmployees() {
     try {
-      const res = await fetch(server + '/api/employees');
+      const res = await fetch(server + '/employees');
       const data = await res.json();
       return Array.isArray(data) ? data : [];
     } catch (err) {
@@ -156,7 +154,7 @@ export default function Cashier() {
       return;
     }
     try {
-      const res = await fetch(server + '/api/employees');
+      const res = await fetch(server + '/employees');
       const employees = await res.json();
       const emp = employees.find(
         e =>
