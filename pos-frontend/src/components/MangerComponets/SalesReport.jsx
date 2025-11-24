@@ -8,6 +8,22 @@ import { useEffect, useState } from "react";
 
 const API_ROUTE = import.meta.env.VITE_SERVER;;
 export default function SalesReport(){
+    const [row, setRow] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [beginDate, setBeginDate] = useState(null);
+    const [endDate, setEndDate] = useState(null)
+
+
+
+
+
+    useEffect({
+        async () => fetch()
+
+
+
+
+    },[])
 
     const columns = [
   { field: 'id', headerName: 'ID', width: 100 },
