@@ -11,6 +11,11 @@
     align-items: center;
 }
 
+.customize-option.selected, .modification.selected {
+  background-color: #131313 !important;
+  color: #1d1d1d !important;
+}
+
 .top-title {
     color: white;
     font-size: 18px;
