@@ -155,7 +155,11 @@ const paginationModel = { page: 0, pageSize: 5 };
         <MangerPage  
         pageName={"Sales Report"}
         child={
+<<<<<<< HEAD
             <div>
+=======
+            <div className="flex">
+>>>>>>> main
                 <div className="flex p-5">
                     <div className="p-5 flex">
                         <p className="p-10">
@@ -174,7 +178,11 @@ const paginationModel = { page: 0, pageSize: 5 };
                     
                 </div>
                 <div className="flex">
+<<<<<<< HEAD
                     <div className="p-2">
+=======
+                    <div className="p-3">
+>>>>>>> main
                         <Button  variant="contained" onClick={applyToday}>Today</Button>
                     </div>
                     <div className="p-2">
