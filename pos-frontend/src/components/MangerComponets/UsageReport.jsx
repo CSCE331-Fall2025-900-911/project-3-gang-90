@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import { useEffect, useState } from "react";
 
 
-const API_ROUTE = "http://localhost:3000";
+const API_ROUTE = import.meta.env.VITE_SERVER;
 export default function UsageReport(){
     const [rows, setRows] = useState([]);
     const [loading, setLoading] = useState(false);
