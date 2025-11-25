@@ -186,3 +186,53 @@
     color: red;
     font-size: 14px;
 }
+
+
+.employee-table-container {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.emp-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.emp-table th {
+    background: #d3d3d3;
+    padding: 10px;
+    text-align: left;
+}
+
+.emp-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.delete-btn {
+    background-color: #cc5555;
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+    color: white;
+    border-radius: 4px;
+}
+
+.delete-btn:hover {
+    background-color: #bb4444;
+}
+
+.primary-button {
+    background-color: #888;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.primary-button:hover {
+    background-color: #777;
+}
