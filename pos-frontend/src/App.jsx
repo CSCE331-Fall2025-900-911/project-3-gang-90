@@ -27,6 +27,7 @@ import Transactions from './components/MangerComponets/Transaction';
 import LoginTest from './components/LoginButton'
 
 import CashierMenu from './Project2/CashierMenu'
+import EmployeeList from './Project2/EmployeeList'
 import ManagerProducts from "./Project2/ManagerProducts"
 import SalesReport from './components/MangerComponets/SalesReport'
 import ZReport from './Project2/ZReport'
