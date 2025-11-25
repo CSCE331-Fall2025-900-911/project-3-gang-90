@@ -160,16 +160,16 @@ const paginationModel = { page: 0, pageSize: 5 };
                 </div>
                 <div className="flex-row">
                     <div className="p-2">
-                        <Button onClick={applyToday}>Today</Button>
+                        <Button variant="contained" onClick={applyToday}>Today</Button>
                     </div>
                     <div className="p-2">
-                        <Button onClick={apply7Days}>Last 7 days</Button>
+                        <Button variant="contained" onClick={apply7Days}>Last 7 days</Button>
                     </div>
                     <div className="p-2">
-                        <Button onClick={apply30Days}>Last 30 days</Button>
+                        <Button  variant="contained" onClick={apply30Days}>Last 30 days</Button>
                     </div>
                     <div className="p-2"> 
-                        <Button onClick={applyMonth}>This month</Button>
+                        <Button variant="contained" onClick={applyMonth}>This month</Button>
                     </div>
                 </div>
                 <div>
