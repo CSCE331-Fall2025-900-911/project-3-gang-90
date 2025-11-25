@@ -203,9 +203,7 @@ export default function Cashier() {
 
         <div className="sidebar">
           {managerViewVisible && (
-            <button onClick={() =>go("/products")}>
-              Manager View
-            </button>
+            <Link to="/products">products</Link>
           )}
           <button onClick={() => setShowLogin(true)}>Change Cashier</button>
         </div>
