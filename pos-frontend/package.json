@@ -26,7 +26,8 @@
     "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
     "react-dom": "^17.0.0 || ^18.0.0 || ^19.0.0",
     "react-router-dom": "6.x",
-    "styled-components": "^6.1.19"
+    "styled-components": "^6.1.19",
+    "yaml": "^2.8.1"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.17",
