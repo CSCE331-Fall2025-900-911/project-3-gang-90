@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main, sprint_1 ]
     paths:
-      "pos-backend/**"
+      "backend/**"
   pull_request:
     branches: [ main, sprint_1 ]
 
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: pos-backend
+        working-directory: backend
 
     steps:
       - name: Checkout repository
@@ -24,10 +24,11 @@ jobs:
         with:
           node-version: 22.12.x
           cache: npm
-          cache-dependency-path: pos-backend/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci
+        working-directory: pos-backend
 
       - name: Start server
         env:
