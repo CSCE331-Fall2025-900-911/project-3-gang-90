@@ -28,22 +28,25 @@ export default function Settings() {
       let node
       while ((node = walk.nextNode())) {
         const text = node.nodeValue.trim()
+        console.log("text: ", text);
         if (text.length > 0) {
           try {
-            const res = await fetch("https://de.libretranslate.com/translate", {
-              method: "POST",
-              body: JSON.stringify({
-                q: text,
-                source: "auto",
-                target: "es",
-                format: "text",
-                alternatives: 3,
-                api_key: ""
-              }),
-              headers: { "Content-Type": "application/json" }
-            })
+            const res = await fetch("https://libretranslate.com/translate", {
+                method: "POST",
+                body: JSON.stringify({
+                  q: "Screen Magnifier (larger text)",
+                  source: "en",
+                  target: "es",
+                  format: "text",
+                  alternatives: 3,
+                  api_key: ""
+            }),
+                  headers: { "Content-Type": "application/json" }
+            });
+
+console.log(await res.json());
             if (!res.ok) throw new Error('API error')
-            const data = await res.json()
+            const data = await res.json();
             node.nodeValue = data.translatedText || text + " (ES)"
           } catch (err) {
             node.nodeValue = text + " (ES)"
