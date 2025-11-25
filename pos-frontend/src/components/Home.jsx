@@ -8,6 +8,7 @@ export default function Home() {
     <div className="regular-container">
       <div className="top-bar">
         <h1>Menu</h1>
+        <Link to="/cashier"> cashier</Link>
         <div className="time">5:00 PM</div>
       </div>
       <h1 className="main-menu-header">Select a Menu Category:</h1>

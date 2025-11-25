@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 .cashier-root,
 .cashier-root * {
     font-size: 16px;
@@ -9,11 +11,6 @@
     padding: 12px 15px;
     display: flex;
     align-items: center;
-}
-
-.customize-option.selected, .modification.selected {
-  background-color: #131313 !important;
-  color: #1d1d1d !important;
 }
 
 .top-title {

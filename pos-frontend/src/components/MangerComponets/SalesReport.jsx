@@ -4,9 +4,9 @@ import { BarChart } from '@mui/x-charts/BarChart';
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import { useEffect, useState } from "react";
+import.meta.env.VITE_SERVER;
 
-
-const API_ROUTE = "http://localhost:3000";
+const API_ROUTE = import.meta.env.VITE_SERVER;
 export default function SalesReport(){
     const [rows, setRows] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -155,7 +155,7 @@ const paginationModel = { page: 0, pageSize: 5 };
                         <input  type="date" onInput={(e)=>{setEndDate(e.target.value)}}></input>
                     </div>
 
-                    <Button onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
+                    <Button  variant="contained" onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
                     
                 </div>
                 <div className="flex-row">

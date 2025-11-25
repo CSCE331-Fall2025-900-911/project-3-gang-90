@@ -18,7 +18,7 @@ import {
   Stack,
 } from "@mui/material";
 
-const API_BASE = "http://localhost:3000";
+const API_BASE = "https://project-3-gang-90-backend.onrender.com";
 
 export default function ManagerProducts() {
   return (
@@ -46,7 +46,7 @@ function ManagerProductsContent() {
     try {
       setLoading(true);
       setError(null);
-      const res = await fetch(`${API_BASE}/menu`);
+      const res = await fetch(`${API_BASE}/api/menu`);
       if (!res.ok) throw new Error("Failed to load menu");
       const data = await res.json();
       setProducts(
@@ -69,7 +69,7 @@ function ManagerProductsContent() {
     try {
       setLoading(true);
       setError(null);
-      const res = await fetch(`${API_BASE}/menu/seasonal`);
+      const res = await fetch(`${API_BASE}/api/menu/seasonal`);
       if (!res.ok) throw new Error("Failed to load seasonal menu");
       const data = await res.json();
       setProducts(
@@ -120,8 +120,8 @@ function ManagerProductsContent() {
     try {
       const body = { name: n, price: priceNum, quantity: qtyNum };
       const url = season
-        ? `${API_BASE}/menu/seasonal`
-        : `${API_BASE}/menu`;
+        ? `${API_BASE}/api/menu/seasonal`
+        : `${API_BASE}/api/menu`;
 
       const res = await fetch(url, {
         method: "POST",

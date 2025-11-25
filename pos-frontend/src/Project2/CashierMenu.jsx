@@ -24,7 +24,7 @@ export default function Cashier() {
   const [loginName, setLoginName] = useState("");
   const [loginID, setLoginID] = useState("");
   const [loginError, setLoginError] = useState("");
-
+  const go = (path) => window.location.href = path;
   async function fetchMenu() {
     try {
       const res = await fetch(server + '/api/menu');
@@ -203,9 +203,7 @@ export default function Cashier() {
 
         <div className="sidebar">
           {managerViewVisible && (
-            <button onClick={() => console.log("Go Manager View")}>
-              Manager View
-            </button>
+            <Link to="/products">products</Link>
           )}
           <button onClick={() => setShowLogin(true)}>Change Cashier</button>
         </div>

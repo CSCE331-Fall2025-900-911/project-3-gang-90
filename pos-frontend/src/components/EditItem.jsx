@@ -23,17 +23,17 @@ export default function EditItem() {
   useEffect(() => {
     async function fetchItem() {
       try {
-        const res = await fetch(server + '/menu')
+        const res = await fetch(server + '/api/menu')
         const data = await res.json()
 
         const found = Array.isArray(data)
-          ? data.find(i => String(i.item_id) === String(id))
+          ? data.find(i => String(i.id) === String(id))
           : null
         
         if (found) {
           setItem({
             ...found,
-            item_name: toTitle(found.item_name)
+            item_name: toTitle(found.name)
           })
         }
       } catch (e) {
