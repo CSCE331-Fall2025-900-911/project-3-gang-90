@@ -34,7 +34,7 @@ export default function Settings() {
               method: "POST",
               body: JSON.stringify({
                 q: text,
-                source: "en",
+                source: "auto",
                 target: "es",
                 format: "text",
                 alternatives: 3,
@@ -49,6 +49,7 @@ export default function Settings() {
             node.nodeValue = text + " (ES)"
           }
         }
+        await new Promise(r => setTimeout(r, 500));
       }
     } else {
       window.location.reload()
