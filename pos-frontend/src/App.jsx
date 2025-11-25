@@ -11,6 +11,7 @@ import EditItem from './components/EditItem'
 import Settings from './components/Settings'
 
 import CashierMenu from './Project2/CashierMenu'
+import EmployeeList from './Project2/EmployeeList'
 import ManagerProducts from "./Project2/ManagerProducts"
 import SalesReport from './components/MangerComponets/SalesReport'
 import ZReport from './Project2/ZReport'
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="/products" element={<ManagerProducts />} />
             <Route path="/salesReport" element={<SalesReport/>}/>
             <Route path="/cashier" element={<CashierMenu />} />
+            <Route path="/employees" element={<EmployeeList />} />
           </Routes>
         </div>
       </CartProvider>
