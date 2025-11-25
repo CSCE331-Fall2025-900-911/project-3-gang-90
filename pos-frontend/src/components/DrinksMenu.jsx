@@ -20,11 +20,12 @@ export default function DrinksMenu() {
 
         const items = Array.isArray(data)
           ? data
-              .filter(i => i.is_active)
+              .filter(i => i.stat)
               .map(i => ({
                 ...i,
-                item_name: toTitle(i.item_name),
-                item_id: i.item_id
+                item_name: toTitle(i.name),
+                item_id: i.id,
+                price: Number(i.price)
               }))
           : [];
 
