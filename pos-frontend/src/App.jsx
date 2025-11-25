@@ -16,6 +16,7 @@ import ManagerProducts from "./Project2/ManagerProducts"
 import SalesReport from './components/MangerComponets/SalesReport'
 import ZReport from './Project2/ZReport'
 import XReport from './Project2/XReport'
+import UsageReport from './components/MangerComponets/UsageReport'
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
             <Route path="/products" element={<ManagerProducts />} />
             <Route path="/salesReport" element={<SalesReport/>}/>
             <Route path="/cashier" element={<CashierMenu />} />
+            <Route path="/usageReport" element={<UsageReport/>}/>
             <Route path="/employees" element={<EmployeeList />} />
           </Routes>
         </div>

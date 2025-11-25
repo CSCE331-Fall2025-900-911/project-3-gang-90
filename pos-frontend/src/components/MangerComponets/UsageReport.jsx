@@ -7,13 +7,14 @@ import { useEffect, useState } from "react";
 
 
 const API_ROUTE = "http://localhost:3000";
-export default function SalesReport(){
+export default function UsageReport(){
     const [rows, setRows] = useState([]);
     const [loading, setLoading] = useState(false);
     const [beginDate, setBeginDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [refresh, setRefresh] = useState(false);
-
+    const [timesUsed, setTimesUsed] = useState([]);
+    const [name, setName] = useState([]);
 
 
     function applyToday(){
@@ -86,7 +87,7 @@ export default function SalesReport(){
          async function fetchRows(){
             
             try{
-                const res =  await fetch(`${API_ROUTE}/api/ingredients/sales-report?start=${beginDate}&end=${endDate}`);
+                const res =  await fetch(`${API_ROUTE}/api/ingredients/usage?start=${beginDate}&end=${endDate}`);
                 if(!res.ok){
                     throw new Error("response not ok: ", res.status);
                 }
@@ -97,6 +98,20 @@ export default function SalesReport(){
                     id: index, // index as ID
                     ...element
                 }));
+                const tempNames = [];
+                const tempTimesUsed = [];
+
+                json.map((element)=>{
+                    tempNames.push(element.name);
+                    tempTimesUsed.push(element.timesUsed);
+                })
+
+                setName(tempNames);
+                setTimesUsed(tempTimesUsed);
+
+
+
+
                 setRows(rowsWithId);
             }catch(e){
                 console.error("faild to fetch rows", e);
@@ -108,8 +123,8 @@ export default function SalesReport(){
     },[refresh]);
 
     const columns = [
-  { field: 'itemName', headerName: 'Name', width: 100 },
-  { field: 'time', headerName: 'Time', width: 230 },
+  { field: 'name', headerName: 'Name', width: 100 },
+  { field: 'timesUsed', headerName: 'Time', width: 230 },
 ];
 
 const paginationModel = { page: 0, pageSize: 5 };
@@ -140,9 +155,9 @@ const paginationModel = { page: 0, pageSize: 5 };
         <MangerPage  
         pageName={"Sales Report"}
         child={
-            <div className="w-1000">
+            <div className="flex-row">
                 <div className="flex-row p-5">
-                    <div className="p-5 flex-row">
+                    <div className="p-5 flex">
                         <p className="p-10">
                         Start date:
                         </p>
@@ -171,6 +186,24 @@ const paginationModel = { page: 0, pageSize: 5 };
                     <div className="p-2"> 
                         <Button onClick={applyMonth}>This month</Button>
                     </div>
+                </div>
+                <div>
+                    <BarChart
+                        xAxis={[
+                            {
+                            id: 'barCategories',
+                            data: name,
+                            },
+                        ]}
+                        series={[
+                            {
+                            data: timesUsed,
+                            },
+                        ]}
+                        // height={400}
+                        // width={1000}
+                        sx={{height: 400, width: '100%'}}
+                    />
                 </div>
                 <div>
                     <Paper sx={{ height: 400, width: '100%' }}>
