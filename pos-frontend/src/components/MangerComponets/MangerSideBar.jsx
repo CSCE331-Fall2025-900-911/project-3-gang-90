@@ -21,10 +21,10 @@ export default function MangerSideBar(){
                 <Link className='mangerLink' to="/employees">Employees</Link>
             </div>
             <div className='mangerLinkPadding'>
-                <Link className='mangerLink' to="/xReport">X-Report</Link>
+                <Link className='mangerLink' to="/reportx">X-Report</Link>
             </div>
             <div className='mangerLinkPadding'>
-                <Link className='mangerLink'to={"/usageChart"}>Usage Chart</Link>
+                <Link className='mangerLink'to={"/usageReport"}>Usage Report</Link>
             </div>
             <div className='mangerLinkPadding'>
                 <Link className='mangerLink' to={"/salesReport"}>Sales Report</Link>

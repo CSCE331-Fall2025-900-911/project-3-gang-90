@@ -13,7 +13,8 @@ export default function UsageReport(){
     const [beginDate, setBeginDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [refresh, setRefresh] = useState(false);
-
+    const [timesUsed, setTimesUsed] = useState([]);
+    const [name, setName] = useState([]);
 
 
     function applyToday(){
@@ -97,6 +98,20 @@ export default function UsageReport(){
                     id: index, // index as ID
                     ...element
                 }));
+                const tempNames = [];
+                const tempTimesUsed = [];
+
+                json.map((element)=>{
+                    tempNames.push(element.name);
+                    tempTimesUsed.push(element.timesUsed);
+                })
+
+                setName(tempNames);
+                setTimesUsed(tempTimesUsed);
+
+
+
+
                 setRows(rowsWithId);
             }catch(e){
                 console.error("faild to fetch rows", e);
@@ -108,8 +123,8 @@ export default function UsageReport(){
     },[refresh]);
 
     const columns = [
-  { field: 'itemName', headerName: 'Name', width: 100 },
-  { field: 'time', headerName: 'Time', width: 230 },
+  { field: 'name', headerName: 'Name', width: 100 },
+  { field: 'timesUsed', headerName: 'Time', width: 230 },
 ];
 
 const paginationModel = { page: 0, pageSize: 5 };
@@ -177,12 +192,12 @@ const paginationModel = { page: 0, pageSize: 5 };
                         xAxis={[
                             {
                             id: 'barCategories',
-                            data: ['bar A', 'bar B', 'bar C'],
+                            data: name,
                             },
                         ]}
                         series={[
                             {
-                            data: [2, 5, 3],
+                            data: timesUsed,
                             },
                         ]}
                         // height={400}
