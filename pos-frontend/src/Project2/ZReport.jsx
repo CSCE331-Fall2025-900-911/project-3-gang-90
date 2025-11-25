@@ -17,8 +17,8 @@ const ZReport = () => {
           <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/transactions"}>Transactions</Link>
           <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/products"}>Products</Link>
           <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/employees"}>Employees</Link>
-          <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/xreport"}>X-Report</Link>
-          <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/usageChart"}>Usage Charge</Link>
+          <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/reportx"}>X-Report</Link>
+          <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/usageReport"}>Usage Charge</Link>
           <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/salesReport"}>Sales Report</Link>
           <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/reportz"}>Z-Report</Link>
         </div>

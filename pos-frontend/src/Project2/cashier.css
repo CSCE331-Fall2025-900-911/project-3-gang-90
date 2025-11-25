@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 .cashier-root,
 .cashier-root * {
     font-size: 16px;
