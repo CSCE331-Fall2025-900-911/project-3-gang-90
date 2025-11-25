@@ -108,8 +108,8 @@ export default function SalesReport(){
     },[refresh]);
 
     const columns = [
-  { field: 'itemName', headerName: 'Name', width: 100 },
-  { field: 'time', headerName: 'Time', width: 230 },
+  { field: 'itemName', headerName: 'Name', width: 200 },
+  { field: 'time', headerName: 'Time', width: 330 },
 ];
 
 const paginationModel = { page: 0, pageSize: 5 };
