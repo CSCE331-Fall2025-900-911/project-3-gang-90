@@ -6,15 +6,14 @@ import Paper from '@mui/material/Paper';
 import { useEffect, useState } from "react";
 
 
-const API_ROUTE = import.meta.env.VITE_SERVER;
+const API_ROUTE = "http://localhost:3000";
 export default function UsageReport(){
     const [rows, setRows] = useState([]);
     const [loading, setLoading] = useState(false);
     const [beginDate, setBeginDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [refresh, setRefresh] = useState(false);
-    const [timesUsed, setTimesUsed] = useState([]);
-    const [name, setName] = useState([]);
+
 
 
     function applyToday(){
@@ -98,20 +97,6 @@ export default function UsageReport(){
                     id: index, // index as ID
                     ...element
                 }));
-                const tempNames = [];
-                const tempTimesUsed = [];
-
-                json.map((element)=>{
-                    tempNames.push(element.name);
-                    tempTimesUsed.push(element.timesUsed);
-                })
-
-                setName(tempNames);
-                setTimesUsed(tempTimesUsed);
-
-
-
-
                 setRows(rowsWithId);
             }catch(e){
                 console.error("faild to fetch rows", e);
@@ -123,8 +108,8 @@ export default function UsageReport(){
     },[refresh]);
 
     const columns = [
-  { field: 'name', headerName: 'Name', width: 100 },
-  { field: 'timesUsed', headerName: 'Time', width: 230 },
+  { field: 'itemName', headerName: 'Name', width: 100 },
+  { field: 'time', headerName: 'Time', width: 230 },
 ];
 
 const paginationModel = { page: 0, pageSize: 5 };
@@ -155,8 +140,8 @@ const paginationModel = { page: 0, pageSize: 5 };
         <MangerPage  
         pageName={"Sales Report"}
         child={
-            <div>
-                <div className="flex p-5">
+            <div className="flex-row">
+                <div className="flex-row p-5">
                     <div className="p-5 flex">
                         <p className="p-10">
                         Start date:
@@ -170,21 +155,21 @@ const paginationModel = { page: 0, pageSize: 5 };
                         <input  type="date" onInput={(e)=>{setEndDate(e.target.value)}}></input>
                     </div>
 
-                    <Button  variant="contained" onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
+                    <Button onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
                     
                 </div>
-                <div className="flex">
+                <div className="flex-row">
                     <div className="p-2">
-                        <Button  variant="contained" onClick={applyToday}>Today</Button>
+                        <Button onClick={applyToday}>Today</Button>
                     </div>
                     <div className="p-2">
-                        <Button   variant="contained"  onClick={apply7Days}>Last 7 days</Button>
+                        <Button onClick={apply7Days}>Last 7 days</Button>
                     </div>
                     <div className="p-2">
-                        <Button  variant="contained" onClick={apply30Days}>Last 30 days</Button>
+                        <Button onClick={apply30Days}>Last 30 days</Button>
                     </div>
                     <div className="p-2"> 
-                        <Button  variant="contained" onClick={applyMonth}>This month</Button>
+                        <Button onClick={applyMonth}>This month</Button>
                     </div>
                 </div>
                 <div>
@@ -192,21 +177,21 @@ const paginationModel = { page: 0, pageSize: 5 };
                         xAxis={[
                             {
                             id: 'barCategories',
-                            data: name,
+                            data: ['bar A', 'bar B', 'bar C'],
                             },
                         ]}
                         series={[
                             {
-                            data: timesUsed,
+                            data: [2, 5, 3],
                             },
                         ]}
                         // height={400}
                         // width={1000}
-                        sx={{height: 400, width: '75%'}}
+                        sx={{height: 400, width: '100%'}}
                     />
                 </div>
                 <div>
-                    <Paper sx={{ height: 400, width: '75%' }}>
+                    <Paper sx={{ height: 400, width: '100%' }}>
                         <DataGrid
                             rows={rows}
                             columns={columns}

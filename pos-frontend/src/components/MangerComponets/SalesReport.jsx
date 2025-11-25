@@ -140,25 +140,25 @@ const paginationModel = { page: 0, pageSize: 5 };
         <MangerPage  
         pageName={"Sales Report"}
         child={
-            <div>
-                <div className="flex p-5">
-                    <div className="p-5 flex">
+            <div className="w-1000">
+                <div className="flex-row p-5">
+                    <div className="p-5 flex-row">
                         <p className="p-10">
                         Start date:
                         </p>
                         <input type="date" onInput={(e)=>{setBeginDate(e.target.value)}}></input>
                     </div>
-                    <div className="p-5 flex">
+                    <div className="p-5 flex-row">
                         <p className="p-10 ">
                         End date:
                         </p>
                         <input  type="date" onInput={(e)=>{setEndDate(e.target.value)}}></input>
                     </div>
 
-                    <Button onClick={()=>{setRefresh(!refresh)}}></Button>
+                    <Button onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
                     
                 </div>
-                <div className="flex">
+                <div className="flex-row">
                     <div className="p-2">
                         <Button onClick={applyToday}>Today</Button>
                     </div>
@@ -171,24 +171,6 @@ const paginationModel = { page: 0, pageSize: 5 };
                     <div className="p-2"> 
                         <Button onClick={applyMonth}>This month</Button>
                     </div>
-                </div>
-                <div>
-                    <BarChart
-                        xAxis={[
-                            {
-                            id: 'barCategories',
-                            data: ['bar A', 'bar B', 'bar C'],
-                            },
-                        ]}
-                        series={[
-                            {
-                            data: [2, 5, 3],
-                            },
-                        ]}
-                        // height={400}
-                        // width={1000}
-                        sx={{height: 400, width: '100%'}}
-                    />
                 </div>
                 <div>
                     <Paper sx={{ height: 400, width: '100%' }}>
