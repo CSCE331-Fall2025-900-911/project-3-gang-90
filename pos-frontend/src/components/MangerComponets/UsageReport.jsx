@@ -155,8 +155,8 @@ const paginationModel = { page: 0, pageSize: 5 };
         <MangerPage  
         pageName={"Sales Report"}
         child={
-            <div className="flex-row">
-                <div className="flex-row p-5">
+            <div className="flex">
+                <div className="flex p-5">
                     <div className="p-5 flex">
                         <p className="p-10">
                         Start date:
@@ -173,8 +173,8 @@ const paginationModel = { page: 0, pageSize: 5 };
                     <Button  variant="contained" onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
                     
                 </div>
-                <div className="flex-row">
-                    <div className="p-2">
+                <div className="flex">
+                    <div className="p-3">
                         <Button  variant="contained" onClick={applyToday}>Today</Button>
                     </div>
                     <div className="p-2">
@@ -202,11 +202,11 @@ const paginationModel = { page: 0, pageSize: 5 };
                         ]}
                         // height={400}
                         // width={1000}
-                        sx={{height: 400, width: '100%'}}
+                        sx={{height: 400, width: '75%'}}
                     />
                 </div>
                 <div>
-                    <Paper sx={{ height: 400, width: '100%' }}>
+                    <Paper sx={{ height: 400, width: '75%' }}>
                         <DataGrid
                             rows={rows}
                             columns={columns}
