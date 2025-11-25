@@ -27,13 +27,13 @@ export default function EditItem() {
         const data = await res.json()
 
         const found = Array.isArray(data)
-          ? data.find(i => String(i.item_id) === String(id))
+          ? data.find(i => String(i.id) === String(id))
           : null
         
         if (found) {
           setItem({
             ...found,
-            item_name: toTitle(found.item_name)
+            item_name: toTitle(found.name)
           })
         }
       } catch (e) {
