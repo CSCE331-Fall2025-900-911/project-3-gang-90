@@ -277,10 +277,10 @@ const paginationModel = { page: 0, pageSize: 5 };
                         <Button onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
                     </div>
 
-                    <Button onClick={()=>{setRefresh(!refresh)}}></Button>
+                    <Button onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
                     
                 </div>
-                <div className="flex">
+                <div className="flex-row">
                     <div className="p-2">
                         <Button variant="contained" onClick={applyToday}>Today</Button>
                     </div>

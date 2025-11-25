@@ -13,8 +13,7 @@ export default function UsageReport(){
     const [beginDate, setBeginDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [refresh, setRefresh] = useState(false);
-    const [timesUsed, setTimesUsed] = useState([]);
-    const [name, setName] = useState([]);
+
 
 
     function applyToday(){
@@ -98,20 +97,6 @@ export default function UsageReport(){
                     id: index, // index as ID
                     ...element
                 }));
-                const tempNames = [];
-                const tempTimesUsed = [];
-
-                json.map((element)=>{
-                    tempNames.push(element.name);
-                    tempTimesUsed.push(element.timesUsed);
-                })
-
-                setName(tempNames);
-                setTimesUsed(tempTimesUsed);
-
-
-
-
                 setRows(rowsWithId);
             }catch(e){
                 console.error("faild to fetch rows", e);
@@ -174,7 +159,7 @@ const paginationModel = { page: 0, pageSize: 5 };
                     </div>
                     
                 </div>
-                <div className="flex">
+                <div className="flex-row">
                     <div className="p-2">
                         <Button onClick={applyToday}>Today</Button>
                     </div>
@@ -194,12 +179,12 @@ const paginationModel = { page: 0, pageSize: 5 };
                         xAxis={[
                             {
                             id: 'barCategories',
-                            data: name,
+                            data: ['bar A', 'bar B', 'bar C'],
                             },
                         ]}
                         series={[
                             {
-                            data: timesUsed,
+                            data: [2, 5, 3],
                             },
                         ]}
                         // height={400}
