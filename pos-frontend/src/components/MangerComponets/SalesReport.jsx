@@ -155,7 +155,7 @@ const paginationModel = { page: 0, pageSize: 5 };
                         <input  type="date" onInput={(e)=>{setEndDate(e.target.value)}}></input>
                     </div>
 
-                    <Button onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
+                    <Button  variant="contained" onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
                     
                 </div>
                 <div className="flex-row">
