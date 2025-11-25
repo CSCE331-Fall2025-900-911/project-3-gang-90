@@ -6,9 +6,9 @@ import Paper from '@mui/material/Paper';
 import { useEffect, useState } from "react";
 
 
-const API_ROUTE = "https://localhost:3000";
+const API_ROUTE = "http://localhost:3000";
 export default function SalesReport(){
-    const [row, setRow] = useState([]);
+    const [rows, setRows] = useState([]);
     const [loading, setLoading] = useState(false);
     const [beginDate, setBeginDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
@@ -22,8 +22,8 @@ export default function SalesReport(){
 
         startDay.setDate(startDay.getDate()-1);
 
-        const databaseStart = startOfMonth.toDateString().split("T")[0];
-        const databaseEnd = endOfMonth.toDateString().split("T")[0];
+        const databaseStart = startDay.toISOString().split("T")[0];
+        const databaseEnd = endDay.toISOString().split("T")[0];
 
         setEndDate(databaseEnd);
         setBeginDate(databaseStart);
@@ -40,8 +40,8 @@ export default function SalesReport(){
         const endOfMonth = new Date(now.getFullYear(), now.getMonth(), now.getDay());
 
 
-        const databaseStart = startOfMonth.toDateString().split("T")[0];
-        const databaseEnd = endOfMonth.toDateString().split("T")[0];
+        const databaseStart = startOfMonth.toISOString().split("T")[0];
+        const databaseEnd = endOfMonth.toISOString().split("T")[0];
 
         setEndDate(databaseEnd);
         setBeginDate(databaseStart);
@@ -54,8 +54,8 @@ export default function SalesReport(){
 
         startDay.setDate(startDay.getDate()-30);
 
-        const databaseStart = startOfMonth.toDateString().split("T")[0];
-        const databaseEnd = endOfMonth.toDateString().split("T")[0];
+        const databaseStart = startDay.toISOString().split("T")[0];
+        const databaseEnd = endDay.toISOString().split("T")[0];
         
         setEndDate(databaseEnd);
         setBeginDate(databaseStart);
@@ -69,8 +69,8 @@ export default function SalesReport(){
 
         startDay.setDate(startDay.getDate()-7);
 
-        const databaseStart = startOfMonth.toDateString().split("T")[0];
-        const databaseEnd = endOfMonth.toDateString().split("T")[0];
+        const databaseStart = startDay.toISOString().split("T")[0];
+        const databaseEnd = endDay.toISOString().split("T")[0];
         
         setEndDate(databaseEnd);
         setBeginDate(databaseStart);
@@ -86,13 +86,18 @@ export default function SalesReport(){
          async function fetchRows(){
             
             try{
-                const res =  await fetch(`${API_ROUTE}/api/ingredients/sales-report?startDate=${beginDate}&endDate=${endDate}`);
+                const res =  await fetch(`${API_ROUTE}/api/ingredients/sales-report?start=${beginDate}&end=${endDate}`);
                 if(!res.ok){
                     throw new Error("response not ok: ", res.status);
                 }
                 const json =  await res.json();
                 console.log(json);
-                setRow(json);
+
+                const rowsWithId = json.map((element, index) => ({
+                    id: index, // index as ID
+                    ...element
+                }));
+                setRows(rowsWithId);
             }catch(e){
                 console.error("faild to fetch rows", e);
             }
@@ -103,37 +108,22 @@ export default function SalesReport(){
     },[refresh]);
 
     const columns = [
-  { field: 'id', headerName: 'ID', width: 100 },
-  { field: 'firstName', headerName: 'First name', width: 230 },
-  { field: 'lastName', headerName: 'Last name', width: 230 },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 100,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 260,
-    valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
-  },
+  { field: 'itemName', headerName: 'Name', width: 100 },
+  { field: 'time', headerName: 'Time', width: 230 },
 ];
 
 const paginationModel = { page: 0, pageSize: 5 };
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+// const rows = [
+//   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
+//   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
+//   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
+//   { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
+//   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
+//   { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
+//   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
+//   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
+//   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+// ];
 
 
 
@@ -170,16 +160,16 @@ const rows = [
                 </div>
                 <div className="flex">
                     <div className="p-2">
-                        <Button>Today</Button>
+                        <Button onClick={applyToday}>Today</Button>
                     </div>
                     <div className="p-2">
-                        <Button>Last 7 days</Button>
+                        <Button onClick={apply7Days}>Last 7 days</Button>
                     </div>
                     <div className="p-2">
-                        <Button>Last 30 days</Button>
+                        <Button onClick={apply30Days}>Last 30 days</Button>
                     </div>
                     <div className="p-2"> 
-                        <Button>This month</Button>
+                        <Button onClick={applyMonth}>This month</Button>
                     </div>
                 </div>
                 <div>
@@ -208,6 +198,7 @@ const rows = [
                             initialState={{ pagination: { paginationModel } }}
                             pageSizeOptions={[5, 10]}
                             sx={{ border: 0 }}
+                            getRowId={(rows) => rows.id}
                          />
                      </Paper>
                 </div>
