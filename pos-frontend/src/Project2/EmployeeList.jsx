@@ -14,7 +14,7 @@ export default function EmployeeList() {
 
   async function loadEmployees() {
     try {
-      const response = await fetch(server + "/employees");
+      const response = await fetch(server + "/api/employees");
       const data = await response.json();
       setEmployees(data);
     } catch (err) {
@@ -23,7 +23,7 @@ export default function EmployeeList() {
   }
 
   async function addEmployee() {
-    await fetch(server + "/employees", {
+    await fetch(server + "/api/employees", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, role, pay: parseFloat(pay) })
@@ -38,7 +38,7 @@ export default function EmployeeList() {
   }
 
   async function deleteEmployee(id) {
-    await fetch(server + `/employees/${id}`, { method: "DELETE" });
+    await fetch(server + `/api/employees/${id}`, { method: "DELETE" });
     loadEmployees();
   }
 
