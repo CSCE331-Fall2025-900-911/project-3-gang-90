@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import "./cashier.css";
+import { Link } from "react-router-dom";
 let server = import.meta.env.VITE_SERVER;
 
 export default function EmployeeList() {
@@ -59,14 +60,14 @@ export default function EmployeeList() {
       <div className="layout">
 
         <div className="sidebar">
-          <button onClick={() => go("/cashier")}>Cashier View</button>
-          <button onClick={() => go("/transactions")}>Recent Transactions</button>
-          <button onClick={() => go("/products")}>Products</button>
-          <button onClick={() => go("/employees")}>Employees</button>
-          <button onClick={() => go("/reportx")}>X Report</button>
-          <button onClick={() => go("/usage-chart")}>Usage Chart</button>
-          <button onClick={() => go("/salesRieport")}>Sales Report</button>
-          <button onClick={() => go("/reportz")}>Z Report</button>
+          <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/cashier"}>Cashier</Link>
+          <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/transactions"}>Transactions</Link>
+          <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/products"}>Products</Link>
+          <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/employees"}>Employees</Link>
+          <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/reportx"}>X-Report</Link>
+          <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/usageReport"}>Usage Charge</Link>
+          <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/salesReport"}>Sales Report</Link>
+          <Link className='border-black border-2 rounded-md px-6 py-2 bg-gray-400 hover:bg-gray-600' to={"/reportz"}>Z-Report</Link>
         </div>
 
         <div className="employee-table-container">
