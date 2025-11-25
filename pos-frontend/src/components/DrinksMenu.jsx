@@ -10,7 +10,7 @@ export default function DrinksMenu() {
   useEffect(() => {
     async function fetchMenu() {
       try {
-        const res = await fetch(server + '/menu');
+        const res = await fetch(server + '/api/menu/');
         const data = await res.json();
 
         const toTitle = (str = "") =>
@@ -20,11 +20,12 @@ export default function DrinksMenu() {
 
         const items = Array.isArray(data)
           ? data
-              .filter(i => i.is_active)
+              .filter(i => i.stat)
               .map(i => ({
                 ...i,
-                item_name: toTitle(i.item_name),
-                item_id: i.item_id
+                item_name: toTitle(i.name),
+                item_id: i.id,
+                price: Number(i.price)
               }))
           : [];
 
@@ -82,7 +83,9 @@ export default function DrinksMenu() {
         </div>
       </div>
 
-      <Link className="floating-btn settings-btn" to="/settings" title="Settings">⚙️</Link>
+      <Link className="floating-btn settings-btn" to="/settings" title="Settings">
+          ⚙️
+      </Link>
 
       <Link
         className="floating-btn cart-btn"
@@ -95,8 +98,8 @@ export default function DrinksMenu() {
           <span
             style={{
               position:'absolute',
-              top:'-10px',
-              right:'-10px',
+              top:'0px',
+              right:'0px',
               background:'#f5f5f5',
               color:'#3a3a3a',
               borderRadius:'50%',

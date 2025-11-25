@@ -23,17 +23,17 @@ export default function EditItem() {
   useEffect(() => {
     async function fetchItem() {
       try {
-        const res = await fetch(server + '/menu')
+        const res = await fetch(server + '/api/menu')
         const data = await res.json()
 
         const found = Array.isArray(data)
-          ? data.find(i => String(i.item_id) === String(id))
+          ? data.find(i => String(i.id) === String(id))
           : null
         
         if (found) {
           setItem({
             ...found,
-            item_name: toTitle(found.item_name)
+            item_name: toTitle(found.name)
           })
         }
       } catch (e) {
@@ -74,7 +74,7 @@ export default function EditItem() {
           <br />
 
           <div className="item-navigation-options">
-            <button className="navigation-option" onClick={() => navigate(-1)}>
+            <button className="navigation-option" onClick={() => navigate(-1)} alt="Cancel and go back">
               <b>Cancel</b>
             </button>
 
@@ -90,6 +90,7 @@ export default function EditItem() {
                 })
                 navigate('/cart')
               }}
+              alt={`Add ${item.item_name} to order`}
             >
               <b>Add To Order</b>
             </button>
@@ -111,8 +112,8 @@ export default function EditItem() {
             <span
               style={{
                 position:'absolute',
-                top:'-10px',
-                right:'-10px',
+                top:'0px',
+                right:'0px',
                 background:'#f5f5f5',
                 color:'#3a3a3a',
                 borderRadius:'50%',
