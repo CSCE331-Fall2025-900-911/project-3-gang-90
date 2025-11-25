@@ -159,7 +159,7 @@ const paginationModel = { page: 0, pageSize: 5 };
                     
                 </div>
                 <div className="flex">
-                    <div className="p-3">
+                    <div className="p-2">
                         <Button variant="contained" onClick={applyToday}>Today</Button>
                     </div>
                     <div className="p-2">
