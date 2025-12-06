@@ -33,6 +33,7 @@ import SalesReport from './components/MangerComponets/SalesReport'
 import ZReport from './Project2/ZReport'
 import XReport from './Project2/XReport'
 import UsageReport from './components/MangerComponets/UsageReport'
+import { useEffect } from 'react'
 
 export default function App() {
   
