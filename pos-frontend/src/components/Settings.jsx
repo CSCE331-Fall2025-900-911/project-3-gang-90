@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAccessibility } from './AccessibilityContext'
 import { useNavigate } from 'react-router-dom'
 
 export default function Settings() {
+ 
   const navigate = useNavigate()
   const {
     spanish,
@@ -20,6 +21,7 @@ export default function Settings() {
   const [showSpanishTip, setShowSpanishTip] = useState(false)
   const [showReaderTip, setShowReaderTip] = useState(false)
   const [showMagnifierTip, setShowMagnifierTip] = useState(false)
+  const [loading, setLoading] = useState(true);
 
   async function handleSpanishToggle() {
     setSpanish(v => !v)
@@ -151,6 +153,32 @@ console.log(await res.json());
       fontSize: '1rem'
     }}>{text}</div>
   )
+  const googleTranslateElementInit = () => {
+    new window.google.translate.TranslateElement(
+      {
+        pageLanguage: "en",
+        autoDisplay: false
+      },
+      "google_translate_element"
+    );
+  };
+  useEffect(() => {
+    if(loading){
+      // if (!window.google || window.googleTranslateInitialized) return;
+      // window.googleTranslateInitialized = true;
+
+      console.log("we are in useEffect");
+      var addScript = document.createElement("script");
+      addScript.setAttribute(
+        "src",
+        "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+      );
+      document.body.appendChild(addScript);
+      window.googleTranslateElementInit = googleTranslateElementInit;
+      setLoading(false);
+    }
+  }, []);
+  
 
   return (
     <div className="regular-container"
@@ -165,17 +193,12 @@ console.log(await res.json());
       <div style={{maxWidth:500, margin:'40px auto', background:'#e0e0e0', borderRadius:16, padding:32}}>
         <h2 style={{marginBottom:24}}>Accessibility Features</h2>
 
-        <div style={{marginBottom:24}}>
-          <label style={{fontSize:'1.3rem'}}>
-            <input alt="Spanish Translation"
-              type="checkbox"
-              checked={spanish}
-              onChange={handleSpanishToggle}
-            />
-            Translate page to Spanish
-          </label>
-          {infoButton(() => setShowSpanishTip(v => !v))}
-          {showSpanishTip && tooltip('Automatically translates all visible page text into Spanish.')}
+        <div style={{marginBottom:24}}  >
+          <div id="google_translate_element" >
+
+          </div>
+          {infoButton(() => setShowReaderTip(v => !v))}
+          {showReaderTip && tooltip('Transalte to any language.')}
         </div>
 
         <div style={{marginBottom:24}}>
