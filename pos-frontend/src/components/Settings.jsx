@@ -230,7 +230,7 @@ console.log(await res.json());
         <button
           className="bottom-button"
           style={{marginTop:32, width:'100%'}}
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/kiosk')}
         >Back to Home</button>
       </div>
     </div>

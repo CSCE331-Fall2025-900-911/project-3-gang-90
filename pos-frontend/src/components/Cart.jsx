@@ -68,7 +68,7 @@ export default function Cart() {
 
     clearCart()
     setName('')
-    navigate('/')
+    navigate('/kiosk')
   }
 
   return (
@@ -130,7 +130,7 @@ export default function Cart() {
 
         <div style={{display:'flex', gap:'10px', marginTop:'20px'}}>
           <button className="bottom-button" style={{flex:1}} onClick={handleCheckout}>Checkout</button>
-          <Link className="bottom-button" style={{flex:1, textAlign:'center', lineHeight:'38px'}} to="/">Back to Menu</Link>
+          <Link className="bottom-button" style={{flex:1, textAlign:'center', lineHeight:'38px'}} to="/kiosk">Back to Menu</Link>
         </div>
       </div>
 
