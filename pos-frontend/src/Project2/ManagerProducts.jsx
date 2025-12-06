@@ -178,6 +178,23 @@ function ManagerProductsContent() {
   return (
     <div>
       <Stack direction="row" spacing={2} mb={3} alignItems="flex-end">
+        {/* temp */}
+          <Button
+          variant="outlined"
+          sx={{ mb: 2 }}
+          onClick={() => {
+            setEditingProduct({
+              id: 0,
+              name: "",
+              price: 0,
+              quantity: 0,
+            });
+            setEditorOpen(true);
+          }}
+          >
+          Open Editor (test)
+          </Button>
+          {/* temp */}
         <TextField
           label="Name"
           size="small"
@@ -266,19 +283,112 @@ function ManagerProductsContent() {
 }
 
 //WIP
-function ItemEditorDialog({ open, product, onClose, onSave }) {
+function ItemEditorDialog({ open, product, onClose, onSave }) 
+{
   const [name, setName] = useState("");
   const [popularity, setPopularity] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
 
+  const [itemIngredients, setItemIngredients] = useState([]);
+  const [allIngredients, setAllIngredients] = useState([]);
+
   useEffect(() => {
     if (!product) return;
+
     setName(product.name ?? "");
     setPopularity(String(product.quantity ?? 0));
     setPrice(String(product.price ?? ""));
     setQuantity(String(product.quantity ?? 0));
+
+    loadItemIngredients(product);
+    loadAllIngredients();
   }, [product]);
+
+  async function loadItemIngredients(prod) {
+    try {
+      const isSeasonal = prod.id < 0;
+      const itemId = Math.abs(prod.id);
+
+      const res = await fetch(
+        `${API_BASE}/menu/${itemId}/ingredients?seasonal=${isSeasonal}`
+      );
+      if (!res.ok) throw new Error("Failed to load item ingredients");
+
+      const data = await res.json();
+      setItemIngredients(data);
+    } catch (err) {
+      console.error(err);
+      setItemIngredients([]);
+    }
+  }
+
+  async function loadAllIngredients() {
+    try {
+      const res = await fetch(`${API_BASE}/ingredients`);
+      if (!res.ok) throw new Error("Failed to load ingredients");
+
+      const data = await res.json();
+      setAllIngredients(data);
+    } catch (err) {
+      console.error(err);
+      setAllIngredients([]);
+    }
+  }
+
+  async function handleAddIngredient(ingredientId) {
+    if (!product) return;
+
+    try {
+      const isSeasonal = product.id < 0;
+      const itemId = Math.abs(product.id);
+
+      const res = await fetch(`${API_BASE}/menu/${itemId}/ingredients`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ingredientId, isSeasonal }),
+      });
+
+      if (!res.ok) {
+        console.error("Failed to add ingredient");
+        alert("Failed to add ingredient");
+        return;
+      }
+
+      await loadItemIngredients(product);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to add ingredient");
+    }
+  }
+
+  async function handleRemoveIngredient(ingredientId) {
+    if (!product) return;
+
+    try {
+      const isSeasonal = product.id < 0;
+      const itemId = Math.abs(product.id);
+
+      const res = await fetch(
+        `${API_BASE}/menu/${itemId}/ingredients/${ingredientId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!res.ok) {
+        console.error("Failed to remove ingredient");
+        alert("Failed to remove ingredient");
+        return;
+      }
+
+      // refresh ingredient list
+      await loadItemIngredients(product);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to remove ingredient");
+    }
+  }
 
   if (!product) return null;
 
@@ -319,7 +429,7 @@ function ItemEditorDialog({ open, product, onClose, onSave }) {
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle>Edit Item</DialogTitle>
       <DialogContent dividers>
-        <Stack direction="row" spacing={2} mt={1}>
+        <Stack direction="row" spacing={2} mt={1} mb={3}>
           <TextField
             label="Name"
             size="small"
@@ -347,7 +457,87 @@ function ItemEditorDialog({ open, product, onClose, onSave }) {
           />
         </Stack>
 
-        {/* Ing WIP*/}
+        <h4>Ingredients in this drink</h4>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>Id</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Category</TableCell>
+              <TableCell width={100}>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {itemIngredients.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={4} align="center">
+                  No ingredients yet.
+                </TableCell>
+              </TableRow>
+            ) : (
+              itemIngredients.map((ing) => (
+                <TableRow key={ing.ingredient_id ?? ing.id}>
+                  <TableCell>{ing.ingredient_id ?? ing.id}</TableCell>
+                  <TableCell>{ing.ingredient_name ?? ing.name}</TableCell>
+                  <TableCell>{ing.category ?? ""}</TableCell>
+                  <TableCell>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      onClick={() =>
+                        handleRemoveIngredient(ing.ingredient_id ?? ing.id)
+                      }
+                    >
+                      Remove
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+
+        <div style={{ height: 16 }} />
+
+        <h4>All ingredients</h4>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>Id</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Category</TableCell>
+              <TableCell width={100}>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {allIngredients.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={4} align="center">
+                  No ingredients found.
+                </TableCell>
+              </TableRow>
+            ) : (
+              allIngredients.map((ing) => (
+                <TableRow key={ing.ingredient_id ?? ing.id}>
+                  <TableCell>{ing.ingredient_id ?? ing.id}</TableCell>
+                  <TableCell>{ing.ingredient_name ?? ing.name}</TableCell>
+                  <TableCell>{ing.category ?? ""}</TableCell>
+                  <TableCell>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      onClick={() =>
+                        handleAddIngredient(ing.ingredient_id ?? ing.id)
+                      }
+                    >
+                      Add
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleSave} variant="contained">
