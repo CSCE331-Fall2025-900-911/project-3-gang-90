@@ -183,6 +183,23 @@ function ManagerProductsContent() {
   return (
     <div>
       <Stack direction="row" spacing={2} mb={3} alignItems="flex-end">
+        {/* temp */}
+          <Button
+          variant="outlined"
+          sx={{ mb: 2 }}
+          onClick={() => {
+            setEditingProduct({
+              id: 0,
+              name: "",
+              price: 0,
+              quantity: 0,
+            });
+            setEditorOpen(true);
+          }}
+          >
+          Open Editor (test)
+          </Button>
+          {/* temp */}
         <TextField
           label="Name"
           size="small"
@@ -286,6 +303,9 @@ function ItemEditorDialog({ open, product, onClose, onSave })
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [category, setCategory] = useState("");
+
+  const [itemIngredients, setItemIngredients] = useState([]);
+  const [allIngredients, setAllIngredients] = useState([]);
 
   const [itemIngredients, setItemIngredients] = useState([]);
   const [allIngredients, setAllIngredients] = useState([]);
