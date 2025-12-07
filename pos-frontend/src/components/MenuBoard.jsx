@@ -97,19 +97,6 @@ export default function MenuBoard() {
           ))
         )}
       </div>
-      <div style={{ position: 'absolute', left: 32, bottom: 32 }}>
-        <Link to="/" style={{
-          display: 'inline-block',
-          background: '#929292',
-          color: '#fff',
-          fontSize: '1rem',
-          borderRadius: 10,
-          padding: '10px 24px',
-          textDecoration: 'none',
-          fontWeight: 600,
-          boxShadow: '0 2px 8px #bbb',
-        }}>⬅ Back</Link>
-      </div>
     </main>
   );
 }
