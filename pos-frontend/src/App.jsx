@@ -26,7 +26,7 @@ export default function App() {
   return (
     <AccessibilityProvider>
       <CartProvider>
-        <div>
+        <main>
           <Routes>
             <Route path="/" element={<SystemSelect />} />
             <Route path="/kiosk" element={<Home />} />
@@ -44,7 +44,7 @@ export default function App() {
             <Route path="/employees" element={<EmployeeList />} />
             <Route path="/transactions" element={<Transactions/>}/>
           </Routes>
-        </div>
+        </main>
       </CartProvider>
     </AccessibilityProvider>
   )

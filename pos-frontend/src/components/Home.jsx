@@ -5,7 +5,8 @@ import { useCart } from './CartContext'
 export default function Home() {
   const { items: cartItems } = useCart()
   return (
-    <div className="regular-container">
+    <main>
+      <div className="regular-container">
       <div className="top-bar">
         <h1>Menu</h1>
         <Link to="/cashier"> cashier</Link>
@@ -39,6 +40,7 @@ export default function Home() {
           }}>{cartItems.length}</span>
         )}
       </Link>
-    </div>
+      </div>
+    </main>
   )
 }
