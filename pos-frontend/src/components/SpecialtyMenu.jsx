@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from './CartContext'
+import TopBar from './TopBar';
 let server = import.meta.env.VITE_SERVER;
 
 export default function DrinksMenu() {
@@ -40,10 +41,7 @@ export default function DrinksMenu() {
 
   return (
     <main>
-      <div className="top-bar">
-        <h1>Drinks</h1>
-        <div className="time">5:00 PM</div>
-      </div>
+      <TopBar/>
 
       <div className="panel-container">
         <div className="sidebar">
