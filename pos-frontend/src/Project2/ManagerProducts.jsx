@@ -193,6 +193,7 @@ function ManagerProductsContent() {
               name: "",
               price: 0,
               quantity: 0,
+              category: "",
             });
             setEditorOpen(true);
           }}
