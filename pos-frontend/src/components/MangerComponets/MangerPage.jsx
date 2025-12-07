@@ -23,7 +23,7 @@ export default function MangerPage({
                 <MangerSideBar/>
             </div>
             <div className="mangerMainPageMargins">
-                <div className="w-screen">
+                <div className="w-full">
                     {child}
                 </div>
             </div>

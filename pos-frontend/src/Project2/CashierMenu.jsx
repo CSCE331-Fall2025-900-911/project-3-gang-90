@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./cashier.css";
+import { Link } from "react-router-dom";
 let server = import.meta.env.VITE_SERVER;
 
 
@@ -203,9 +204,9 @@ export default function Cashier() {
 
         <div className="sidebar">
           {managerViewVisible && (
-            <button onClick={() => console.log("Go Manager View")}>
+            <Link to="/products">
               Manager View
-            </button>
+            </Link>
           )}
           <button onClick={() => setShowLogin(true)}>Change Cashier</button>
         </div>
