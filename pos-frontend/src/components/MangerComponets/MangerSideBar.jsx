@@ -15,7 +15,7 @@ export default function MangerSideBar(){
                 <Link className='mangerLink' to="/transactions">Transactions</Link>
             </div>
             <div className='mangerLinkPadding'>
-                <Link className='mangerLink' to="/products">Productst</Link>
+                <Link className='mangerLink' to="/products">Products</Link>
             </div>
             <div className='mangerLinkPadding'>
                 <Link className='mangerLink' to="/employees">Employees</Link>

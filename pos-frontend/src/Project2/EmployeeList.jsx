@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import "./cashier.css";
+import MangerPage from "../components/MangerComponets/MangerPage";
 let server = import.meta.env.VITE_SERVER;
 
 export default function EmployeeList() {
@@ -48,27 +49,8 @@ export default function EmployeeList() {
   const go = (path) => window.location.href = path;
 
   return (
-    <div className="cashier-root">
-
-      <div className="top-bar">
-        <div className="top-title">Employees</div>
-        <div className="spacer"></div>
-        <div className="top-time">{new Date().toLocaleTimeString()}</div>
-      </div>
-
-      <div className="layout">
-
-        <div className="sidebar">
-          <button onClick={() => go("/cashier")}>Cashier View</button>
-          <button onClick={() => go("/transactions")}>Recent Transactions</button>
-          <button onClick={() => go("/products")}>Products</button>
-          <button onClick={() => go("/employees")}>Employees</button>
-          <button onClick={() => go("/reportx")}>X Report</button>
-          <button onClick={() => go("/usage-chart")}>Usage Chart</button>
-          <button onClick={() => go("/salesRieport")}>Sales Report</button>
-          <button onClick={() => go("/reportz")}>Z Report</button>
-        </div>
-
+    <div>
+    <MangerPage child={
         <div className="employee-table-container">
 
           <table className="emp-table">
@@ -109,8 +91,11 @@ export default function EmployeeList() {
           >
             Add Employee
           </button>
-        </div>
-      </div>
+        </div>}   
+        pageName="Employee page"
+        />
+
+      
 
       {showPopup && (
         <div className="popup-overlay">

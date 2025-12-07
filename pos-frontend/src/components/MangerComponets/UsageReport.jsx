@@ -123,7 +123,7 @@ export default function UsageReport(){
     },[refresh]);
 
     const columns = [
-  { field: 'name', headerName: 'Name', width: 100 },
+  { field: 'name', headerName: 'Name', width: 500 },
   { field: 'timesUsed', headerName: 'Time', width: 230 },
 ];
 
@@ -153,27 +153,28 @@ const paginationModel = { page: 0, pageSize: 5 };
 
     return(
         <MangerPage  
-        pageName={"Sales Report"}
+        pageName={"Usage Report"}
         child={
-            <div className="flex-row">
-                <div className="flex-row p-5">
-                    <div className="p-5 flex">
-                        <p className="p-10">
+            <div className="">
+                 <div className="flex py-5">
+                    <div className="pe-5 flex">
+                        <p className="pe-10 py-10 p-1">
                         Start date:
                         </p>
                         <input type="date" onInput={(e)=>{setBeginDate(e.target.value)}}></input>
                     </div>
-                    <div className="p-5 flex-row">
+                    <div className="ps-5 flex">
                         <p className="p-10 ">
                         End date:
                         </p>
                         <input  type="date" onInput={(e)=>{setEndDate(e.target.value)}}></input>
                     </div>
-
-                    <Button onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
+                    <div className="content-center">
+                        <Button onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
+                    </div>
                     
                 </div>
-                <div className="flex-row">
+                <div className="flex">
                     <div className="p-2">
                         <Button onClick={applyToday}>Today</Button>
                     </div>
@@ -187,7 +188,8 @@ const paginationModel = { page: 0, pageSize: 5 };
                         <Button onClick={applyMonth}>This month</Button>
                     </div>
                 </div>
-                <div>
+                <div className="p-2 w-100% py-5">
+                <div className="">
                     <BarChart
                         xAxis={[
                             {
@@ -205,7 +207,8 @@ const paginationModel = { page: 0, pageSize: 5 };
                         sx={{height: 400, width: '100%'}}
                     />
                 </div>
-                <div>
+                </div>
+                <div className="">
                     <Paper sx={{ height: 400, width: '100%' }}>
                         <DataGrid
                             rows={rows}
