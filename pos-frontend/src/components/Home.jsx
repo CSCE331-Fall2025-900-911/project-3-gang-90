@@ -1,18 +1,33 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from './CartContext'
 import LoginTest from './LoginButton'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import LoginButton from './LoginButton'
 
 export default function Home() {
   const { items: cartItems } = useCart()
-
   const [askLogin, setAskLogin] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const navigate = useNavigate()
+
+  useEffect(()=> {
+    const user = localStorage.getItem("auth.id_token")
+    if (user) {
+      setIsLoggedIn(true)
+    }
+  })
+
+  function handleLoginLogic() {
+    if (!isLoggedIn) {
+      setAskLogin(true)
+    } 
+    navigate("/drinks")
+  }
 
   return (
     <main>
-      <div className="regular-container">
+      <div className="regular-contzainer">
       <div className="top-bar">
         <h1>Menu</h1>
         <div className="time">5:00 PM</div>
@@ -33,7 +48,7 @@ export default function Home() {
         <h1 className="main-menu-header">Select a Menu Category:</h1>
         <div className="menu-options">
           {/* <Link className="menu-option" to="/drinks"><b>Drinks</b></Link> */}
-          <button className="menu-option font-bold" onClick={()=>setAskLogin(true)}>Drinks</button>
+          <button className="menu-option font-bold" onClick={handleLoginLogic}>Drinks</button>
           <Link className="menu-option" to="/entrees"><b>Entrees</b></Link>
           <Link className="menu-option" to="/sides"><b>Sides</b></Link>
         </div>
