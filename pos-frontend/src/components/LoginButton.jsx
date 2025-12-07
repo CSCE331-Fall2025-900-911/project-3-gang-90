@@ -68,36 +68,36 @@ export default function LoginButton() {
               //persist token
               localStorage.setItem('auth.id_token', id_token)
               navigate("/drinks")
-              const payload = decodeJwt(id_token)
-              if (payload) {
-                setUser({ name: payload.name, email: payload.email, picture: payload.picture, raw: payload })
-              }
-              try {
-                const serverUrl = VITE_SERVER + '/auth/google'
-                const r = await fetch(serverUrl, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ id_token })
-                })
-                const data = await r.json()
-                console.log('backend response (id_token)', data)
-              } catch (e) {
-                console.error('Server verification failed (continuing with local token):', e)
-              }
+            //   const payload = decodeJwt(id_token)
+            //   if (payload) {
+            //     setUser({ name: payload.name, email: payload.email, picture: payload.picture, raw: payload })
+            //   }
+            //   try {
+            //     const serverUrl = VITE_SERVER + '/auth/google'
+            //     const r = await fetch(serverUrl, {
+            //       method: 'POST',
+            //       headers: { 'Content-Type': 'application/json' },
+            //       body: JSON.stringify({ id_token })
+            //     })
+            //     const data = await r.json()
+            //     console.log('backend response (id_token)', data)
+            //   } catch (e) {
+            //     console.error('Server verification failed (continuing with local token):', e)
+            //   }
             }}
-            onError={() => console.log('Google login failed')}
+            // onError={() => console.log('Google login failed')}
           />
           {loadingRestore && <p style={{ fontSize: '0.85rem', color: '#666' }}>Restoring session...</p>}
         </>
       )}
-      {user && (
+      {/* {user && (
         <div style={{ textAlign: 'center' }}>
           <img src={user.picture} alt={user.name} style={{ width: 72, height: 72, borderRadius: '50%', objectFit: 'cover', marginBottom: '0.5rem' }} />
           <h3 style={{ margin: '0 0 0.25rem' }}>{user.name}</h3>
             <p style={{ margin: 0, fontSize: '0.8rem', color: '#555' }}>{user.email}</p>
           <button onClick={signOut} style={{ marginTop: '0.75rem', padding: '0.5rem 1rem', border: 'none', background: '#4285F4', color: '#fff', borderRadius: 6, cursor: 'pointer' }}>Sign Out</button>
         </div>
-      )}
+      )} */}
     </div>
   )
 }
