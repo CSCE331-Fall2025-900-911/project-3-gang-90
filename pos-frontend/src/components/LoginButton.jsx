@@ -67,6 +67,7 @@ export default function LoginButton() {
               if (!id_token) { console.error('No id_token in response'); return }
               //persist token
               localStorage.setItem('auth.id_token', id_token)
+              navigate("/drinks")
               const payload = decodeJwt(id_token)
               if (payload) {
                 setUser({ name: payload.name, email: payload.email, picture: payload.picture, raw: payload })
