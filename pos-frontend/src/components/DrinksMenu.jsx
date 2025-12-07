@@ -39,7 +39,7 @@ export default function DrinksMenu() {
   }, []);
 
   return (
-    <>
+    <main>
       <div className="top-bar">
         <h1>Drinks</h1>
         <div className="time">5:00 PM</div>
@@ -117,6 +117,6 @@ export default function DrinksMenu() {
           </span>
         )}
       </Link>
-    </>
+    </main>
   )
 }

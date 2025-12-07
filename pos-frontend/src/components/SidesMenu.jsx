@@ -6,7 +6,7 @@ export default function SidesMenu(){
   const items = [{id:'s1', name:'Side 1'}, {id:'s2', name:'Side 2'}]
   const { items: cartItems } = useCart()
   return (
-    <>
+    <main>
       <div className="top-bar">
         <h1>Sides</h1>
         <div className="time">5:00 PM</div>
@@ -51,6 +51,6 @@ export default function SidesMenu(){
           }}>{cartItems.length}</span>
         )}
       </Link>
-    </>
+    </main>
   )
 }

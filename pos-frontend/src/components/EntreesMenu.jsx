@@ -6,7 +6,7 @@ export default function EntreesMenu(){
   const items = [{id:'e1', name:'Entree 1'}, {id:'e2', name:'Entree 2'}]
   const { items: cartItems } = useCart()
   return (
-    <>
+    <main>
       <div className="top-bar">
         <h1>Entrees</h1>
         <div className="time">5:00 PM</div>
@@ -51,6 +51,6 @@ export default function EntreesMenu(){
           }}>{cartItems.length}</span>
         )}
       </Link>
-    </>
+    </main>
   )
 }
