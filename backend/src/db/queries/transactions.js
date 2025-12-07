@@ -36,7 +36,6 @@ export async function getTransactions(offset = 0, limit = 50) {
     SELECT transaction_id, customer_name, transaction_time, employee_id, total_price
     FROM transactions
     ORDER BY transaction_time DESC
-    LIMIT ${limit} OFFSET ${offset};
   `;
 
   return rows.map(mapTransactionRow);
