@@ -34,6 +34,7 @@ import ZReport from './Project2/ZReport'
 import XReport from './Project2/XReport'
 import UsageReport from './components/MangerComponets/UsageReport'
 import { useEffect } from 'react'
+import Transactions from './components/MangerComponets/Transaction';
 
 export default function App() {
   
