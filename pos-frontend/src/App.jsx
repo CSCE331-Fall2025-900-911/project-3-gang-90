@@ -4,9 +4,9 @@ import { AccessibilityProvider } from './components/AccessibilityContext'
 import { Routes, Route, Link } from 'react-router-dom'
 import SystemSelect from "./components/SystemSelect";
 import Home from './components/Home'
-import DrinksMenu from './components/DrinksMenu'
-import EntreesMenu from './components/EntreesMenu'
-import SidesMenu from './components/SidesMenu'
+import MilkTeaMenu from './components/MilkTeaMenu'
+import FruitTeaMenu from './components/FruitTeaMenu'
+import SpecialtyMenu from './components/SpecialtyMenu'
 import Cart from './components/Cart'
 import EditItem from './components/EditItem'
 import Settings from './components/Settings'
@@ -30,9 +30,9 @@ export default function App() {
           <Routes>
             <Route path="/" element={<SystemSelect />} />
             <Route path="/kiosk" element={<Home />} />
-            <Route path="/drinks" element={<DrinksMenu />} />
-            <Route path="/entrees" element={<EntreesMenu />} />
-            <Route path="/sides" element={<SidesMenu />} />
+            <Route path="/milktea" element={<MilkTeaMenu />} />
+            <Route path="/fruittea" element={<FruitTeaMenu />} />
+            <Route path="/specialty" element={<SpecialtyMenu />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/edit/:id" element={<EditItem />} />
             <Route path="/settings" element={<Settings />} />
