@@ -19,16 +19,16 @@ export default function Cart() {
   }
 
   async function submitTransaction(customerName) {
-    const transaction = {
+    const transactionTime = new Date().toISOString();
+    const items = itemIds.map((id) => ({ id }));
+    const body = {
       customerName,
-      transactionTime: new Date().toISOString(),
+      transactionTime,
       employeeId: 1,
       totalPrice: Number(total.toFixed(2)),
+      items
     };
-    console.log("Transaction to submit:", transaction);
-
-    const item = itemIds.map((id) => ({ itemId: id }));
-    console.log("Items to submit:", item);
+    console.log("Transaction to submit:", body);
 
     const controller = new AbortController();
     const timeout = setTimeout(() => {
@@ -37,13 +37,13 @@ export default function Cart() {
     }, 10000);
 
     try {
-      const response = await fetch(server + "/menu/TransactionAndDetails", {
+      const response = await fetch(server + "/api/transactions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         signal: controller.signal,
-        body: JSON.stringify({ transaction, item }),
+        body: JSON.stringify(body),
       });
 
       clearTimeout(timeout);

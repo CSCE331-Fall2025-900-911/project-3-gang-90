@@ -23,18 +23,18 @@ export default function EditItem() {
   useEffect(() => {
     async function fetchItem() {
       try {
-        const res = await fetch(server + '/menu')
+        const res = await fetch(server + '/api/menu/')
         const data = await res.json()
 
         const found = Array.isArray(data)
-          ? data.find(i => String(i.item_id) === String(id))
-          : null
-        
+          ? data.find(i => String(i.item_id ?? i.id) === String(id))
+          : null;
+
         if (found) {
           setItem({
             ...found,
-            item_name: toTitle(found.item_name)
-          })
+            item_name: toTitle(found.item_name ?? found.name ?? "")
+          });
         }
       } catch (e) {
         console.error(e)
@@ -64,22 +64,23 @@ export default function EditItem() {
       <div className="panel-container">
         <div className="item-sidebar">
           <div>
-            <h1>{item.item_name}</h1>
-            <div>Price: ${Number(item.price).toFixed(2)}</div>
+            <h1 style={{ fontSize: '2.2rem', fontWeight: 700, marginBottom: 8 }}>{item.item_name}</h1>
+            <div style={{ fontSize: '1.3rem', fontWeight: 500, marginBottom: 12 }}>Price: ${Number(item.price).toFixed(2)}</div>
           </div>
         </div>
 
-        <div className="customize-panel">
+        <div className="customize-panel" style={{ fontSize: '1.1rem' }}>
           <DrinkCustomization />
           <br />
 
-          <div className="item-navigation-options">
-            <button className="navigation-option" onClick={() => navigate(-1)} alt="Cancel and go back">
-              <b>Cancel</b>
+          <div className="item-navigation-options" style={{ marginTop: 16 }}>
+            <button className="navigation-option" style={{ fontSize: '1.1rem', fontWeight: 500 }} onClick={() => navigate(-1)} alt="Cancel and go back">
+              Cancel
             </button>
 
             <button
               className="navigation-option"
+              style={{ fontSize: '1.1rem', fontWeight: 700, border: 'none' }}
               onClick={() => {
                 addItem({
                   id: item.item_id,
@@ -92,7 +93,7 @@ export default function EditItem() {
               }}
               alt={`Add ${item.item_name} to order`}
             >
-              <b>Add To Order</b>
+              Add To Order
             </button>
           </div>
         </div>
