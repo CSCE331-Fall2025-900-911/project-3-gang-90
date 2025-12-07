@@ -7,6 +7,7 @@ import menuRouter from './api/routes/menu.js'
 import seasonalMenuRouter from './api/routes/seasonalMenu.js'
 import ingredientsRouter from './api/routes/ingredients.js'
 import transactionsRouter from './api/routes/transactions.js'
+import authenticationRouter from './api/routes/authentication.js'
 
 import { errorHandler } from './middleware/errorHandler.js'
 import { requestLogger } from './middleware/logging.js'
@@ -26,6 +27,7 @@ app.use('/api/menu', menuRouter);
 app.use('/api/seasonal-menu', seasonalMenuRouter);
 app.use('/api/ingredients', ingredientsRouter);
 app.use('/api/transactions', transactionsRouter);
+app.use('/auth/google', authenticationRouter)
 
 app.use(errorHandler);
 

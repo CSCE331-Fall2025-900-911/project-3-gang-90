@@ -20,6 +20,7 @@ import XReport from './Project2/XReport'
 import UsageReport from './components/MangerComponets/UsageReport'
 import { useEffect } from 'react'
 import Transactions from './components/MangerComponets/Transaction';
+import LoginTest from './components/LoginTest'
 
 export default function App() {
   
@@ -44,6 +45,7 @@ export default function App() {
             <Route path="/usageReport" element={<UsageReport/>}/>
             <Route path="/employees" element={<EmployeeList />} />
             <Route path="/transactions" element={<Transactions/>}/>
+            <Route path="/loginTest" element={<LoginTest />} />
           </Routes>
         </main>
       </CartProvider>

@@ -10,6 +10,7 @@ export default function Home() {
       <div className="top-bar">
         <h1>Menu</h1>
         <div className="time">5:00 PM</div>
+        <div></div>
       </div>
       <h1 className="main-menu-header">Select a Menu Category:</h1>
       <div className="menu-options">
