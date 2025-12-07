@@ -159,7 +159,7 @@ export default function Cashier() {
       controller.abort();
     }, 10000);
 
-    fetch(server + "/api/menu/TransactionAndDetails", {
+    fetch(server + "/api/transactions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
