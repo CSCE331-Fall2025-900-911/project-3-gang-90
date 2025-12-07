@@ -10,6 +10,7 @@ import SpecialtyMenu from './components/SpecialtyMenu'
 import Cart from './components/Cart'
 import EditItem from './components/EditItem'
 import Settings from './components/Settings'
+import MenuBoard from './components/MenuBoard'
 
 import CashierMenu from './Project2/CashierMenu'
 import EmployeeList from './Project2/EmployeeList'
@@ -45,6 +46,7 @@ export default function App() {
             <Route path="/employees" element={<EmployeeList />} />
             <Route path="/transactions" element={<Transactions/>}/>
             <Route path="/loginTest" element={<LoginTest />} />
+            <Route path="/menuboard" element={<MenuBoard />} />
           </Routes>
         </main>
       </CartProvider>

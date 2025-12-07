@@ -30,6 +30,14 @@ export default function SystemSelect() {
         >
           Cashier View
         </Button>
+
+        <Button
+          variant="contained"
+          size="large"
+          onClick={() => navigate("/menuboard")}
+        >
+          Menu Board View
+        </Button>
       </Stack>
     </Box>
   );
