@@ -18,7 +18,7 @@ import {
   Stack,
 } from "@mui/material";
 
-const API_BASE = "http://localhost:3000";
+const API_BASE = "https://project-3-gang-90-backend.onrender.com/api";
 
 export default function ManagerProducts() {
   return (
@@ -30,6 +30,7 @@ function ManagerProductsContent() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [category, setCategory] = useState("");
 
   const [products, setProducts] = useState([]);
   const [season, setSeason] = useState(false);
@@ -55,6 +56,7 @@ function ManagerProductsContent() {
           name: item.name,
           price: item.price,
           quantity: item.popularity ?? 0,
+          category: item.category,
         }))
       );
     } catch (e) {
@@ -96,14 +98,16 @@ function ManagerProductsContent() {
     setName("");
     setPrice("");
     setQuantity("");
+    setCategory("");
   };
 
   const handleSaveNew = async () => {
     const n = safeTrim(name);
     const p = safeTrim(price);
     const q = safeTrim(quantity);
+    const c = safeTrim(category);
 
-    if (!n || !p || !q) {
+    if (!n || !p || !q || !c) {
       alert("Missing fields");
       return;
     }
@@ -118,7 +122,7 @@ function ManagerProductsContent() {
     }
 
     try {
-      const body = { name: n, price: priceNum, quantity: qtyNum };
+      const body = { name: n, price: priceNum, quantity: qtyNum, category: c };
       const url = season
         ? `${API_BASE}/menu/seasonal`
         : `${API_BASE}/menu`;
@@ -139,6 +143,7 @@ function ManagerProductsContent() {
           name: n,
           price: priceNum,
           quantity: qtyNum,
+          category: c,
         },
       ]);
 
@@ -188,6 +193,7 @@ function ManagerProductsContent() {
               name: "",
               price: 0,
               quantity: 0,
+              category: "",
             });
             setEditorOpen(true);
           }}
@@ -212,6 +218,12 @@ function ManagerProductsContent() {
           size="small"
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
+        />
+        <TextField
+          label="Category"
+          size="small"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
         />
         <Button variant="contained" onClick={handleSaveNew}>
           Add
@@ -241,6 +253,7 @@ function ManagerProductsContent() {
             <TableCell>Name</TableCell>
             <TableCell>Price</TableCell>
             <TableCell>Quantity</TableCell>
+            <TableCell>Category</TableCell>
             <TableCell width={120}>Actions</TableCell>
           </TableRow>
         </TableHead>
@@ -257,6 +270,7 @@ function ManagerProductsContent() {
                 <TableCell>{p.name}</TableCell>
                 <TableCell>${p.price}</TableCell>
                 <TableCell>{p.quantity}</TableCell>
+                <TableCell>{p.category}</TableCell>
                 <TableCell>
                   <Button
                     size="small"
@@ -289,6 +303,7 @@ function ItemEditorDialog({ open, product, onClose, onSave })
   const [popularity, setPopularity] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [category, setCategory] = useState("");
 
   const [itemIngredients, setItemIngredients] = useState([]);
   const [allIngredients, setAllIngredients] = useState([]);
@@ -300,6 +315,7 @@ function ItemEditorDialog({ open, product, onClose, onSave })
     setPopularity(String(product.quantity ?? 0));
     setPrice(String(product.price ?? ""));
     setQuantity(String(product.quantity ?? 0));
+    setCategory(product.category ?? "");
 
     loadItemIngredients(product);
     loadAllIngredients();
@@ -397,8 +413,9 @@ function ItemEditorDialog({ open, product, onClose, onSave })
     const popStr = popularity.trim();
     const priceStr = price.trim();
     const qtyStr = quantity.trim();
+    const ctgStr = category.trim();
 
-    if (!n || !popStr || !priceStr || !qtyStr) {
+    if (!n || !popStr || !priceStr || !qtyStr || !ctgStr) {
       alert("Missing fields");
       return;
     }
@@ -419,6 +436,7 @@ function ItemEditorDialog({ open, product, onClose, onSave })
       price: priceNum,
       quantity: qtyNum,
       popularity: popNum,
+      category: ctgStr,
     };
 
     if (onSave) onSave(updated);
@@ -454,6 +472,12 @@ function ItemEditorDialog({ open, product, onClose, onSave })
             size="small"
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
+          />
+          <TextField
+            label="Category"
+            size="small"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
           />
         </Stack>
 

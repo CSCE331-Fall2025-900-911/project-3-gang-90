@@ -22,7 +22,7 @@ export default function Home() {
     if (!isLoggedIn) {
       setAskLogin(true)
     } 
-    navigate("/drinks")
+    navigate("/milktea")
   }
 
   return (
@@ -30,7 +30,6 @@ export default function Home() {
       <div className="regular-contzainer">
       <div className="top-bar">
         <h1>Menu</h1>
-        <Link to="/cashier"> cashier</Link>
         <div className="time">5:00 PM</div>
       </div>
       {askLogin ? 
@@ -49,9 +48,9 @@ export default function Home() {
         <h1 className="main-menu-header">Select a Menu Category:</h1>
         <div className="menu-options">
           {/* <Link className="menu-option" to="/drinks"><b>Drinks</b></Link> */}
-          <button className="menu-option font-bold" onClick={handleLoginLogic}>Drinks</button>
-          <Link className="menu-option" to="/entrees"><b>Entrees</b></Link>
-          <Link className="menu-option" to="/sides"><b>Sides</b></Link>
+          <button className="menu-option font-bold" onClick={handleLoginLogic}>Milk Tea</button>
+          <Link className="menu-option" to="/fruittea"><b>Fruit Tea</b></Link>
+          <Link className="menu-option" to="/specialty"><b>Specialty</b></Link>
         </div>
       </div>
       }
