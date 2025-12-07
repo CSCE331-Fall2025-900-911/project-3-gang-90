@@ -8,7 +8,7 @@ import { getIngredientsForItem } from "./helpers.js";
  * @returns {Promise<Array<Object>>} A promise that resolves to an array of objects containing the item_id, name, price, is_active, and item_popularity fields of all menu items, as well as an array of ingredient IDs associated with each item.
  */
 export async function getMenu() {
-    const rows = await sql`SELECT item_id, item_name, price, is_active, item_popularity FROM menu;`;
+    const rows = await sql`SELECT item_id, item_name, price, is_active, item_popularity, category FROM menu;`;
     return Promise.all(rows.map(async (row) => ({
         id: row.item_id,
         name: row.item_name,
@@ -16,6 +16,7 @@ export async function getMenu() {
         price: row.price,
         stat: row.is_active,
         ingredients: await getIngredientsForItem(row.item_id),
+        category: row.category
     })));
 }
 
@@ -25,7 +26,7 @@ export async function getMenu() {
  * @returns {Promise<Array<Object>>} A promise that resolves to an array of objects containing the item_id, name, price, is_active, and item_popularity fields of all active menu items, as well as an array of ingredient IDs associated with each item.
  */
 export async function getActiveMenu() {
-    const rows = await sql`SELECT item_id, item_name, price, is_active, item_popularity FROM menu WHERE is_active = TRUE;`;
+    const rows = await sql`SELECT item_id, item_name, price, is_active, item_popularity, category FROM menu WHERE is_active = TRUE;`;
     return Promise.all(rows.map(async (row) => ({
         id: row.item_id,
         name: row.item_name,
@@ -33,6 +34,7 @@ export async function getActiveMenu() {
         price: row.price,
         stat: row.is_active,
         ingredients: await getIngredientsForItem(row.item_id),
+        category: row.category
     })));
 }
 

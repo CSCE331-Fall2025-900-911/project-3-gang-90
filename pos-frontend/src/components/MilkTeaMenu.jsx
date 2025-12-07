@@ -20,7 +20,7 @@ export default function DrinksMenu() {
 
         const items = Array.isArray(data)
           ? data
-              .filter(i => i.stat)
+              .filter(i => i.stat && i.category === "Milk Tea")
               .map(i => ({
                 ...i,
                 item_name: toTitle(i.name),
@@ -48,9 +48,9 @@ export default function DrinksMenu() {
       <div className="panel-container">
         <div className="sidebar">
           <div>
-            <Link className="menu-item selected" to="/drinks">Drinks</Link><br /><br />
-            <Link className="menu-item" to="/entrees">Entrees</Link><br /><br />
-            <Link className="menu-item" to="/sides">Sides</Link>
+            <Link className="menu-item selected" to="/milktea">Milk Tea</Link><br /><br />
+            <Link className="menu-item" to="/fruittea">Fruit Tea</Link><br /><br />
+            <Link className="menu-item" to="/specialty">Specialty</Link>
           </div>
         </div>
 

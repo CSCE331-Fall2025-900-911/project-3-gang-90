@@ -14,9 +14,9 @@ export default function Home() {
       </div>
       <h1 className="main-menu-header">Select a Menu Category:</h1>
       <div className="menu-options">
-        <Link className="menu-option" to="/drinks"><b>Drinks</b></Link>
-        <Link className="menu-option" to="/entrees"><b>Entrees</b></Link>
-        <Link className="menu-option" to="/sides"><b>Sides</b></Link>
+        <Link className="menu-option" to="/milktea"><b>Milk Tea</b></Link>
+        <Link className="menu-option" to="/fruittea"><b>Fruit Tea</b></Link>
+        <Link className="menu-option" to="/specialty"><b>Specialty</b></Link>
       </div>
       <Link className="floating-btn settings-btn" to="/settings" title="Settings" alt="Settings">⚙️</Link>
       <Link className="floating-btn cart-btn" to="/cart" title="Cart" style={{position:'fixed', right:'32px', bottom:'32px'}} alt="Cart">
