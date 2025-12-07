@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./cashier.css";
+import { Link } from "react-router-dom";
 let server = import.meta.env.VITE_SERVER;
 
 

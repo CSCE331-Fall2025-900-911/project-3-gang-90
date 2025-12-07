@@ -108,7 +108,7 @@ export default function SalesReport(){
     },[refresh]);
 
     const columns = [
-  { field: 'itemName', headerName: 'Name', width: 100 },
+  { field: 'itemName', headerName: 'Name', width: 500 },
   { field: 'time', headerName: 'Time', width: 230 },
 ];
 
@@ -280,7 +280,7 @@ const paginationModel = { page: 0, pageSize: 5 };
                     <Button onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
                     
                 </div>
-                <div className="flex-row">
+                <div className="flex">
                     <div className="p-2">
                         <Button variant="contained" onClick={applyToday}>Today</Button>
                     </div>

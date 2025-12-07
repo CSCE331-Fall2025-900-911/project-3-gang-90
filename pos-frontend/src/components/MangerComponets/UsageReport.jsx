@@ -174,7 +174,7 @@ const paginationModel = { page: 0, pageSize: 5 };
                     </div>
                     
                 </div>
-                <div className="flex-row">
+                <div className="flex">
                     <div className="p-2">
                         <Button onClick={applyToday}>Today</Button>
                     </div>
