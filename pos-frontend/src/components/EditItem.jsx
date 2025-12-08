@@ -54,7 +54,6 @@ export default function EditItem() {
     )
   }
 
-  // Helper to get price adjustment from mods
   function getAdjustedPrice(basePrice, modsArr) {
     let price = Number(basePrice);
     const sizeMod = modsArr.find(m => m.startsWith('Size:'));
@@ -65,7 +64,6 @@ export default function EditItem() {
     return price;
   }
 
-  // Helper to get mods string
   function getModsString(modsArr) {
     return modsArr.map(m => m.split(':')[1] || m).join(', ');
   }

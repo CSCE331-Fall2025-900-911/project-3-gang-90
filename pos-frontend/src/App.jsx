@@ -4,9 +4,12 @@ import { AccessibilityProvider } from './components/AccessibilityContext'
 import { Routes, Route, Link } from 'react-router-dom'
 import SystemSelect from "./components/SystemSelect";
 import Home from './components/Home'
-import MilkTeaMenu from './components/MilkTeaMenu'
-import FruitTeaMenu from './components/FruitTeaMenu'
-import SpecialtyMenu from './components/SpecialtyMenu'
+import FreshBrewMenu from './components/FreshBrewMenu'
+import MilkySeriesMenu from './components/MilkySeriesMenu'
+import FruitBeverageMenu from './components/FruityBeverageMenu'
+import NonCaffeinatedMenu from './components/NonCaffeinatedMenu'
+import IceBlendedMenu from './components/IceBlendedMenu'
+import MatchaSeriesMenu from './components/MatchaSeriesMenu'
 import Cart from './components/Cart'
 import EditItem from './components/EditItem'
 import Settings from './components/Settings'
@@ -32,9 +35,12 @@ export default function App() {
           <Routes>
             <Route path="/" element={<SystemSelect />} />
             <Route path="/kiosk" element={<Home />} />
-            <Route path="/milktea" element={<MilkTeaMenu />} />
-            <Route path="/fruittea" element={<FruitTeaMenu />} />
-            <Route path="/specialty" element={<SpecialtyMenu />} />
+            <Route path="/freshbrew" element={<FreshBrewMenu />} />
+            <Route path="/milkyseries" element={<MilkySeriesMenu />} />
+            <Route path="/fruity" element={<FruitBeverageMenu />} />
+            <Route path="/noncaffeinated" element={<NonCaffeinatedMenu />} />
+            <Route path="/iceblended" element={<IceBlendedMenu />} />
+            <Route path="/matcha" element={<MatchaSeriesMenu />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/edit/:id" element={<EditItem />} />
             <Route path="/settings" element={<Settings />} />

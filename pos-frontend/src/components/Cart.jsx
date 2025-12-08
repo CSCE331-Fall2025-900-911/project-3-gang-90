@@ -52,7 +52,7 @@ export default function Cart() {
         console.error("Error:", response.status);
         return;
       }
-    } 
+    }
     catch (err) {
       clearTimeout(timeout);
       console.error("Error:", err);
@@ -133,7 +133,7 @@ export default function Cart() {
           <Link className="bottom-button" style={{flex:1, textAlign:'center', lineHeight:'38px'}} to="/kiosk">Back to Menu</Link>
         </div>
       </div>
-
+        
       {showModal && (
         <>
           <div style={{position:'fixed', top:0, left:0, width:'100vw', height:'100vh', background:'rgba(0,0,0,0.5)', zIndex:200}}></div>

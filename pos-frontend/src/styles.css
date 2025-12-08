@@ -61,16 +61,16 @@
 .main-menu-header {
   text-align: center;
   padding: 20px;
-  font-size: 3rem;
+  font-size: 2.5rem;
+  font-weight: bold;
   color: #3a3a3a;
 }
 
 .menu-options {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  padding: 15px;
-  margin: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 20px;
+  justify-items: center;
 }
 
 .menu-option {
@@ -79,12 +79,15 @@
   color: #fff;
   border: none;
   cursor: pointer;
-  font-size: 2rem;
-  width: 250px;
-  height: 350px;
+  font-size: 1.8rem;
+  width: 200px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  line-height: 340px;
   text-decoration: none;
+  border-radius: 8px;
 }
 
 .bottom-button {
