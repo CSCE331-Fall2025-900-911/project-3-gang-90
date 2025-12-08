@@ -11,7 +11,7 @@ export default function EditItem() {
   const { addItem, items: cartItems } = useCart()
 
   const [quantity, setQuantity] = useState(1)
-  const [mods, setMods] = useState('')
+  const [mods, setMods] = useState([])
 
   const [item, setItem] = useState(null)
 
@@ -54,6 +54,22 @@ export default function EditItem() {
     )
   }
 
+  // Helper to get price adjustment from mods
+  function getAdjustedPrice(basePrice, modsArr) {
+    let price = Number(basePrice);
+    const sizeMod = modsArr.find(m => m.startsWith('Size:'));
+    if (sizeMod) {
+      if (sizeMod.includes('Medium')) price += 0.5;
+      if (sizeMod.includes('Large')) price += 1.0;
+    }
+    return price;
+  }
+
+  // Helper to get mods string
+  function getModsString(modsArr) {
+    return modsArr.map(m => m.split(':')[1] || m).join(', ');
+  }
+
   return (
     <div className="main-page">
       <div className="top-bar">
@@ -65,12 +81,17 @@ export default function EditItem() {
         <div className="item-sidebar">
           <div>
             <h1 style={{ fontSize: '2.2rem', fontWeight: 700, marginBottom: 8 }}>{item.item_name}</h1>
-            <div style={{ fontSize: '1.3rem', fontWeight: 500, marginBottom: 12 }}>Price: ${Number(item.price).toFixed(2)}</div>
+            <div style={{ fontSize: '1.3rem', fontWeight: 500, marginBottom: 12 }}>
+              Price: ${getAdjustedPrice(item.price, mods).toFixed(2)}
+            </div>
+            <div style={{ fontSize: '1.1rem', color: '#555', marginBottom: 8 }}>
+              Modifications: {getModsString(mods)}
+            </div>
           </div>
         </div>
 
         <div className="customize-panel" style={{ fontSize: '1.1rem' }}>
-          <DrinkCustomization />
+          <DrinkCustomization mods={mods} setMods={setMods} />
           <br />
 
           <div className="item-navigation-options" style={{ marginTop: 16 }}>
@@ -85,9 +106,9 @@ export default function EditItem() {
                 addItem({
                   id: item.item_id,
                   name: item.item_name,
-                  mods,
+                  mods: getModsString(mods),
                   quantity,
-                  price: Number(item.price)
+                  price: getAdjustedPrice(item.price, mods)
                 })
                 navigate('/cart')
               }}

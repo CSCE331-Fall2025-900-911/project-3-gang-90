@@ -89,7 +89,7 @@ export default function Cart() {
                 <div className="cart-item" key={idx}>
                   <div className="cart-item-details">
                     <h2 className="cart-item-name">{item.name}</h2>
-                    <p className="cart-item-mods">{item.mods}</p>
+                    <p className="cart-item-mods"><b>Modifications:</b> {item.mods}</p>
                     <p className="cart-item-qty">Quantity: {item.quantity}</p>
                     <p className="cart-item-price">
                       Price: {

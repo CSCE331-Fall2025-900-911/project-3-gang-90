@@ -12,8 +12,8 @@
 }
 
 .customize-option.selected, .modification.selected {
-  background-color: #131313 !important;
-  color: #ffffff !important;
+    background-color: #222 !important;
+    color: #fff !important;
 }
 
 .top-title {
@@ -166,17 +166,31 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .popup button {
     padding: 8px 12px;
     border: none;
     cursor: pointer;
+    background: #e0e0e0;
+    transition: background 0.2s;
+}
+
+.modification.selected {
+    background-color: #222 !important;
+    color: #fff !important;
+}
+
+.modification {
+    background-color: #d4d4d4 !important;
+    color: #000000 !important;
+    border-radius: 5px;
 }
 
 .confirm-btn {
-    background-color: #444;
-    color: white;
+    background-color: #decccc;
+    color: rgb(0, 0, 0);
 }
 
 .cancel-btn {
