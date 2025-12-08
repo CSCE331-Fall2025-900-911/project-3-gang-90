@@ -9,6 +9,9 @@ export default function Home() {
   const { items: cartItems } = useCart()
   const [askLogin, setAskLogin] = useState(false)
   const navigate = useNavigate()
+  const [milk, setMilk] = useState(false)
+  const [fruit, setFruit] = useState(false)
+  const [special, setSpecial] = useState(false)
   const { user, authReady, logoutReason, clearLogoutReason } = useAuth()
 
 
