@@ -1,44 +1,51 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from './CartContext'
-import LoginTest from './LoginButton'
-import { useState, useEffect } from 'react'
 import LoginButton from './LoginButton'
+import TopBar from './TopBar'
+import { useAuth } from './AuthContext'
 
 export default function Home() {
   const { items: cartItems } = useCart()
   const [askLogin, setAskLogin] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const navigate = useNavigate()
+  const { user, authReady, logoutReason, clearLogoutReason } = useAuth()
 
-  useEffect(()=> {
-    const user = localStorage.getItem("auth.id_token")
-    if (user) {
-      setIsLoggedIn(true)
-    }
-  })
+
 
   function handleLoginLogic() {
-    if (!isLoggedIn) {
+    if (!user) {
       setAskLogin(true)
+      return
     } 
     navigate("/milktea")
   }
 
+  useEffect(() => {
+    if (authReady && user) {
+      navigate('/milktea')
+    }
+  }, [authReady, user, navigate])
+
   return (
     <main>
       <div className="regular-contzainer">
-      <div className="top-bar">
-        <h1>Menu</h1>
-        <div className="time">5:00 PM</div>
-      </div>
+      <TopBar/>
+      {logoutReason && (
+        <div className='w-full flex justify-center items-center'>
+          <div className='bg-yellow-100 text-yellow-800 px-4 py-2 rounded-md mb-4 shadow-sm border border-yellow-300 flex items-center gap-3'>
+            <span>⚠️ {logoutReason}</span>
+            <button className='text-yellow-900 underline cursor-pointer' onClick={clearLogoutReason}>Dismiss</button>
+          </div>
+        </div>
+      )}
       {askLogin ? 
       <div className='flex flex-col justify-center items-center'>
         <h1 className='main-menu-header'>Do you want to Sign in?</h1>
         <div className='flex flex-col justify-center items-center gap-5'>
           <LoginButton/>
           <div className='w-full flex flex-row justify-center items-center gap-5'>
-            <Link className='bg-[#929292] text-[#fff] px-10 py-2 rounded-md cursor-pointer' to="/drinks">Skip Login</Link>
+            <Link className='bg-[#929292] text-[#fff] px-10 py-2 rounded-md cursor-pointer' to="/milktea">Skip Login</Link>
             <button className='bg-[#929292] text-[#fff] px-10 py-2 rounded-md cursor-pointer' onClick={()=>setAskLogin(false)} >Go Back</button>
           </div>
         </div>
