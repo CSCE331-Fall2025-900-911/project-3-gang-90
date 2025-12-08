@@ -290,9 +290,6 @@ function ItemEditorDialog({ open, product, onClose, onSave })
   const [itemIngredients, setItemIngredients] = useState([]);
   const [allIngredients, setAllIngredients] = useState([]);
 
-  const [itemIngredients, setItemIngredients] = useState([]);
-  const [allIngredients, setAllIngredients] = useState([]);
-
   useEffect(() => {
     if (!product) return;
 

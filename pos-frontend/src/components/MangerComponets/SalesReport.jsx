@@ -105,14 +105,7 @@ export default function SalesReport(){
 
         fetchRows();
 
-    },[refresh]);
-
-    const columns = [
-  { field: 'itemName', headerName: 'Name', width: 500 },
-  { field: 'time', headerName: 'Time', width: 230 },
-];
-
-const paginationModel = { page: 0, pageSize: 5 };
+        },[refresh]);
 // const rows = [
 //   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
 //   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
@@ -215,14 +208,14 @@ const paginationModel = { page: 0, pageSize: 5 };
 
         fetchRows();
 
-    },[refresh]);
+        },[refresh]);
 
-    const columns = [
+        const columns = [
   { field: 'itemName', headerName: 'Name', width: 500 },
   { field: 'time', headerName: 'Time', width: 230 },
 ];
 
-const paginationModel = { page: 0, pageSize: 5 };
+        const paginationModel = { page: 0, pageSize: 5 };
 // const rows = [
 //   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
 //   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
