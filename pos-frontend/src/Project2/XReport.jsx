@@ -30,10 +30,11 @@ child={
             </div>
           </div>
           <p className='font-bold'>Per-Employee Summary:</p>
-          {/* table region fills remaining vertical space */}
-          <div className='flex-1 min-h-0 overflow-auto rounded-md border mb-5 border-gray-300 bg-white'>
+
+          <div className='flex-none h-[480px] overflow-auto rounded-md border mb-5 border-gray-300 bg-white p-4 shadow-sm'>
             <ReportTable refreshSignal={refreshKey} />
-          </div> 
+          </div>
+          <div className='pb-4' />
           </div>
         } />
 

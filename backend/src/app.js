@@ -21,7 +21,6 @@ app.use(cors());
 app.use(helmet());
 app.use(requestLogger);
 
-// Routes from api/routes
 app.use('/api/employees', employeesRouter);
 app.use('/api/menu', menuRouter);
 app.use('/api/seasonal-menu', seasonalMenuRouter);
