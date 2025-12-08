@@ -89,7 +89,7 @@ export default function EditItem() {
         </div>
 
         <div className="customize-panel" style={{ fontSize: '1.1rem' }}>
-          <DrinkCustomization mods={mods} setMods={setMods} />
+          <DrinkCustomization mods={mods} setMods={setMods} itemName={item.item_name}/>
           <br />
 
           <div className="item-navigation-options" style={{ marginTop: 16 }}>

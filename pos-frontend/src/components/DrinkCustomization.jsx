@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
+import AllergenTable from './AllergenTable';
 
-export default function DrinkCustomization({ mods, setMods }) {
+export default function DrinkCustomization({ mods, setMods, itemName }) {
   // mods: array of "Category:Value" strings
+
   function handleSelect(category, value, multi = false) {
     const key = `${category}:${value}`;
     if (multi) {
@@ -20,11 +22,41 @@ export default function DrinkCustomization({ mods, setMods }) {
   const sweetOptions = ['0% Sweet', '50% Sweet', '100% Sweet'];
   const tempOptions = ['Normal', 'Hot'];
   const toppingOptions = ["Boba", "Honey Boba", "Lychee Jelly", "Coconut Jelly", "Pudding", "Ice Cream", "Oreo", "Mini Pearls", "Aiyu Jelly", "Crema", "Sub Crema", "Crystal Boba", "Mango Boba", "Strawberry Boba", "Coffee Jelly", "Honey Jelly", "Peach Boba", "Fresh Milk"];
+  const [drinkAllergen, setDrinkAllergen] = useState(["Wheat"]);
+  const [toppingAllergen, setTopiingAllergen] = useState(["Egg"]);
+
+
+  //need to fetch the basic 
+  useEffect(()=>{
+    const getDrinkAllergen = async ()=>{
+      try{
+      const resp  = await fetch();
+      if(!resp.ok){
+        throw new Error("failed to load");
+      }
+      const allergens = resp.json();
+
+      setDrinkAllergen(allergens);
+
+      }catch(e){
+        console.error("Failed to load: ", e);
+      }
+
+
+
+    }
+
+  },[]);
+
 
   return (
     <div className="customize-panel-inner">
       <h2>Customize Your Drink</h2>
       <div className="customization">
+        <div>
+          <AllergenTable allergens={drinkAllergen} type="Allergen in drink"/>
+          <AllergenTable allergens={toppingAllergen} typ="Allergen in topings"/>
+        </div>
         <h3>Size</h3>
         <div className="customize-buttons">
           {sizeOptions.map(option => (
