@@ -218,10 +218,12 @@ export default function Cashier() {
                 key={idx}
                 className="drink-button"
                 onClick={() =>
-                  openDrinkMods(name, drinkPrices[idx])
+                  openDrinkMods(toTitleCase(name), drinkPrices[idx])
                 }
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontSize: '1rem', padding: '12px' }}
               >
-                {name}
+                <span style={{ fontWeight: 600, fontSize: '1.1em', marginBottom: 4 }}>{toTitleCase(name)}</span>
+                <span style={{ color: '#2a7b2a', fontWeight: 500, fontSize: '0.95em' }}>${Number(drinkPrices[idx]).toFixed(2)}</span>
               </button>
             ))}
           </div>
