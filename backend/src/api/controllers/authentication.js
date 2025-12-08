@@ -47,3 +47,22 @@ export async function refreshToken(req, res) {
   }
 }
 
+export async function authMe(req, res) {
+  try {
+    const authHeader = req.headers.authorization || ''
+    const m = authHeader.match(/^Bearer\s+(.*)$/i)
+    const idToken = m ? m[1] : null
+    if (!idToken) return res.status(401).json({ error: 'Unauthorized: missing token' })
+
+    const ticket = await oAuth2Client.verifyIdToken({
+      idToken,
+      audience: process.env.GOOGLE_CLIENT_ID
+    })
+    const payload = ticket.getPayload()
+    return res.json({ ok: true, user: payload })
+  } catch (err) {
+    console.error('authMe error:', err)
+    return res.status(401).json({ error: 'Unauthorized' })
+  }
+}
+

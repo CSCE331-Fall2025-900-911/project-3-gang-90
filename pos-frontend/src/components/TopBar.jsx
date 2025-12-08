@@ -1,47 +1,59 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useAuth } from './AuthContext'
+import { useNavigate } from 'react-router-dom'
 
-
-const decodeJwt = (jwt) => {
-  try {
-    const base64Url = jwt.split('.')[1]
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''))
-    return JSON.parse(jsonPayload)
-  } catch {
-    return null
-  }
-}
-
-const getUser = () => {
-  const token = localStorage.getItem("auth.id_token")
-  if (!token) return null
-  const payload = decodeJwt(token)
-  const now = Math.floor(Date.now()/1000)
-  if (!payload || (payload.exp && payload.exp < now)) return null;
-  return {name: payload.name, email: payload.email, picture: payload.picture, raw: payload}
-}
+const VITE_SERVER = import.meta.env.VITE_SERVER || 'http://localhost:3000'
 
 const TopBar = () => {
-  const [user] = useState(getUser())
+  const { user: authUser, authReady, signOut } = useAuth()
+  const [user, setUser] = useState(null)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!authReady) return
+    setUser(authUser || null)
+  }, [authReady, authUser])
 
   const avatar = useMemo(() => {
-    const src = user?.picture;
+    const src = user?.picture
     return src
   }, [user])
 
   return (
     <div className="top-bar">
         <h1>Drinks</h1>
-        <div className='flex flex-row gap-2 justify-center items-center'>
+        <div className='flex flex-row gap-2 justify-center items-center relative'>
           <div className="time">5:00 PM</div>
-          <img
-          className='rounded-lg'
-          src={avatar}
-          alt={user?.name || "Profile Picture"}
-          width={30}
-          height={30}
-          onError={(e) => {e.currentTarget.src = "/"}}
-          />
+          {user ? (
+            <>
+              <img
+                className='rounded-lg cursor-pointer'
+                src={avatar}
+                alt={user?.name || "Profile Picture"}
+                width={30}
+                height={30}
+                onError={(e) => {e.currentTarget.src = '/avatar-fallback.png'}}
+                onClick={() => setMenuOpen(v => !v)}
+              />
+              {menuOpen && (
+                <div className='absolute right-0 top-10 bg-white text-[#222] rounded-md shadow-lg border border-[#ddd] min-w-[180px] z-50'>
+                  <div className='px-3 py-2 border-b border-[#eee]'>
+                    <div className='font-semibold'>{user.name}</div>
+                    <div className='text-sm text-[#666]'>{user.email}</div>
+                  </div>
+                  <button
+                    className='w-full text-left px-3 py-2 hover:bg-[#f7f7f7] cursor-pointer'
+                    onClick={() => { setMenuOpen(false); signOut('Signed out by user'); navigate("/kiosk") }}
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </>
+          ) : (
+            <></>
+          )}
         </div>
     </div>
   )
