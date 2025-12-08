@@ -183,24 +183,6 @@ function ManagerProductsContent() {
   return (
     <div>
       <Stack direction="row" spacing={2} mb={3} alignItems="flex-end">
-        {/* temp */}
-          <Button
-          variant="outlined"
-          sx={{ mb: 2 }}
-          onClick={() => {
-            setEditingProduct({
-              id: 0,
-              name: "",
-              price: 0,
-              quantity: 0,
-              category: "",
-            });
-            setEditorOpen(true);
-          }}
-          >
-          Open Editor (test)
-          </Button>
-          {/* temp */}
         <TextField
           label="Name"
           size="small"
