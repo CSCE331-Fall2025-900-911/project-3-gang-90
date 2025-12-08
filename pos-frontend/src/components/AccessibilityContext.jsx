@@ -22,7 +22,15 @@ export function AccessibilityProvider({ children }) {
     function detectSelectables() {
       const elements = Array.from(document.querySelectorAll(
         'button, [role="button"], input:not([type="hidden"]), select, a[href], [tabindex]:not([tabindex="-1"])'
-      ))
+      )).filter(el => {
+        const id = el.id || ''
+        const cls = el.className || ''
+        const role = el.getAttribute('role') || ''
+        if (/goog\S*|google\S*|gtx|translate/i.test(id + ' ' + cls + ' ' + role)) return false
+        const text = (el.innerText || el.textContent || '').toLowerCase()
+        if (text.includes('good translation') || text.includes('poor translation') || text === 'option' || text == 'i') return false
+        return true
+      })
       selectableRefs.current = elements
       function getDeepestText(node) {
         if (!node) return ''
@@ -37,10 +45,10 @@ export function AccessibilityProvider({ children }) {
         if (el.getAttribute('aria-label')) return el.getAttribute('aria-label')
         if (el.getAttribute('alt')) return el.getAttribute('alt')
         const deepText = getDeepestText(el)
-        if (deepText.length > 0) return deepText
+        if (deepText.length > 0 && !/good translation|poor translation|option/i.test(deepText)) return deepText
         if (el.value && el.value.trim().length > 0) return el.value.trim()
         if (el.getAttribute('title')) return el.getAttribute('title')
-        return 'Option'
+        return ''
       })
     }
     detectSelectables()
