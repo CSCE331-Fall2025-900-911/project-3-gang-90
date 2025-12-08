@@ -126,18 +126,28 @@ export default function ReportTable({ refreshSignal }) {
   React.useEffect(() => {
     async function fetchTransactions() {
       try {
-        // change once deployed
-        const res = await fetch('http://localhost:3000/transactions');
+        const now = new Date();
+        const todayStr = now.toDateString();
+
+        const res = await fetch(`http://localhost:3000/api/transactions?page=0&pageSize=200`);
         const json = await res.json();
-        if (json.success) {
-          const mapped = json.data.map(t => ({
-            id: t.transaction_id,
-            customer: t.customer_name,
-            time: t.transaction_time,
-            employee: t.employee_id,
-            total: Number(t.total_price)
+        const data = Array.isArray(json) ? json : json?.data;
+        if (Array.isArray(data)) {
+          const mappedAll = data.map(t => ({
+            id: t.id ?? t.transaction_id,
+            customer: t.customerName ?? t.customer_name,
+            time: t.transactionTime ?? t.transaction_time,
+            employee: t.employeeId ?? t.employee_id,
+            total: Number(t.totalPrice ?? t.total_price)
           }));
-          setRows(mapped);
+          const filtered = mappedAll.filter(row => {
+            const d = new Date(row.time);
+            return d.toDateString() === todayStr;
+          });
+          setRows(filtered);
+        } else {
+          console.warn('Unexpected transactions response shape', json);
+          setRows([]);
         }
       } catch (e) {
         console.error('Failed to fetch transactions', e);

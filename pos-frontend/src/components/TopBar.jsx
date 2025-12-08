@@ -17,7 +17,7 @@ const TopBar = () => {
 
   const avatar = useMemo(() => {
     const src = user?.picture
-    return src
+    return src || null
   }, [user])
 
   return (
@@ -29,11 +29,16 @@ const TopBar = () => {
             <>
               <img
                 className='rounded-lg cursor-pointer'
-                src={avatar}
+                src={avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || 'User')}&background=0D8ABC&color=fff&size=64`}
                 alt={user?.name || "Profile Picture"}
                 width={30}
                 height={30}
-                onError={(e) => {e.currentTarget.src = '/avatar-fallback.png'}}
+                loading='lazy'
+                referrerPolicy='no-referrer'
+                crossOrigin='anonymous'
+                onError={(e) => {
+                  e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || 'User')}&background=0D8ABC&color=fff&size=64`
+                }}
                 onClick={() => setMenuOpen(v => !v)}
               />
               {menuOpen && (
