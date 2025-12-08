@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useAuth } from './AuthContext'
 import { useNavigate } from 'react-router-dom'
+import WeatherBar from './WeatherBar'
 
 const VITE_SERVER = import.meta.env.VITE_SERVER || 'http://localhost:3000'
 
@@ -24,7 +25,9 @@ const TopBar = () => {
     <div className="top-bar">
         <h1>Drinks</h1>
         <div className='flex flex-row gap-2 justify-center items-center relative'>
-          <div className="time">5:00 PM</div>
+          <div className="time">
+            <WeatherBar/>
+          </div>
           {user ? (
             <>
               <img
