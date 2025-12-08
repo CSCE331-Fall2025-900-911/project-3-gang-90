@@ -8,7 +8,7 @@ const ZReport = () => {
   return (
 <MangerPage 
 pageName={"Z-Report"}
-child={        <div className='flex-1 flex min-h-0 flex-col pl-6 pr-6 pt-5 overflow-hidden'>
+child={        <div className='flex-1 flex min-h-0 flex-col overflow-hidden'>
           <p className='font-bold text-3xl pb-5'>Z Report</p>
           <div className='flex flex-row w-1/2 items-center gap-7 pb-5'>
             <button onClick={()=>setRefreshKey(k=>k+1)} className='border-2 p-1 rounded-lg bg-gray-200 hover:bg-gray-300 cursor-pointer'>Refresh</button>
@@ -20,10 +20,10 @@ child={        <div className='flex-1 flex min-h-0 flex-col pl-6 pr-6 pt-5 overf
           <p className='text-3xl pb-5'>$0.00</p>
           {/* ----------- */}
           <p className='font-bold'>Per-Employee Summary:</p>
-          {/* table region fills remaining vertical space */}
-          <div className='flex-1 min-h-0 overflow-auto rounded-md border mb-5 border-gray-300 bg-white'>
+          <div className='flex-none h-[480px] overflow-auto rounded-md border mb-5 border-gray-300 bg-white p-4 shadow-sm'>
             <ReportTable refreshSignal={refreshKey} />
           </div>
+          <div className='pb-4' />
 
         </div>
 }/>

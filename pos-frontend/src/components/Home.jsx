@@ -9,16 +9,31 @@ export default function Home() {
   const { items: cartItems } = useCart()
   const [askLogin, setAskLogin] = useState(false)
   const navigate = useNavigate()
+  const [milk, setMilk] = useState(false)
+  const [fruit, setFruit] = useState(false)
+  const [special, setSpecial] = useState(false)
   const { user, authReady, logoutReason, clearLogoutReason } = useAuth()
 
 
 
-  function handleLoginLogic() {
+  function handleLoginLogic(button) {
+    if (button == 'milk') setMilk(true)
+    if (button == 'fruit') setFruit(true)
+    if (button == 'special') setSpecial(true)
+
     if (!user) {
       setAskLogin(true)
       return
     } 
-    navigate("/milktea")
+    if (milk) navigate('/milktea')
+    if (fruit) navigate('/fruittea')
+    if (special) navigate('/specialty')
+  }
+
+  function handleSkip() {
+    if (milk) navigate('/milktea')
+    if (fruit) navigate('/fruittea')
+    if (special) navigate('/specialty')
   }
 
   useEffect(() => {
@@ -45,7 +60,7 @@ export default function Home() {
         <div className='flex flex-col justify-center items-center gap-5'>
           <LoginButton/>
           <div className='w-full flex flex-row justify-center items-center gap-5'>
-            <Link className='bg-[#929292] text-[#fff] px-10 py-2 rounded-md cursor-pointer' to="/milktea">Skip Login</Link>
+            <button className='bg-[#929292] text-[#fff] px-10 py-2 rounded-md cursor-pointer' onClick={handleSkip}>Skip Login</button>
             <button className='bg-[#929292] text-[#fff] px-10 py-2 rounded-md cursor-pointer' onClick={()=>setAskLogin(false)} >Go Back</button>
           </div>
         </div>
@@ -55,9 +70,11 @@ export default function Home() {
         <h1 className="main-menu-header">Select a Menu Category:</h1>
         <div className="menu-options">
           {/* <Link className="menu-option" to="/drinks"><b>Drinks</b></Link> */}
-          <button className="menu-option font-bold" onClick={handleLoginLogic}>Milk Tea</button>
-          <Link className="menu-option" to="/fruittea"><b>Fruit Tea</b></Link>
-          <Link className="menu-option" to="/specialty"><b>Specialty</b></Link>
+          {/* <Link className="menu-option" to="/fruittea"><b>Fruit Tea</b></Link>
+          <Link className="menu-option" to="/specialty"><b>Specialty</b></Link> */}
+          <button className="menu-option font-bold" onClick={()=>handleLoginLogic('milk')}>Milk Tea</button>
+          <button className="menu-option font-bold" onClick={()=>handleLoginLogic('fruit')}>Fruit Tea</button>
+          <button className="menu-option font-bold" onClick={()=>handleLoginLogic('special')}>Specialty</button>
         </div>
       </div>
       }
