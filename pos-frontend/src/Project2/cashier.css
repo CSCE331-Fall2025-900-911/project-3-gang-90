@@ -13,7 +13,7 @@
 
 .customize-option.selected, .modification.selected {
   background-color: #131313 !important;
-  color: #1d1d1d !important;
+  color: #ffffff !important;
 }
 
 .top-title {
@@ -71,6 +71,7 @@
     border: none;
     cursor: pointer;
     padding: 10px;
+    /* font-size: 0.5rem; */
     white-space: normal;
     text-align: center;
     font-size: 16px;
