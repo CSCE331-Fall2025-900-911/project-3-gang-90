@@ -425,11 +425,12 @@ export default function Cashier() {
 
             <div className="row">
               <span><b>Toppings:</b></span>
-              {["Honey Boba", "Lychee Jelly", "Coconut Jelly", "Pudding", "Ice Cream", "Oreos"].map(mod => {
+              {["Boba", "Honey Boba", "Lychee Jelly", "Coconut Jelly", "Pudding", "Ice Cream", "Oreo", "Mini Pearls", "Aiyu Jelly", "Crema", "Sub Crema", "Crystal Boba", "Mango Boba", "Strawberry Boba", "Coffee Jelly", "Honey Jelly", "Peach Boba", "Fresh Milk"].map(mod => {
                 const selected = currentMods.includes(`Toppings:${mod}`);
                 return (
                   <button
                     key={mod}
+                    style={{ fontSize: "0.7rem" }}
                     className={selected ? "modification selected" : "modification"}
                     onClick={() => toggleModification("Toppings", mod)}
                   >
