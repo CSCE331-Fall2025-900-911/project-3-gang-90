@@ -9,7 +9,7 @@ export default function MangerSideBar(){
     return(
         <div className='mangerSideBar' >
             <div className='mangerLinkPadding'>
-                <Link className='mangerLink' to="/cashier">Chashier</Link>
+                <Link className='mangerLink' to="/cashier">Cashier</Link>
             </div>
             <div className='mangerLinkPadding'>
                 <Link className='mangerLink' to="/transactions">Transactions</Link>
