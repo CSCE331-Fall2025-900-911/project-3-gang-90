@@ -21,7 +21,7 @@ export default function DrinksMenu() {
 
         const items = Array.isArray(data)
           ? data
-              .filter(i => i.stat && i.category === "fresh brew")
+              .filter(i => i.stat && i.category === "matcha series")
               .map(i => ({
                 ...i,
                 item_name: toTitle(i.name),
@@ -46,12 +46,12 @@ export default function DrinksMenu() {
       <div className="panel-container">
         <div className="sidebar">
           <div>
-            <Link className="menu-item selected" to="/freshbrew">Fresh Brew</Link><br />
+            <Link className="menu-item" to="/freshbrew">Fresh Brew</Link><br />
             <Link className="menu-item" to="/milkyseries">Milky Series</Link><br />
             <Link className="menu-item" to="/fruity">Fruity Beverage</Link><br />
             <Link className="menu-item" to="/noncaffeinated">Non-Caffeinated</Link><br />
             <Link className="menu-item" to="/iceblended">Ice Blended</Link><br />
-            <Link className="menu-item" to="/matcha">Matcha Series</Link><br />
+            <Link className="menu-item selected" to="/matcha">Matcha Series</Link><br />
           </div>
         </div>
 

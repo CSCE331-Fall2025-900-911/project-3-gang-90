@@ -19,7 +19,7 @@ export default function DrinkCustomization({ mods, setMods }) {
   const iceOptions = ['No Ice', 'Light Ice', 'Regular Ice'];
   const sweetOptions = ['0% Sweet', '50% Sweet', '100% Sweet'];
   const tempOptions = ['Normal', 'Hot'];
-  const toppingOptions = ["Honey Boba", "Lychee Jelly", "Coconut Jelly", "Pudding", "Ice Cream", "Oreos"];
+  const toppingOptions = ["Boba", "Honey Boba", "Lychee Jelly", "Coconut Jelly", "Pudding", "Ice Cream", "Oreo", "Mini Pearls", "Aiyu Jelly", "Crema", "Sub Crema", "Crystal Boba", "Mango Boba", "Strawberry Boba", "Coffee Jelly", "Honey Jelly", "Peach Boba", "Fresh Milk"];
 
   return (
     <div className="customize-panel-inner">
@@ -88,6 +88,7 @@ export default function DrinkCustomization({ mods, setMods }) {
           {toppingOptions.map(option => (
             <button
               key={option}
+              style={{ fontSize: "1.2rem" }}
               className={`customize-option${mods.includes(`Toppings:${option}`) ? ' selected' : ''}`}
               onClick={() => handleSelect('Toppings', option, true)}
             >

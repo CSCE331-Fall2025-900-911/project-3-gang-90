@@ -52,7 +52,7 @@ export default function Cart() {
         console.error("Error:", response.status);
         return;
       }
-    } 
+    }
     catch (err) {
       clearTimeout(timeout);
       console.error("Error:", err);
@@ -90,9 +90,9 @@ export default function Cart() {
                   <div className="cart-item-details">
                     <h2 className="cart-item-name">{item.name}</h2>
                     <p className="cart-item-mods"><b>Modifications:</b> {item.mods}</p>
-                    <p className="cart-item-qty">Quantity: {item.quantity}</p>
+                    <p className="cart-item-qty"><b>Quantity:</b> {item.quantity}</p>
                     <p className="cart-item-price">
-                      Price: {
+                      <b>Price:</b> {
                         typeof item.price === 'number'
                           ? `$${item.price.toFixed(2)}`
                           : `$${Number(item.price || 0).toFixed(2)}`
@@ -133,7 +133,7 @@ export default function Cart() {
           <Link className="bottom-button" style={{flex:1, textAlign:'center', lineHeight:'38px'}} to="/kiosk">Back to Menu</Link>
         </div>
       </div>
-
+        
       {showModal && (
         <>
           <div style={{position:'fixed', top:0, left:0, width:'100vw', height:'100vh', background:'rgba(0,0,0,0.5)', zIndex:200}}></div>
