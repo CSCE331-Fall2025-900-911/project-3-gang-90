@@ -46,12 +46,12 @@ export default function DrinksMenu() {
       <div className="panel-container">
         <div className="sidebar">
           <div>
-            <Link className="menu-item" to="/freshbrew">Fresh Brew</Link><br /><br />
-            <Link className="menu-item" to="/milkyseries">Milky Series</Link><br /><br />
-            <Link className="menu-item" to="/fruity">Fruity Beverage</Link><br /><br />
-            <Link className="menu-item" to="/noncaffeinated">Non-Caffeinated</Link><br /><br />
-            <Link className="menu-item selected" to="/iceblended">Ice Blended</Link><br /><br />
-            <Link className="menu-item" to="/matcha">Matcha Series</Link><br /><br />
+            <Link className="menu-item" to="/freshbrew">Fresh Brew</Link><br />
+            <Link className="menu-item" to="/milkyseries">Milky Series</Link><br />
+            <Link className="menu-item" to="/fruity">Fruity Beverage</Link><br />
+            <Link className="menu-item" to="/noncaffeinated">Non-Caffeinated</Link><br />
+            <Link className="menu-item selected" to="/iceblended">Ice Blended</Link><br />
+            <Link className="menu-item" to="/matcha">Matcha Series</Link><br />
           </div>
         </div>
 
