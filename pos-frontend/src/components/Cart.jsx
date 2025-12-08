@@ -90,9 +90,9 @@ export default function Cart() {
                   <div className="cart-item-details">
                     <h2 className="cart-item-name">{item.name}</h2>
                     <p className="cart-item-mods"><b>Modifications:</b> {item.mods}</p>
-                    <p className="cart-item-qty">Quantity: {item.quantity}</p>
+                    <p className="cart-item-qty"><b>Quantity:</b> {item.quantity}</p>
                     <p className="cart-item-price">
-                      Price: {
+                      <b>Price:</b> {
                         typeof item.price === 'number'
                           ? `$${item.price.toFixed(2)}`
                           : `$${Number(item.price || 0).toFixed(2)}`
