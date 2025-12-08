@@ -12,9 +12,6 @@ export default function MangerTopBar({pageName}){
                 {pageName}
                 </h1>
             </div>
-            <div className="mangerRightAlign">
-                add time
-            </div>
 
         </div>
 
