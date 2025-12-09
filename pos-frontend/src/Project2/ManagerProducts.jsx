@@ -176,9 +176,12 @@ function ManagerProductsContent() {
 
   const handleSaveEditor = (updated) => {
     setProducts((prev) =>
-      prev.map((p) => (p.id === updated.id ? updated : p))
+      updated._deleted
+        ? prev.filter((p) => p.id !== updated.id)
+        : prev.map((p) => (p.id === updated.id ? updated : p))
     );
   };
+
 
   return (
     <div>
@@ -278,7 +281,36 @@ function ManagerProductsContent() {
   );
 }
 
-//WIP
+async function handleDelete() {
+  if (!product) return;
+
+  try {
+    const isSeasonal = product.id < 0;
+    const itemId = Math.abs(product.id);
+
+    const url = isSeasonal ? `${API_BASE}/seasonalMenu/${itemId}` : `${API_BASE}/menu/${itemId}`;
+
+    const res = await fetch(url, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+      alert("Failed to delete item");
+      return;
+    }
+
+    if (onSave) {
+      onSave({ ...product, _deleted: true });
+    }
+    
+    onClose();
+  } catch (err) {
+    console.error(err);
+    alert("Error deleting itemm");
+  }
+}
+
+
 function ItemEditorDialog({ open, product, onClose, onSave }) 
 {
   const [name, setName] = useState("");
@@ -551,6 +583,9 @@ function ItemEditorDialog({ open, product, onClose, onSave })
         </Button>
         <Button onClick={onClose} variant="outlined">
           Cancel
+        </Button>
+        <Button onClick={handleDelete} variant="contained" color="#dc143c">
+          Remove
         </Button>
       </DialogActions>
     </Dialog>
