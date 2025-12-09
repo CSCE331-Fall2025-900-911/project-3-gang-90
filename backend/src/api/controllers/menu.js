@@ -305,3 +305,39 @@ export async function checkAllergens(req, res, next) {
     return next(err);
   }
 }
+
+/**
+ * Retrieves a random set of menu items from the given category,
+ * excluding the given menu item, and ensuring that all items have at
+ * least one ingredient with a quantity greater than 0.
+ *
+ * @param {Object} req The request object.
+ * @param {Object} res The response object.
+ * @param {function} next The next function to call in the middleware chain.
+ *
+ * @param {string} name The name of the menu item to exclude.
+ * @param {string} category The category of menu items to retrieve.
+ * @param {number} limit The maximum number of menu items to retrieve.
+ *
+ * @returns {Promise<Object[]>} A promise that resolves to an array of objects containing the item_id, item_name, price, and category fields of the menu items.
+ * @throws {Error} If the item name, category, or limit is not provided.
+ */
+export async function getRecommendation(req, res, next) {
+  try {
+    const itemName = req.params.name;
+    const category = req.params.category;
+    const limit = req.params.limit;
+
+    if (!itemName || !category || !limit) {
+      return res.status(400).json({ error: "Missing required parameters" });
+    }
+
+    const rows = await menuService.getReccomendation(itemName, category, limit);
+    if (!rows || rows.length === 0 || rows === null) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+    return res.status(200).json(rows);
+  } catch (err) {
+    return next(err);
+  }
+}
