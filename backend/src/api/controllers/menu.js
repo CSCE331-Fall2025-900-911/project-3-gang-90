@@ -328,6 +328,10 @@ export async function getReccomendation(req, res, next) {
     const category = req.params.category;
     const limit = req.params.limit;
 
+    if (!itemName || !category || !limit) {
+      return res.status(400).json({ error: "Missing required parameters" });
+    }
+
     const rows = await menuService.getReccomendation(itemName, category, limit);
     if (!rows || rows.length === 0 || rows === null) {
       return res.status(404).json({ error: "Item not found" });
