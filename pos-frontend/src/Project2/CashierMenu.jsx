@@ -239,11 +239,12 @@ export default function Cashier() {
       <div className="layout">
 
         <div className="sidebar">
-          {managerViewVisible && (
-            <Link to="/products">
-              Manager View
-            </Link>
-          )}
+          {//managerViewVisible && (
+            //<Link to="/products">
+              //Manager View
+            //</Link>
+          //)
+          }
           <button onClick={() => setShowLogin(true)}>Change Cashier</button>
           <div style={{ marginTop: 18, display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}>
             <div style={{ fontWeight: 600, marginBottom: 6 }}>Filter by Category:</div>
