@@ -76,7 +76,7 @@ export default function Home() {
         {logoutReason && (
           <div className='w-full flex justify-center items-center'>
             <div className='bg-yellow-100 text-yellow-800 px-4 py-2 rounded-md mb-4 shadow-sm border border-yellow-300 flex items-center gap-3'>
-              <span>⚠️ {logoutReason}</span>
+              <span>{logoutReason}</span>
               <button className='text-yellow-900 underline cursor-pointer' onClick={clearLogoutReason}>Dismiss</button>
             </div>
           </div>

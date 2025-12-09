@@ -72,7 +72,6 @@ export default function EditItem() {
     <div className="main-page">
       <div className="top-bar">
         <h1>Edit Item</h1>
-        <div className="time">5:00 PM</div>
       </div>
 
       <div className="panel-container">
