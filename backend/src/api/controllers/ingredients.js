@@ -288,7 +288,7 @@ export async function getSalesReport(req, res, next) {
  */
 export async function getAllergens(req, res, next) {
   try {
-    const { ingredientName } = req.query;
+    const ingredientName  = req.params.name;
     
     if (!ingredientName) {
       return res.status(400).json({ error: "Query parameter 'ingredientName' is required" });
