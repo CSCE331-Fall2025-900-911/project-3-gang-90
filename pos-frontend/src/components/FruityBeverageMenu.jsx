@@ -21,15 +21,7 @@ export default function DrinksMenu() {
 
         const items = Array.isArray(data)
           ? data
-<<<<<<< HEAD
-<<<<<<<< HEAD:pos-frontend/src/components/FruitTeaMenu.jsx
-              .filter(i => i.stat && i.category === "Fruit Tea")
-========
-              .filter(i => i.stat && i.category === "Specialty")
->>>>>>>> sprint-3:pos-frontend/src/components/SpecialtyMenu.jsx
-=======
-              .filter(i => i.stat && i.category === "fresh brew")
->>>>>>> sprint-3
+              .filter(i => i.stat && i.category === "fruity beverage")
               .map(i => ({
                 ...i,
                 item_name: toTitle(i.name),
@@ -54,23 +46,12 @@ export default function DrinksMenu() {
       <div className="panel-container">
         <div className="sidebar">
           <div>
-<<<<<<< HEAD
-            <Link className="menu-item" to="/milktea">Milk Tea</Link><br /><br />
-<<<<<<<< HEAD:pos-frontend/src/components/FruitTeaMenu.jsx
-            <Link className="menu-item selected" to="/fruittea">Fruit Tea</Link><br /><br />
-            <Link className="menu-item" to="/specialty">Specialty</Link>
-========
-            <Link className="menu-item" to="/fruittea">Fruit Tea</Link><br /><br />
-            <Link className="menu-item selected" to="/specialty">Specialty</Link>
->>>>>>>> sprint-3:pos-frontend/src/components/SpecialtyMenu.jsx
-=======
-            <Link className="menu-item selected" to="/freshbrew">Fresh Brew</Link><br />
+            <Link className="menu-item" to="/freshbrew">Fresh Brew</Link><br />
             <Link className="menu-item" to="/milkyseries">Milky Series</Link><br />
-            <Link className="menu-item" to="/fruity">Fruity Beverage</Link><br />
+            <Link className="menu-item selected   " to="/fruity">Fruity Beverage</Link><br />
             <Link className="menu-item" to="/noncaffeinated">Non-Caffeinated</Link><br />
             <Link className="menu-item" to="/iceblended">Ice Blended</Link><br />
             <Link className="menu-item" to="/matcha">Matcha Series</Link><br />
->>>>>>> sprint-3
           </div>
         </div>
 

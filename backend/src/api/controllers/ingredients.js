@@ -272,3 +272,36 @@ export async function getSalesReport(req, res, next) {
     return next(err);
   }
 }
+
+
+/**
+ * Retrieves an array of allergens associated with the given ingredient name.
+ * 
+ * @param {Object} req The request object.
+ * @param {Object} res The response object.
+ * @param {function} next The next function to call in the middleware chain.
+ *
+ * @query {string} ingredientName The name of the ingredient to retrieve the allergens for.
+ *
+ * @returns {Promise<Array<string>|null>} A promise that resolves to an array of allergen names associated with the ingredient, or null if the ingredient is not found.
+ * @throws {Error} If the ingredient name is not provided.
+ */
+export async function getAllergens(req, res, next) {
+  try {
+    const ingredientName  = req.params.name;
+    
+    if (!ingredientName) {
+      return res.status(400).json({ error: "Query parameter 'ingredientName' is required" });
+    }
+
+    const allergens = await ingredientsService.getAllergens(ingredientName);
+    
+    if (allergens === null) {
+      return res.status(404).json({ error: "Ingredient not found" });
+    }
+
+    return res.status(200).json(allergens);
+  } catch (err) {
+    return next(err);
+  }
+}

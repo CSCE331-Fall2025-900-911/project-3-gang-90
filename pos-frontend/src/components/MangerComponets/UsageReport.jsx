@@ -21,10 +21,20 @@ export default function UsageReport(){
         const startDay = new Date();
         const endDay = new Date();
 
+<<<<<<< HEAD
         startDay.setDate(startDay.getDate()-1);
 
         const databaseStart = startDay.toISOString().split("T")[0];
         const databaseEnd = endDay.toISOString().split("T")[0];
+=======
+        startDay.setDate(startDay.getDate()-2);
+        endDay.setDate(endDay.getDate()-1);
+
+        const databaseStart = startDay.toISOString().split("T")[0];
+        const databaseEnd = endDay.toISOString().split("T")[0];
+        console.log(databaseStart);
+        console.log(databaseEnd);
+>>>>>>> sprint-3
 
         setEndDate(databaseEnd);
         setBeginDate(databaseStart);
@@ -34,7 +44,11 @@ export default function UsageReport(){
 
     function applyMonth(){
 
+<<<<<<< HEAD
                 const now = new Date();
+=======
+        const now = new Date();
+>>>>>>> sprint-3
 
 
         const startOfMonth = new Date(now.getFullYear(), now.getMonth() -1, now.getDay());
@@ -46,6 +60,11 @@ export default function UsageReport(){
 
         setEndDate(databaseEnd);
         setBeginDate(databaseStart);
+<<<<<<< HEAD
+=======
+        console.log(databaseEnd);
+        console.log(databaseStart);
+>>>>>>> sprint-3
         setRefresh(!refresh);
     }
 
@@ -88,6 +107,10 @@ export default function UsageReport(){
             
             try{
                 const res =  await fetch(`${API_ROUTE}/api/ingredients/usage?start=${beginDate}&end=${endDate}`);
+<<<<<<< HEAD
+=======
+                console.log(`${API_ROUTE}/api/ingredients/usage?start=${beginDate}&end=${endDate}`);
+>>>>>>> sprint-3
                 if(!res.ok){
                     throw new Error("response not ok: ", res.status);
                 }

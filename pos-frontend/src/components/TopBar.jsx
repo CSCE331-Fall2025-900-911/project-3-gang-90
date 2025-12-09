@@ -23,7 +23,11 @@ const TopBar = () => {
 
   return (
     <div className="top-bar">
+<<<<<<< HEAD
         <h1>Drinks</h1>
+=======
+        <h2 className="text-3xl font-bold">ShareTea</h2>
+>>>>>>> sprint-3
         <div className='flex flex-row gap-2 justify-center items-center relative'>
           <div className="time">
             <WeatherBar/>

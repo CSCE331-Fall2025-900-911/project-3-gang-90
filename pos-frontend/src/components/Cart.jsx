@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useCart } from './CartContext'
 import { useNavigate, Link } from 'react-router-dom'
+import { useRecommendation } from './RecommendationContext'
 
 let server = import.meta.env.VITE_SERVER;
 
@@ -9,6 +10,7 @@ export default function Cart() {
   const navigate = useNavigate()
   const [showModal, setShowModal] = useState(false)
   const [name, setName] = useState('')
+  const { suggestions, visible, hideRecommendations } = useRecommendation()
 
   const subtotal = items.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0)
   const tax = subtotal * 0.0825
@@ -52,7 +54,7 @@ export default function Cart() {
         console.error("Error:", response.status);
         return;
       }
-    } 
+    }
     catch (err) {
       clearTimeout(timeout);
       console.error("Error:", err);
@@ -72,12 +74,34 @@ export default function Cart() {
   }
 
   return (
-    <div className="regular-container" style={{position:'relative'}}>
+    <div className="regular-container relative">
       <div className="top-bar">
         <h1>Your Cart</h1>
         <div className="time">5:00 PM</div>
       </div>
-      <div style={{padding:20, display:'flex', flexDirection:'column', minHeight:'60vh', justifyContent:'space-between'}}>
+      <div className="p-5 flex flex-col min-h-[60vh] justify-between">
+        {visible && suggestions.length > 0 && (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-xl px-4 py-3 mb-4">
+            <div className="flex justify-between items-center">
+              <strong>Recommended for you</strong>
+              <button onClick={hideRecommendations} className="border-none bg-transparent cursor-pointer">✕</button>
+            </div>
+            <div className="flex gap-3 mt-2 flex-wrap">
+              {suggestions.map(s => (
+                <Link
+                  key={String(s.item_id ?? s.id)}
+                  to={`/edit/${String(s.item_id ?? s.id)}`}
+                  className="menu-item px-3 py-2 rounded-lg bg-gray-100 border border-gray-200"
+                >
+                  {(s.item_name ?? s.name)}
+                  <span className="ml-2 text-green-700">
+                    {typeof s.price === 'number' ? `$${s.price.toFixed(2)}` : `$${Number(s.price||0).toFixed(2)}`}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
         <div>
           {items.length === 0 ? (
             <>
@@ -89,10 +113,10 @@ export default function Cart() {
                 <div className="cart-item" key={idx}>
                   <div className="cart-item-details">
                     <h2 className="cart-item-name">{item.name}</h2>
-                    <p className="cart-item-mods">{item.mods}</p>
-                    <p className="cart-item-qty">Quantity: {item.quantity}</p>
+                    <p className="cart-item-mods"><b>Modifications:</b> {item.mods}</p>
+                    <p className="cart-item-qty"><b>Quantity:</b> {item.quantity}</p>
                     <p className="cart-item-price">
-                      Price: {
+                      <b>Price:</b> {
                         typeof item.price === 'number'
                           ? `$${item.price.toFixed(2)}`
                           : `$${Number(item.price || 0).toFixed(2)}`
@@ -100,56 +124,54 @@ export default function Cart() {
                     </p>
                   </div>
                   <div className="cart-item-actions">
-                    <a className="cart-item-action" onClick={() => removeItem(idx)} style={{cursor:'pointer'}}>Remove</a>
+                    <a className="cart-item-action cursor-pointer" onClick={() => removeItem(idx)}>Remove</a>
                   </div>
                 </div>
               ))}
             </>
           )}
         </div>
-
-        <div style={{
-          background:'#f5f5f5',
-          borderRadius:'12px',
-          padding:'18px 24px',
-          alignSelf:'center',
-          fontSize:'1.15rem',
-        }}>
-          <div style={{display:'flex', justifyContent:'space-between', marginBottom:'8px'}}>
+        <div className="bg-gray-100 rounded-xl px-6 py-4 self-center text-[1.15rem]">
+          <div className="flex justify-between mb-2">
             <span>Subtotal: ${subtotal.toFixed(2)}</span>
           </div>
-          <div style={{display:'flex', justifyContent:'space-between', marginBottom:'8px'}}>
+          <div className="flex justify-between mb-2">
             <span>Tax:</span>
             <span>${tax.toFixed(2)}</span>
           </div>
-          <div style={{display:'flex', justifyContent:'space-between', fontWeight:'bold'}}>
+          <div className="flex justify-between font-bold">
             <span>Total:</span>
             <span>${total.toFixed(2)}</span>
           </div>
         </div>
 
+<<<<<<< HEAD
         <div style={{display:'flex', gap:'10px', marginTop:'20px'}}>
           <button className="bottom-button" style={{flex:1}} onClick={handleCheckout}>Checkout</button>
           <Link className="bottom-button" style={{flex:1, textAlign:'center', lineHeight:'38px'}} to="/kiosk">Back to Menu</Link>
+=======
+        <div className="flex gap-2.5 mt-5">
+          <button className="bottom-button flex-1" onClick={handleCheckout}>Checkout</button>
+          <Link className="bottom-button flex-1 text-center leading-[38px]" to="/kiosk">Back to Menu</Link>
+>>>>>>> sprint-3
         </div>
       </div>
-
       {showModal && (
         <>
-          <div style={{position:'fixed', top:0, left:0, width:'100vw', height:'100vh', background:'rgba(0,0,0,0.5)', zIndex:200}}></div>
-          <div style={{position:'fixed', top:'50%', left:'50%', transform:'translate(-50%,-50%)', background:'#d3d3d3', padding:'40px 30px', borderRadius:'18px', boxShadow:'0 2px 16px rgba(0,0,0,0.2)', zIndex:201, minWidth:'320px', display:'flex', flexDirection:'column', alignItems:'center'}}>
-            <h2 style={{color:'#3a3a3a', marginBottom:'18px'}}>Enter your name</h2>
-            <form onSubmit={handleNameSubmit} style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center'}}>
+          <div className="fixed inset-0 w-screen h-screen bg-black/50 z-50"></div>
+          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-300 px-7 py-10 rounded-2xl shadow-lg z-50 min-w-[320px] flex flex-col items-center">
+            <h2 className="text-gray-800 mb-4 text-2xl">Enter your name</h2>
+            <form onSubmit={handleNameSubmit} className="w-full flex flex-col items-center">
               <input
                 type="text"
                 value={name}
                 onChange={e => setName(e.target.value)}
                 placeholder="Your name"
-                style={{padding:'12px', fontSize:'1.2rem', borderRadius:'8px', border:'1px solid #929292', marginBottom:'18px', width:'100%'}}
+                className="p-3 text-xl rounded-lg border border-gray-400 mb-4 w-full"
                 required
                 autoFocus
               />
-              <button type="submit" className="bottom-button" style={{width:'100%'}}>Submit</button>
+              <button type="submit" className="bottom-button w-full">Submit</button>
             </form>
           </div>
         </>

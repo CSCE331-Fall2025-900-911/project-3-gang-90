@@ -7,7 +7,11 @@ let server = import.meta.env.VITE_SERVER;
 export default function Cashier() {
   const [drinkNames, setDrinkNames] = useState([]);
   const [drinkPrices, setDrinkPrices] = useState([]);
+<<<<<<< HEAD
   const [menu, setMenu] = useState([]); // Store menu for id lookup
+=======
+  const [menu, setMenu] = useState([]);
+>>>>>>> sprint-3
   const [orderItems, setOrderItems] = useState([]);
   const [employeeName, setEmployeeName] = useState("Logged Out");
   const [managerViewVisible, setManagerViewVisible] = useState(false);
@@ -26,6 +30,11 @@ export default function Cashier() {
   const [loginID, setLoginID] = useState("");
   const [loginError, setLoginError] = useState("");
 
+<<<<<<< HEAD
+=======
+  const [selectedCategory, setSelectedCategory] = useState("All Categories");
+
+>>>>>>> sprint-3
   async function fetchMenu() {
     try {
       const res = await fetch(server + '/api/menu');
@@ -70,6 +79,15 @@ export default function Cashier() {
     loadMenu();
   }, []);
 
+<<<<<<< HEAD
+=======
+  // Get unique categories from menu
+  const categories = React.useMemo(() => {
+    const cats = menu.map(m => m.category || m.type || "Drink");
+    return ["All Categories", ...Array.from(new Set(cats))];
+  }, [menu]);
+
+>>>>>>> sprint-3
   function toTitleCase(str) {
     return str
       .split(" ")
@@ -77,14 +95,20 @@ export default function Cashier() {
       .join(" ");
   }
 
+<<<<<<< HEAD
   function openDrinkMods(name, price) {
     setCurrentDrink({ name, price });
+=======
+  function openDrinkMods(name, price, category) {
+    setCurrentDrink({ name, price, basePrice: price, category });
+>>>>>>> sprint-3
     setCurrentMods([]);
     setShowMods(true);
   }
 
   function toggleModification(category, mod) {
     const key = `${category}:${mod}`;
+<<<<<<< HEAD
     const existing = currentMods.find(m => m.startsWith(category + ":"));
 
     if (existing === key) {
@@ -94,25 +118,79 @@ export default function Cashier() {
 
     const filtered = currentMods.filter(m => !m.startsWith(category + ":"));
     setCurrentMods([...filtered, key]);
+=======
+    if (category === "Toppings") {
+      if (currentMods.includes(key)) {
+        setCurrentMods(currentMods.filter(m => m !== key));
+      } else {
+        setCurrentMods([...currentMods, key]);
+      }
+    } else {
+      const filtered = currentMods.filter(m => !m.startsWith(category + ":"));
+      if (currentMods.includes(key)) {
+        setCurrentMods(filtered);
+      } else {
+        setCurrentMods([...filtered, key]);
+      }
+
+      if (category === "Size" && currentDrink) {
+        let newPrice = currentDrink.basePrice;
+        if (mod === "Medium") newPrice = Number(currentDrink.basePrice) + 0.5;
+        else if (mod === "Large") newPrice = Number(currentDrink.basePrice) + 1.0;
+        else newPrice = Number(currentDrink.basePrice);
+        setCurrentDrink({ ...currentDrink, price: newPrice });
+      }
+    }
+>>>>>>> sprint-3
   }
 
   function addDrinkToOrder() {
     if (!currentDrink) return;
+<<<<<<< HEAD
     const { name, price } = currentDrink;
     const mods = [...currentMods];
     const found = menu.find(m => m.name === name && m.price === price);
     const id = found ? found.id : undefined;
     setOrderItems(items => [...items, { name, price, mods, id }]);
+=======
+    const { name, price, category } = currentDrink;
+    const mods = [...currentMods];
+    const found = menu.find(m => m.name === name && (Number(m.price) === Number(currentDrink.basePrice)));
+    const id = found ? found.id : undefined;
+    setOrderItems(items => [...items, { name, price, mods, id, category, quantity: 1 }]);
+>>>>>>> sprint-3
     setShowMods(false);
     setCurrentDrink(null);
     setCurrentMods([]);
   }
 
   useEffect(() => {
+<<<<<<< HEAD
     let sum = orderItems.reduce((acc, d) => acc + (typeof d.price === 'number' ? d.price : Number(d.price) || 0), 0);
     setSubtotal(sum);
   }, [orderItems]);
 
+=======
+    let sum = orderItems.reduce((acc, d) => acc + ((typeof d.price === 'number' ? d.price : Number(d.price) || 0) * (d.quantity || 1)), 0);
+    setSubtotal(sum);
+  }, [orderItems]);
+
+  function changeQuantity(index, delta) {
+    setOrderItems(items => {
+      return items.flatMap((item, i) => {
+        if (i !== index) {
+          return [item];
+        }
+        const newQty = (item.quantity || 1) + delta;
+        if (newQty <= 0) {
+          return [];
+        }
+        return [{ ...item, quantity: newQty }];
+      });
+    });
+  }
+
+>>>>>>> sprint-3
   async function confirmLogin() {
     setLoginError("");
     if (!loginName || !loginID) {
@@ -203,16 +281,50 @@ export default function Cashier() {
       <div className="layout">
 
         <div className="sidebar">
+<<<<<<< HEAD
           {managerViewVisible && (
             <Link to="/products">
               Manager View
             </Link>
           )}
           <button onClick={() => setShowLogin(true)}>Change Cashier</button>
+=======
+          {//managerViewVisible && (
+            //<Link to="/products">
+              //Manager View
+            //</Link>
+          //)
+          }
+          <button onClick={() => setShowLogin(true)}>Change Cashier</button>
+          <div style={{ marginTop: 18, display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}>
+            <div style={{ fontWeight: 600, marginBottom: 6 }}>Filter by Category:</div>
+            {categories.map((cat, idx) => (
+              <button
+                key={cat}
+                style={{
+                  marginBottom: 6,
+                  background: selectedCategory === cat ? '#888' : '#e0e0e0',
+                  color: selectedCategory === cat ? '#fff' : '#222',
+                  border: 'none',
+                  borderRadius: 4,
+                  padding: '8px 10px',
+                  cursor: 'pointer',
+                  fontWeight: selectedCategory === cat ? 600 : 400,
+                  width: '100%',
+                  textAlign: 'left'
+                }}
+                onClick={() => setSelectedCategory(cat)}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+>>>>>>> sprint-3
         </div>
 
         <div className="drink-menu">
           <div className="drink-grid">
+<<<<<<< HEAD
             {drinkNames.map((name, idx) => (
               <button
                 key={idx}
@@ -226,6 +338,26 @@ export default function Cashier() {
                 <span style={{ color: '#2a7b2a', fontWeight: 500, fontSize: '0.95em' }}>${Number(drinkPrices[idx]).toFixed(2)}</span>
               </button>
             ))}
+=======
+            {menu
+              .filter(item =>
+                selectedCategory === "All Categories" || (item.category || item.type || "Drink") === selectedCategory
+              )
+              .map((item, idx) => (
+                <button
+                  key={idx}
+                  className="drink-button"
+                  onClick={() =>
+                    openDrinkMods(toTitleCase(item.name), item.price, item.category || item.type || "Drink")
+                  }
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', padding: '12px' }}
+                >
+                  <span style={{ fontWeight: 600, fontSize: '1.1em', marginBottom: 4 }}>{toTitleCase(item.name)}</span>
+                  <span style={{ color: '#2a7b2a', fontWeight: 500, fontSize: '0.95em' }}>${Number(item.price).toFixed(2)}</span>
+                  <span style={{ color: '#555', fontSize: '0.85em', marginTop: 2 }}>{item.category || item.type || "Drink"}</span>
+                </button>
+              ))}
+>>>>>>> sprint-3
           </div>
         </div>
 
@@ -236,6 +368,7 @@ export default function Cashier() {
             {orderItems.length === 0 && <div>No items yet.</div>}
 
             {orderItems.map((item, i) => (
+<<<<<<< HEAD
               <div key={i} className="order-item">
                 <div>
                   {item.name} — ${
@@ -244,6 +377,22 @@ export default function Cashier() {
                       : `$${Number(item.price || 0).toFixed(2)}`
                   }
                 </div>
+=======
+              <div key={i} className="order-item" style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span>
+                    {item.name} — ${
+                      typeof item.price === 'number'
+                        ? item.price.toFixed(2)
+                        : `$${Number(item.price || 0).toFixed(2)}`
+                    }
+                  </span>
+                  <button style={{ marginLeft: 4, padding: '2px 8px', fontSize: '1em' }} onClick={() => changeQuantity(i, -1)}>-</button>
+                  <span style={{ minWidth: 24, textAlign: 'center' }}>{item.quantity || 1}</span>
+                  <button style={{ padding: '2px 8px', fontSize: '1em' }} onClick={() => changeQuantity(i, 1)}>+</button>
+                </div>
+                <div style={{ fontSize: '0.85em', color: '#555' }}>{item.category || "Drink"}</div>
+>>>>>>> sprint-3
                 <div className="mods">
                   {item.mods.join(", ")}
                 </div>
@@ -284,6 +433,7 @@ export default function Cashier() {
             <h2>Modifications</h2>
 
             <div className="row">
+<<<<<<< HEAD
               <span>Ice Level:</span>
               {["Less", "Normal", "More"].map(mod => (
                 <button
@@ -305,6 +455,92 @@ export default function Cashier() {
                   {mod}
                 </button>
               ))}
+=======
+              <span><b>Size:</b></span>
+              {["Small", "Medium", "Large"].map(mod => {
+                const selected = currentMods.includes(`Size:${mod}`);
+                let priceDiff = 0;
+                if (mod === "Medium") priceDiff = 0.5;
+                if (mod === "Large") priceDiff = 1.0;
+                return (
+                  <button
+                    key={mod}
+                    className={selected ? "modification selected" : "modification"}
+                    onClick={() => toggleModification("Size", mod)}
+                  >
+                    {mod}
+                    {priceDiff > 0 && (
+                      <span style={{ fontSize: '0.8em', color: '#2a7b2a', marginLeft: 4 }}>+${priceDiff.toFixed(2)}</span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="row">
+              <span><b>Ice Level:</b></span>
+              {["Less", "Normal", "More"].map(mod => {
+                const selected = currentMods.includes(`Ice Level:${mod}`);
+                return (
+                  <button
+                    key={mod}
+                    className={selected ? "modification selected" : "modification"}
+                    onClick={() => toggleModification("Ice Level", mod)}
+                  >
+                    {mod}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="row">
+              <span><b>Sugar Level:</b></span>
+              {["0%", "50%", "100%"].map(mod => {
+                const selected = currentMods.includes(`Sugar Level:${mod}`);
+                return (
+                  <button
+                    key={mod}
+                    className={selected ? "modification selected" : "modification"}
+                    onClick={() => toggleModification("Sugar Level", mod)}
+                  >
+                    {mod}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="row">
+              <span><b>Temperature:</b></span>
+              {["Normal", "Hot"].map(mod => {
+                const selected = currentMods.includes(`Temperature:${mod}`);
+                return (
+                  <button
+                    key={mod}
+                    className={selected ? "modification selected" : "modification"}
+                    onClick={() => toggleModification("Temperature", mod)}
+                  >
+                    {mod}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="row">
+              <span><b>Toppings:</b></span>
+              {["Boba", "Honey Boba", "Lychee Jelly", "Coconut Jelly", "Pudding", "Ice Cream", "Oreo", "Mini Pearls", "Aiyu Jelly", "Crema", "Sub Crema", "Crystal Boba", "Mango Boba", "Strawberry Boba", "Coffee Jelly", "Honey Jelly", "Peach Boba", "Fresh Milk"].map(mod => {
+                const selected = currentMods.includes(`Toppings:${mod}`);
+                return (
+                  <button
+                    key={mod}
+                    style={{ fontSize: "0.7rem" }}
+                    className={selected ? "modification selected" : "modification"}
+                    onClick={() => toggleModification("Toppings", mod)}
+                  >
+                    {mod}
+                  </button>
+                );
+              })}
+>>>>>>> sprint-3
             </div>
 
             <button className="confirm-btn" onClick={addDrinkToOrder}>

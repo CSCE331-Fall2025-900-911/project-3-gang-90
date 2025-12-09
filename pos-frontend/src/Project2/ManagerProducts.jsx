@@ -71,7 +71,11 @@ function ManagerProductsContent() {
     try {
       setLoading(true);
       setError(null);
+<<<<<<< HEAD
       const res = await fetch(`${API_BASE}/menu/seasonal`);
+=======
+      const res = await fetch(`${API_BASE}/seasonalMenu`);
+>>>>>>> sprint-3
       if (!res.ok) throw new Error("Failed to load seasonal menu");
       const data = await res.json();
       setProducts(

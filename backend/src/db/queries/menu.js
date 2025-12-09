@@ -8,16 +8,19 @@ import { getIngredientsForItem } from "./helpers.js";
  * @returns {Promise<Array<Object>>} A promise that resolves to an array of objects containing the item_id, name, price, is_active, and item_popularity fields of all menu items, as well as an array of ingredient IDs associated with each item.
  */
 export async function getMenu() {
-    const rows = await sql`SELECT item_id, item_name, price, is_active, item_popularity, category FROM menu;`;
-    return Promise.all(rows.map(async (row) => ({
-        id: row.item_id,
-        name: row.item_name,
-        popularity: row.item_popularity,
-        price: row.price,
-        stat: row.is_active,
-        ingredients: await getIngredientsForItem(row.item_id),
-        category: row.category
-    })));
+  const rows =
+    await sql`SELECT item_id, item_name, price, is_active, item_popularity, category FROM menu;`;
+  return Promise.all(
+    rows.map(async (row) => ({
+      id: row.item_id,
+      name: row.item_name,
+      popularity: row.item_popularity,
+      price: row.price,
+      stat: row.is_active,
+      ingredients: await getIngredientsForItem(row.item_id),
+      category: row.category,
+    }))
+  );
 }
 
 /**
@@ -26,16 +29,19 @@ export async function getMenu() {
  * @returns {Promise<Array<Object>>} A promise that resolves to an array of objects containing the item_id, name, price, is_active, and item_popularity fields of all active menu items, as well as an array of ingredient IDs associated with each item.
  */
 export async function getActiveMenu() {
-    const rows = await sql`SELECT item_id, item_name, price, is_active, item_popularity, category FROM menu WHERE is_active = TRUE;`;
-    return Promise.all(rows.map(async (row) => ({
-        id: row.item_id,
-        name: row.item_name,
-        popularity: row.item_popularity,
-        price: row.price,
-        stat: row.is_active,
-        ingredients: await getIngredientsForItem(row.item_id),
-        category: row.category
-    })));
+  const rows =
+    await sql`SELECT item_id, item_name, price, is_active, item_popularity, category FROM menu WHERE is_active = TRUE;`;
+  return Promise.all(
+    rows.map(async (row) => ({
+      id: row.item_id,
+      name: row.item_name,
+      popularity: row.item_popularity,
+      price: row.price,
+      stat: row.is_active,
+      ingredients: await getIngredientsForItem(row.item_id),
+      category: row.category,
+    }))
+  );
 }
 
 /**
@@ -45,16 +51,18 @@ export async function getActiveMenu() {
  * @returns {Promise<number|null>} A promise that resolves to the item_id of the menu item if it exists, or null if no item with the given name exists or if there are multiple items with the same name.
  */
 export async function getItemId(itemName) {
-    const rows = await sql`SELECT item_id, item_name 
+  const rows = await sql`SELECT item_id, item_name 
     FROM menu
     WHERE item_name = ${itemName};`;
 
-    if (rows.length === 0) { return null; }
-    if (rows.length > 1) { 
-        console.warn(`Found ${rows.length} items with name ${itemName}!`);
-        return null;
-    }
-    return rows[0].item_id;
+  if (rows.length === 0) {
+    return null;
+  }
+  if (rows.length > 1) {
+    console.warn(`Found ${rows.length} items with name ${itemName}!`);
+    return null;
+  }
+  return rows[0].item_id;
 }
 
 /**
@@ -64,19 +72,19 @@ export async function getItemId(itemName) {
  * @returns {Promise<Array<Object>>} A promise that resolves to an array of objects containing the ingredient_id, ingredient_name, quantity, and category fields of all ingredients associated with the given menu item.
  */
 export async function getItemIngredients(id) {
-    const rows = await sql`
+  const rows = await sql`
         SELECT i.ingredient_id, i.ingredient_name, i.quantity, i.category
         FROM ingredients i
         JOIN ingredients_map m ON m.ingredient_id = i.ingredient_id
         WHERE m.item_id = ${id};
     `;
 
-    return rows.map((row) => ({
-        id: row.ingredient_id,
-        name: row.ingredient_name,
-        quantity: row.quantity,
-        category: row.category,
-    }));
+  return rows.map((row) => ({
+    id: row.ingredient_id,
+    name: row.ingredient_name,
+    quantity: row.quantity,
+    category: row.category,
+  }));
 }
 
 /**
@@ -88,12 +96,12 @@ export async function getItemIngredients(id) {
  * @returns {Promise<Object>} A promise that resolves to an object containing the ingredient_id, item_id, and is_seasonal fields of the added ingredient.
  */
 export async function addIngredientToItem(itemId, ingredientId, isSeasonal) {
-    const rows = await sql`
+  const rows = await sql`
         INSERT INTO ingredients_map (ingredient_id, item_id, is_seasonal) VALUES (${ingredientId}, ${itemId}, ${isSeasonal})
         RETURNING ingredient_id, item_id, is_seasonal;
     `;
 
-    return rows[0];
+  return rows[0];
 }
 
 /**
@@ -104,16 +112,17 @@ export async function addIngredientToItem(itemId, ingredientId, isSeasonal) {
  * @returns {Promise<Object|null>} A promise that resolves to an object containing the item_id and ingredient_id fields of the removed ingredient, or null if no item with the given item_id and ingredient_id exists or if there are multiple items with the same item_id and ingredient_id.
  */
 export async function removeIngredientFromItem(itemId, ingredientId) {
-    const rows = await sql`
+  const rows = await sql`
         DELETE FROM ingredients_map WHERE item_id = ${itemId} AND ingredient_id = ${ingredientId}
         RETURNING item_id, ingredient_id;
     `;
-    if (rows.length === 0) { return null; }
-    else if (rows.length > 1) {
-        console.warn(`Found ${rows.length} items with id ${itemId}!`);
-    }
+  if (rows.length === 0) {
+    return null;
+  } else if (rows.length > 1) {
+    console.warn(`Found ${rows.length} items with id ${itemId}!`);
+  }
 
-    return rows[0];
+  return rows[0];
 }
 
 /**
@@ -125,12 +134,12 @@ export async function removeIngredientFromItem(itemId, ingredientId) {
  * @returns {Promise<number>} A promise that resolves to the item_id of the added menu item.
  */
 export async function addMenuItem(name, popularity, price) {
-    const res = await sql`
+  const res = await sql`
         INSERT INTO menu (item_name, item_popularity, price)
         VALUES (${name}, ${popularity}, ${price}) RETURNING item_id;
     `;
 
-    return res[0].item_id;
+  return res[0].item_id;
 }
 
 /**
@@ -140,17 +149,18 @@ export async function addMenuItem(name, popularity, price) {
  * @param {number} price The new price of the menu item.
  */
 export async function updateMenuPrice(id, price) {
-    const rows = await sql`
+  const rows = await sql`
         UPDATE menu
         SET price = ${price}
         WHERE item_id = ${id};
     `;
-    if (rows.length === 0) { return null; }
-    else if (rows.length > 1) {
-        console.warn(`Found ${rows.length} items with id ${id}!`);
-    }
+  if (rows.length === 0) {
+    return null;
+  } else if (rows.length > 1) {
+    console.warn(`Found ${rows.length} items with id ${id}!`);
+  }
 
-    return rows[0];
+  return rows[0];
 }
 
 /**
@@ -159,36 +169,106 @@ export async function updateMenuPrice(id, price) {
  * @param {number} id The item_id of the menu item to delete.
  */
 export async function deleteItem(id) {
-    const rows = await sql`
+  const rows = await sql`
         DELETE FROM menu WHERE item_id = ${id}
         RETURNING item_id;
     `;
 
-    if (rows.length === 0) { return null; }
-    else if (rows.length > 1) {
-        console.warn(`Found ${rows.length} items with id ${id}!`);
-    }
+  if (rows.length === 0) {
+    return null;
+  } else if (rows.length > 1) {
+    console.warn(`Found ${rows.length} items with id ${id}!`);
+  }
 
-    return rows[0];
+  return rows[0];
 }
 
 /**
  * Retires a menu item from the database.
- * 
+ *
  * @param {number} id The item_id of the menu item to retire.
  */
 export async function retireItem(id) {
-    const rows = await sql`
+  const rows = await sql`
         UPDATE menu
         SET is_active = FALSE
         WHERE item_id = ${id}
         RETURNING item_id;
     `;
 
-    if (rows.length === 0) { return null; }
-    else if (rows.length > 1) {
-        console.warn(`Found ${rows.length} items with id ${id}!`);
-    }
+  if (rows.length === 0) {
+    return null;
+  } else if (rows.length > 1) {
+    console.warn(`Found ${rows.length} items with id ${id}!`);
+  }
 
-    return rows[0];
+  return rows[0];
+}
+
+/**
+ * Retrieves all allergens associated with a given menu item.
+ *
+ * @param {string} item The name of the menu item to retrieve the allergens for.
+ * @returns {Promise<Array<Object>|null>} A promise that resolves to an array of objects containing the name of the allergen, or null if no allergens are found.
+ */
+export async function checkAllergens(item) {
+  const rows = await sql`
+        SELECT DISTINCT a.name
+        FROM menu m
+        JOIN ingredients_map im
+            ON m.item_id = im.item_id
+        JOIN allergen_map am
+            ON im.ingredient_id = am.ingredient_id  
+        JOIN allergens a
+            ON a.allergen_id = am.allergen_id
+        WHERE m.item_name = ${item}
+        AND m.is_active = TRUE;
+    `;
+
+  if (rows.length === 0) {
+    console.warn(`Found no allergens for ${item}!`);
+    return null;
+  }
+  return rows.map((row) => row.name);
+}
+
+
+/**
+ * Retrieves a random set of menu items from the given category,
+ * excluding the given menu item, and ensuring that all items have at
+ * least one ingredient with a quantity greater than 0.
+ *
+ * @param {string} item The name of the menu item to exclude.
+ * @param {string} category The category of menu items to retrieve.
+ * @param {number} limit The maximum number of menu items to retrieve.
+ * @returns {Promise<Array<Object>|null>} A promise that resolves to an array of objects containing the item_id, item_name, price, and category fields of the menu items, or null if no items are found.
+ */
+export async function getRecommendation(item, category, limit) {
+  const rows = await sql`
+    SELECT
+      m.item_id,
+      m.item_name,
+      m.price,
+      m.category
+    FROM menu m
+    JOIN ingredients_map im
+      ON im.item_id = m.item_id
+    JOIN ingredients i
+      ON i.ingredient_id = im.ingredient_id
+    WHERE m.category = ${category}
+      AND m.is_active = TRUE
+      AND m.item_name != ${item}
+    GROUP BY
+      m.item_id,
+      m.item_name,
+      m.price,
+      m.category
+    HAVING MIN(i.quantity) > 0
+    ORDER BY RANDOM()
+    LIMIT ${limit};
+  `;
+
+  if (rows.length === 0) return null;
+
+  return rows;
 }

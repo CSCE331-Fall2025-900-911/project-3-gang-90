@@ -12,5 +12,6 @@ router.post("/refill", ingredientsController.refillInventory);
 router.post("/:id/decrease", ingredientsController.decreaseInventory);
 router.get("/usage", ingredientsController.getIngredientUsage);
 router.get("/sales-report", ingredientsController.getSalesReport);
+router.get("/:name/allergens", ingredientsController.getAllergens);
 
 export default router;

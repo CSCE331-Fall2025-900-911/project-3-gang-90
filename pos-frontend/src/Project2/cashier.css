@@ -12,8 +12,13 @@
 }
 
 .customize-option.selected, .modification.selected {
+<<<<<<< HEAD
   background-color: #131313 !important;
   color: #ffffff !important;
+=======
+    background-color: #222 !important;
+    color: #fff !important;
+>>>>>>> sprint-3
 }
 
 .top-title {
@@ -152,7 +157,11 @@
     background: #e0e0e0;
     padding: 20px;
     border-radius: 10px;
+<<<<<<< HEAD
     width: 350px;
+=======
+    width: 450px;
+>>>>>>> sprint-3
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -166,17 +175,42 @@
     display: flex;
     align-items: center;
     gap: 10px;
+<<<<<<< HEAD
+=======
+    flex-wrap: wrap;
+>>>>>>> sprint-3
 }
 
 .popup button {
     padding: 8px 12px;
     border: none;
     cursor: pointer;
+<<<<<<< HEAD
 }
 
 .confirm-btn {
     background-color: #444;
     color: white;
+=======
+    background: #e0e0e0;
+    transition: background 0.2s;
+}
+
+.modification.selected {
+    background-color: #222 !important;
+    color: #fff !important;
+}
+
+.modification {
+    background-color: #d4d4d4 !important;
+    color: #000000 !important;
+    border-radius: 5px;
+}
+
+.confirm-btn {
+    background-color: #decccc;
+    color: rgb(0, 0, 0);
+>>>>>>> sprint-3
 }
 
 .cancel-btn {
