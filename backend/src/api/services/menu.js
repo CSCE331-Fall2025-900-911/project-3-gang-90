@@ -189,6 +189,6 @@ export async function checkAllergens(item) {
  * @returns {Promise<Array<Object>|null>} A promise that resolves to an array of objects containing the item_id, item_name, price, and category fields of the menu items, or null if no items are found.
  * @throws {Error} If the item name, category, or limit is not provided.
  */
-export async function getReccomendation(item, category, limit) {
-  return await menuQueries.getReccomendation(item, category, limit);
+export async function getRecommendation(item, category, limit) {
+  return await menuQueries.getRecommendation(item, category, limit);
 }

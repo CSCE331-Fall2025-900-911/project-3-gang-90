@@ -243,7 +243,7 @@ export async function checkAllergens(item) {
  * @param {number} limit The maximum number of menu items to retrieve.
  * @returns {Promise<Array<Object>|null>} A promise that resolves to an array of objects containing the item_id, item_name, price, and category fields of the menu items, or null if no items are found.
  */
-export async function getReccomendation(item, category, limit) {
+export async function getRecommendation(item, category, limit) {
   const rows = await sql`
     SELECT
       m.item_id,

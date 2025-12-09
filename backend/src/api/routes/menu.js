@@ -4,7 +4,7 @@ import * as menuController from "../controllers/menu.js";
 const router = Router();
 
 router.get("/", menuController.getMenu);
-router.get("/recommendations", menuController.getReccomendation);
+router.get("/recommendations", menuController.getRecommendation);
 router.get("/active", menuController.getActiveMenu);
 router.get("/item-id", menuController.getItemIdByName);
 router.get("/:id/ingredients", menuController.getItemIngredients);

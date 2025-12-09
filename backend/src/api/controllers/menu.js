@@ -322,7 +322,7 @@ export async function checkAllergens(req, res, next) {
  * @returns {Promise<Object[]>} A promise that resolves to an array of objects containing the item_id, item_name, price, and category fields of the menu items.
  * @throws {Error} If the item name, category, or limit is not provided.
  */
-export async function getReccomendation(req, res, next) {
+export async function getRecommendation(req, res, next) {
   try {
     const itemName = req.params.name;
     const category = req.params.category;
