@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import InnerAlergenTable from "./innerAlergenTable";
 
-
+const API_ROUTE = import.meta.env.VITE_SERVER;;
 
 export default function AllergenTable({ mods, itemName}){
       const [drinkAllergen, setDrinkAllergen] = useState(["Wheat"]);
@@ -13,13 +13,15 @@ export default function AllergenTable({ mods, itemName}){
       useEffect(()=>{
         const getDrinkAllergen = async ()=>{
           try{
-          const resp  = await fetch("api/:id/allergen");
+            console.log(API_ROUTE+`/api/${itemName}/allergen`)
+          const resp  = await fetch(API_ROUTE+`/api/${itemName}/allergen`);
           if(!resp.ok){
+
             throw new Error("failed to load");
           }
           const allergens = resp.json();
-    
-          setDrinkAllergen(allergens);
+          console.log(allergens)
+          //setDrinkAllergen(allergens);
     
           }catch(e){
             console.error("Failed to load: ", e);
@@ -28,7 +30,7 @@ export default function AllergenTable({ mods, itemName}){
     
     
         }
-    
+        getDrinkAllergen();
       },[]);
     
     //fetch the allergens for the topoings
@@ -48,7 +50,7 @@ export default function AllergenTable({ mods, itemName}){
           }catch(e){
             console.error("Failed to load: ", e);
           }
-       
+     
     
         
       }
