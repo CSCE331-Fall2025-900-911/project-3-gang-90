@@ -205,6 +205,12 @@ export async function retireItem(id) {
   return rows[0];
 }
 
+/**
+ * Retrieves all allergens associated with a given menu item.
+ *
+ * @param {string} item The name of the menu item to retrieve the allergens for.
+ * @returns {Promise<Array<Object>|null>} A promise that resolves to an array of objects containing the name of the allergen, or null if no allergens are found.
+ */
 export async function checkAllergens(item) {
   const rows = await sql`
         SELECT DISTINCT a.name

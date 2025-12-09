@@ -274,3 +274,34 @@ export async function retireMenuItem(req, res, next) {
     return next(err);
   }
 }
+
+/**
+ * Retrieves the allergens associated with a given menu item.
+ *
+ * @param {Object} req The request object.
+ * @param {Object} res The response object.
+ * @param {function} next The next function to call in the middleware chain.
+ *
+ * @query {string} itemName The name of the menu item to retrieve the allergens for.
+ *
+ * @returns {Promise<Object[]>} A promise that resolves to an array of objects containing the allergen name.
+ * @throws {Error} If the item name is not provided, or if the item name is invalid.
+ */
+export async function checkAllergens(req, res, next) {
+  try {
+    const itemName = Number(req.params.itemName); 
+    if (Number.isNaN(itemName)) {
+      return res.status(400).json({ error: "Invalid item id" });
+    }
+
+    const rows = await menuService.checkAllergens(itemName);
+
+    if (!rows || rows.length === 0) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+
+    return res.status(200).json(rows);
+  } catch (err) {
+    return next(err);
+  }
+}

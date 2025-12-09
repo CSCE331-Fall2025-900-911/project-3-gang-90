@@ -165,3 +165,14 @@ export async function retireMenuItem(id) {
 
   await menuQueries.retireItem(id);
 }
+
+/**
+ * Retrieves an array of allergens associated with the given menu item.
+ * 
+ * @param {string} item The name of the menu item to retrieve the allergens for.
+ * @returns {Promise<Array<string>>} A promise that resolves to an array of allergen names associated with the menu item.
+ * @throws {Error} If the item name is not provided.
+ */
+export async function checkAllergens(item) {
+  return await menuQueries.checkAllergens(item);
+}
