@@ -221,7 +221,7 @@ export async function checkAllergens(item) {
             ON im.ingredient_id = am.ingredient_id  
         JOIN allergens a
             ON a.allergen_id = am.allergen_id
-        WHERE m.item_name = 'regular pearl milk tea'
+        WHERE m.item_name = ${item}
         AND m.is_active = TRUE;
     `;
 
