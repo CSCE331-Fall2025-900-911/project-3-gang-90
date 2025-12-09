@@ -1,5 +1,6 @@
 import React from 'react'
 import { CartProvider } from './components/CartContext'
+import { RecommendationProvider } from './components/RecommendationContext'
 import { AccessibilityProvider } from './components/AccessibilityContext'
 import { Routes, Route, Link } from 'react-router-dom'
 import SystemSelect from "./components/SystemSelect";
@@ -31,6 +32,7 @@ export default function App() {
   return (
     <AccessibilityProvider>
       <CartProvider>
+        <RecommendationProvider>
         <main>
           <Routes>
             <Route path="/" element={<SystemSelect />} />
@@ -56,6 +58,7 @@ export default function App() {
             <Route path="/menuboard" element={<MenuBoard />} />
           </Routes>
         </main>
+        </RecommendationProvider>
       </CartProvider>
     </AccessibilityProvider>
   )

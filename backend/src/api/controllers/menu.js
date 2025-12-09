@@ -333,7 +333,7 @@ export async function getRecommendation(req, res, next) {
       return res.status(400).json({ error: "Missing required parameters" });
     }
 
-    const rows = await menuService.getReccomendation(itemName, category, limit);
+    const rows = await menuService.getRecommendation(itemName, category, limit);
     if (!rows || rows.length === 0 || rows === null) {
       return res.status(404).json({ error: "Item not found" });
     }

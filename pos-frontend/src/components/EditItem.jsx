@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useCart } from './CartContext'
+import { useRecommendation } from './RecommendationContext'
 import DrinkCustomization from './DrinkCustomization'
 
 let server = import.meta.env.VITE_SERVER;
@@ -9,6 +10,7 @@ export default function EditItem() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { addItem, items: cartItems } = useCart()
+  const { fetchRecommendations } = useRecommendation()
 
   const [quantity, setQuantity] = useState(1)
   const [mods, setMods] = useState([])
@@ -107,6 +109,8 @@ export default function EditItem() {
                   quantity,
                   price: getAdjustedPrice(item.price, mods)
                 })
+                const category = item.category ?? item.item_category ?? 'Drink';
+                fetchRecommendations(item.item_name, category, 3)
                 navigate('/cart')
               }}
               alt={`Add ${item.item_name} to order`}
