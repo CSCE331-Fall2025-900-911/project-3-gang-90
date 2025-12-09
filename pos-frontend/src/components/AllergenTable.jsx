@@ -13,7 +13,7 @@ export default function AllergenTable({ mods, itemName}){
       useEffect(()=>{
         const getDrinkAllergen = async ()=>{
           try{
-          const resp  = await fetch();
+          const resp  = await fetch("api/:id/allergen");
           if(!resp.ok){
             throw new Error("failed to load");
           }
