@@ -176,3 +176,19 @@ export async function retireMenuItem(id) {
 export async function checkAllergens(item) {
   return await menuQueries.checkAllergens(item);
 }
+
+
+/**
+ * Retrieves a random set of menu items from the given category,
+ * excluding the given menu item, and ensuring that all items have at
+ * least one ingredient with a quantity greater than 0.
+ *
+ * @param {string} item The name of the menu item to exclude.
+ * @param {string} category The category of menu items to retrieve.
+ * @param {number} limit The maximum number of menu items to retrieve.
+ * @returns {Promise<Array<Object>|null>} A promise that resolves to an array of objects containing the item_id, item_name, price, and category fields of the menu items, or null if no items are found.
+ * @throws {Error} If the item name, category, or limit is not provided.
+ */
+export async function getReccomendation(item, category, limit) {
+  return await menuQueries.getReccomendation(item, category, limit);
+}

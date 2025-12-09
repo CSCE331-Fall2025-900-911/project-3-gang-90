@@ -4,6 +4,7 @@ import * as menuController from "../controllers/menu.js";
 const router = Router();
 
 router.get("/", menuController.getMenu);
+router.get("/recommendations", menuController.getReccomendation);
 router.get("/active", menuController.getActiveMenu);
 router.get("/item-id", menuController.getItemIdByName);
 router.get("/:id/ingredients", menuController.getItemIngredients);
@@ -14,5 +15,6 @@ router.patch("/:id/price", menuController.updateMenuPrice);
 router.delete("/:id", menuController.deleteMenuItem);
 router.post("/:id/retire", menuController.retireMenuItem);
 router.get("/:name/allergens", menuController.checkAllergens);
+
 
 export default router;
