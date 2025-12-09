@@ -10,12 +10,6 @@ export default function WeatherBar(){
     const [weatherDescriptoin, setWeatherDescription] = useState("faild to load");
     const [temputure, setTempeture] = useState(0);
 
-
-
-
-
-
-
     useEffect(()=>{
         const getWeather = async (longitude, latitude)=>{
             try{
