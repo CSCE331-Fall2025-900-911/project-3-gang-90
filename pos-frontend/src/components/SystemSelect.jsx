@@ -43,7 +43,7 @@ export default function SystemSelect() {
           size="large"
           onClick={() => navigate("/products")}
         >
-          Menu Board View
+          Manger view
         </Button>
       </Stack>
     </Box>
