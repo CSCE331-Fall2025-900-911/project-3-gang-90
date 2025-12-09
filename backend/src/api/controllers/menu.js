@@ -289,9 +289,10 @@ export async function retireMenuItem(req, res, next) {
  */
 export async function checkAllergens(req, res, next) {
   try {
-    const itemName = Number(req.params.itemName); 
-    if (Number.isNaN(itemName)) {
-      return res.status(400).json({ error: "Invalid item id" });
+    const itemName = req.params.itemName;
+
+    if (!itemName || itemName.trim() === "") {
+      return res.status(400).json({ error: "Item name is required" });
     }
 
     const rows = await menuService.checkAllergens(itemName);
