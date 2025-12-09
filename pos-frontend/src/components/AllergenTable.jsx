@@ -13,8 +13,8 @@ export default function AllergenTable({ mods, itemName}){
       useEffect(()=>{
         const getDrinkAllergen = async ()=>{
           try{
-            console.log(API_ROUTE+`/api/${itemName}/allergen`)
-          const resp  = await fetch(API_ROUTE+`/api/${itemName}/allergen`);
+            console.log(API_ROUTE+`/api/${itemName}/allergens`)
+          const resp  = await fetch(API_ROUTE+`/api/${itemName}/allergens`);
           if(!resp.ok){
 
             throw new Error("failed to load");
@@ -37,15 +37,17 @@ export default function AllergenTable({ mods, itemName}){
     
     useEffect(()=>{
       const getToppingAllergens = async()=>{
+        const tempallergen = [];
         try{
-          for(i = 0; i < mods.length(); i++){
-            const resp  = await fetch();
+          for(let i = 0; i < mods.length; i++){
+            let parsedmod = mods[i].split(":");
+            const resp  = await fetch(API_ROUTE+`/api/${parsedmod[1]}/allergens`);
             if(!resp.ok){
               throw new Error("failed to load");
             }
             const allergens = resp.json();
-    
-            setTopingAllergen(...allergens);
+            console.log(allergens);
+            //setTopingAllergen(...allergens);
            }
           }catch(e){
             console.error("Failed to load: ", e);
@@ -54,7 +56,8 @@ export default function AllergenTable({ mods, itemName}){
     
         
       }
-    
+      console.log(mods);
+      getToppingAllergens();
      const moreEggs = toppingAllergen;
      if(perviousMod.length < mods.length ){
         moreEggs.push("More Eggs");
