@@ -165,3 +165,7 @@ export async function retireMenuItem(id) {
 
   await menuQueries.retireItem(id);
 }
+
+export async function checkAllergens(item) {
+  return await menuQueries.checkAllergens(item);
+}

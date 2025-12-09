@@ -274,3 +274,22 @@ export async function retireMenuItem(req, res, next) {
     return next(err);
   }
 }
+
+export async function checkAllergens(req, res, next) {
+  try {
+    const itemName = Number(req.params.itemName); 
+    if (Number.isNaN(itemName)) {
+      return res.status(400).json({ error: "Invalid item id" });
+    }
+
+    const rows = await menuService.checkAllergens(itemName);
+
+    if (!rows || rows.length === 0) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+
+    return res.status(200).json(rows);
+  } catch (err) {
+    return next(err);
+  }
+}

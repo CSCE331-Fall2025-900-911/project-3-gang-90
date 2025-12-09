@@ -13,5 +13,6 @@ router.delete("/:id/ingredients/:ingredientId", menuController.removeIngredientF
 router.patch("/:id/price", menuController.updateMenuPrice);
 router.delete("/:id", menuController.deleteMenuItem);
 router.post("/:id/retire", menuController.retireMenuItem);
+router.get("/:id/allergens", menuController.checkAllergens);
 
 export default router;
