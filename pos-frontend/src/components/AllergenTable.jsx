@@ -14,14 +14,14 @@ export default function AllergenTable({ mods, itemName}){
         const getDrinkAllergen = async ()=>{
           try{
             console.log(API_ROUTE+`/api/${itemName}/allergens`)
-          const resp  = await fetch(API_ROUTE+`/api/${itemName}/allergens`);
+            const resp  = await fetch(API_ROUTE+`/api/menu/${itemName.toLowerCase()}/allergens`);
           if(!resp.ok){
 
             throw new Error("failed to load");
           }
-          const allergens = resp.json();
+          const allergens = await resp.json();
           console.log(allergens)
-          //setDrinkAllergen(allergens);
+          setDrinkAllergen(allergens);
     
           }catch(e){
             console.error("Failed to load: ", e);
@@ -41,7 +41,8 @@ export default function AllergenTable({ mods, itemName}){
         try{
           for(let i = 0; i < mods.length; i++){
             let parsedmod = mods[i].split(":");
-            const resp  = await fetch(API_ROUTE+`/api/${parsedmod[1]}/allergens`);
+    
+            const resp  = await fetch(API_ROUTE+`/api/ingredients/${parsedmod[1].toLowerCase()}/allergens`);
             if(!resp.ok){
               throw new Error("failed to load");
             }
