@@ -3,6 +3,7 @@ import InnerAlergenTable from "./innerAlergenTable";
 
 const API_ROUTE = import.meta.env.VITE_SERVER;
 
+
 function toTitleCase(str) {
   return str
     .toLowerCase()
