@@ -13,7 +13,7 @@ export default function SystemSelect() {
       height="100vh"
     >
       <Stack spacing={3} alignItems="center">
-        <Typography variant="h4">Select System</Typography>
+        <h1>Select System</h1>
 
         <Button
           variant="contained"
