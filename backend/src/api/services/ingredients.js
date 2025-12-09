@@ -160,3 +160,18 @@ export async function getSalesReport(start, end) {
 
   return await ingredientQueries.getSalesReport(start, end);
 }
+
+/**
+ * Retrieves an array of allergens associated with the given ingredient name.
+ * 
+ * @param {string} ingredientName The name of the ingredient to retrieve the allergens for.
+ * @returns {Promise<Array<string>>} A promise that resolves to an array of allergen names associated with the ingredient, or null if no allergens are found.
+ * @throws {Error} If the ingredient name is not provided.
+ */
+export async function getAllergens(ingredientName) {
+  if (!ingredientName) {
+    throw new Error("Ingredient name is required to get allergens");
+  }
+  
+  return await ingredientQueries.getAllergens(ingredientName);
+}

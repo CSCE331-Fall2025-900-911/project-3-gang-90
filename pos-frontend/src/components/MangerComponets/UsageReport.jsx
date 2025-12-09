@@ -21,10 +21,13 @@ export default function UsageReport(){
         const startDay = new Date();
         const endDay = new Date();
 
-        startDay.setDate(startDay.getDate()-1);
+        startDay.setDate(startDay.getDate()-2);
+        endDay.setDate(endDay.getDate()-1);
 
         const databaseStart = startDay.toISOString().split("T")[0];
         const databaseEnd = endDay.toISOString().split("T")[0];
+        console.log(databaseStart);
+        console.log(databaseEnd);
 
         setEndDate(databaseEnd);
         setBeginDate(databaseStart);
@@ -34,7 +37,7 @@ export default function UsageReport(){
 
     function applyMonth(){
 
-                const now = new Date();
+        const now = new Date();
 
 
         const startOfMonth = new Date(now.getFullYear(), now.getMonth() -1, now.getDay());
@@ -46,6 +49,8 @@ export default function UsageReport(){
 
         setEndDate(databaseEnd);
         setBeginDate(databaseStart);
+        console.log(databaseEnd);
+        console.log(databaseStart);
         setRefresh(!refresh);
     }
 
@@ -88,6 +93,7 @@ export default function UsageReport(){
             
             try{
                 const res =  await fetch(`${API_ROUTE}/api/ingredients/usage?start=${beginDate}&end=${endDate}`);
+                console.log(`${API_ROUTE}/api/ingredients/usage?start=${beginDate}&end=${endDate}`);
                 if(!res.ok){
                     throw new Error("response not ok: ", res.status);
                 }

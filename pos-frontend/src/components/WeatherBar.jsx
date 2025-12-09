@@ -34,15 +34,24 @@ export default function WeatherBar(){
         const getLocation = async ()=>{
         if ("geolocation" in navigator) {
         /* geolocation is available */
+            //console.log("in geolocation");
+            let geoAllowed = false;
             navigator.geolocation.getCurrentPosition((positions)=>{
                 //send to fetch
+                geoAllowed = true;
+               console.log(positions.coords.longitude, positions.coords.latitude)
                 getWeather(positions.coords.longitude, positions.coords.latitude);
 
             })
+            if(!geoAllowed){
+                //console.log("hello")
+                getWeather(96.354304, 30.6118656);
+            }
 
         } else {
         /* geolocation IS NOT available */
-            getWeather("96.33", "30.63");
+            console.log("in other location");
+            getWeather(-96.354304, 30.6118656);
         }
 
 

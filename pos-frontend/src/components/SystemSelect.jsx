@@ -38,6 +38,13 @@ export default function SystemSelect() {
         >
           Menu Board View
         </Button>
+        <Button
+          variant="contained"
+          size="large"
+          onClick={() => navigate("/products")}
+        >
+          Manger view
+        </Button>
       </Stack>
     </Box>
   );

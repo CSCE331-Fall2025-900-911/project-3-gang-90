@@ -9,6 +9,11 @@ export default function Home() {
   const { items: cartItems } = useCart()
   const [askLogin, setAskLogin] = useState(false)
   const navigate = useNavigate()
+  const [milk, setMilk] = useState(false)
+  const [fruit, setFruit] = useState(false)
+  const [special, setSpecial] = useState(false)
+  const { user, authReady, logoutReason, clearLogoutReason } = useAuth()
+
 
   const [freshBrew, setFreshBrew] = useState(false)
   const [milkySeries, setMilkySeries] = useState(false)
@@ -17,7 +22,7 @@ export default function Home() {
   const [iceBlended, setIceBlended] = useState(false)
   const [matcha, setMatcha] = useState(false)
 
-  const { user, authReady, logoutReason, clearLogoutReason } = useAuth()
+
 
   function resetSelections() {
     setFreshBrew(false)
@@ -34,7 +39,7 @@ export default function Home() {
     if (button === 'freshBrew') setFreshBrew(true)
     if (button === 'milkySeries') setMilkySeries(true)
     if (button === 'fruity') setFruity(true)
-    if (button === 'nonCaffeinated') setNonCaffeinated(true)
+    if (button === 'nonCaffeinated') setNonCafeinated(true)
     if (button === 'iceBlended') setIceBlended(true)
     if (button === 'matcha') setMatcha(true)
 
@@ -46,7 +51,7 @@ export default function Home() {
     if (freshBrew) navigate('/freshbrew')
     if (milkySeries) navigate('/milkyseries')
     if (fruity) navigate('/fruity')
-    if (nonCaffeinated) navigate('/noncaffeinated')
+    if (nonCafeinated) navigate('/noncaffeinated')
     if (iceBlended) navigate('/iceblended')
     if (matcha) navigate('/matcha')
   }

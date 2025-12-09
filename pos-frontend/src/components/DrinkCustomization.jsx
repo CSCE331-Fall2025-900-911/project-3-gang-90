@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
+import AllergenTable from './AllergenTable';
 
-export default function DrinkCustomization({ mods, setMods }) {
+export default function DrinkCustomization({ mods, setMods, itemName }) {
   // mods: array of "Category:Value" strings
+
   function handleSelect(category, value, multi = false) {
     const key = `${category}:${value}`;
     if (multi) {
@@ -21,10 +23,15 @@ export default function DrinkCustomization({ mods, setMods }) {
   const tempOptions = ['Normal', 'Hot'];
   const toppingOptions = ["Boba", "Honey Boba", "Lychee Jelly", "Coconut Jelly", "Pudding", "Ice Cream", "Oreo", "Mini Pearls", "Aiyu Jelly", "Crema", "Sub Crema", "Crystal Boba", "Mango Boba", "Strawberry Boba", "Coffee Jelly", "Honey Jelly", "Peach Boba", "Fresh Milk"];
 
+
+
   return (
     <div className="customize-panel-inner">
       <h2>Customize Your Drink</h2>
       <div className="customization">
+        <div>
+          <AllergenTable mods={mods} itemName={itemName}/>
+        </div>
         <h3>Size</h3>
         <div className="customize-buttons">
           {sizeOptions.map(option => (

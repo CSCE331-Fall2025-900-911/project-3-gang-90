@@ -205,6 +205,12 @@ export async function retireItem(id) {
   return rows[0];
 }
 
+/**
+ * Retrieves all allergens associated with a given menu item.
+ *
+ * @param {string} item The name of the menu item to retrieve the allergens for.
+ * @returns {Promise<Array<Object>|null>} A promise that resolves to an array of objects containing the name of the allergen, or null if no allergens are found.
+ */
 export async function checkAllergens(item) {
   const rows = await sql`
         SELECT DISTINCT a.name
@@ -219,9 +225,50 @@ export async function checkAllergens(item) {
         AND m.is_active = TRUE;
     `;
 
-    if (rows.length === 0) {
-        console.warn(`Found no allergens for ${item}!`);
-        return null;
-    }
-    return rows;
+  if (rows.length === 0) {
+    console.warn(`Found no allergens for ${item}!`);
+    return null;
+  }
+  return rows.map((row) => row.name);
+}
+
+
+/**
+ * Retrieves a random set of menu items from the given category,
+ * excluding the given menu item, and ensuring that all items have at
+ * least one ingredient with a quantity greater than 0.
+ *
+ * @param {string} item The name of the menu item to exclude.
+ * @param {string} category The category of menu items to retrieve.
+ * @param {number} limit The maximum number of menu items to retrieve.
+ * @returns {Promise<Array<Object>|null>} A promise that resolves to an array of objects containing the item_id, item_name, price, and category fields of the menu items, or null if no items are found.
+ */
+export async function getRecommendation(item, category, limit) {
+  const rows = await sql`
+    SELECT
+      m.item_id,
+      m.item_name,
+      m.price,
+      m.category
+    FROM menu m
+    JOIN ingredients_map im
+      ON im.item_id = m.item_id
+    JOIN ingredients i
+      ON i.ingredient_id = im.ingredient_id
+    WHERE m.category = ${category}
+      AND m.is_active = TRUE
+      AND m.item_name != ${item}
+    GROUP BY
+      m.item_id,
+      m.item_name,
+      m.price,
+      m.category
+    HAVING MIN(i.quantity) > 0
+    ORDER BY RANDOM()
+    LIMIT ${limit};
+  `;
+
+  if (rows.length === 0) return null;
+
+  return rows;
 }
