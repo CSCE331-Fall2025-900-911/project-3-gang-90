@@ -229,5 +229,5 @@ export async function checkAllergens(item) {
         console.warn(`Found no allergens for ${item}!`);
         return null;
     }
-    return rows;
+    return rows.map((row) => row.name);
 }

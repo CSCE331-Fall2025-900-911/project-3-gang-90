@@ -21,7 +21,7 @@ export async function getIngredients() {
 
 /**
  * Retrieves the ingredient_id of an ingredient given its name.
- * 
+ *
  * @param {string} ingredientName The name of the ingredient to retrieve the id for.
  * @returns {Promise<number|null>} A promise that resolves to the ingredient_id of the ingredient if found, or null if not found. If multiple ingredients are found with the same name, logs a warning and returns the first one.
  */
@@ -80,10 +80,10 @@ export async function refillInventory(ingredientName, quantity) {
 
 /**
  * Decreases the inventory of an ingredient given its id and the quantity to be subtracted.
- * 
+ *
  * @param {number} ingredientId The id of the ingredient to decrease the inventory of.
  * @param {number} quantity The quantity to be subtracted from the ingredient.
- * 
+ *
  * @returns {Promise<Object|null>} A promise that resolves to an object containing the ingredient_id, ingredient_name, quantity, and category fields of the decreased ingredient, or null if the ingredient is not found.
  * @throws {Error} If the quantity is negative.
  */
@@ -114,11 +114,11 @@ export async function decreaseInventory(ingredientId, quantity) {
 
 /**
  * Inserts a new ingredient into the database.
- * 
+ *
  * @param {string} name The name of the ingredient to add.
  * @param {number} quantity The quantity of the ingredient to add.
  * @param {string} category The category of the ingredient to add.
- * 
+ *
  * @returns {Promise<Object>} A promise that resolves to an object containing the ingredient_id, ingredient_name, quantity, and category fields of the added ingredient.
  * @throws {Error} If the insert fails for any reason.
  */
@@ -144,12 +144,12 @@ export async function addIngredient(name, quantity, category) {
 
 /**
  * Updates an existing ingredient in the database.
- * 
+ *
  * @param {number} id The id of the ingredient to update.
  * @param {string} name The new name of the ingredient.
  * @param {number} quantity The new quantity of the ingredient.
  * @param {string} category The new category of the ingredient.
- * 
+ *
  * @returns {Promise<Object|null>} A promise that resolves to an object containing the ingredient_id, ingredient_name, quantity, and category fields of the updated ingredient, or null if the ingredient is not found.
  * @throws {Error} If the update fails for any reason.
  */
@@ -178,9 +178,9 @@ export async function updateIngredient(id, name, quantity, category) {
 
 /**
  * Deletes an ingredient from the database given its id.
- * 
+ *
  * @param {number} id The id of the ingredient to delete.
- * 
+ *
  * @returns {Promise<Object|null>} A promise that resolves to an object containing the ingredient_id field of the deleted ingredient, or null if nothing was deleted.
  */
 export async function deleteIngredient(id) {
@@ -245,4 +245,30 @@ export async function getSalesReport(start, end) {
     time: row.transaction_time,
     itemName: row.item_name,
   }));
+}
+
+/**
+ * Retrieves an array of allergen names associated with the given ingredient.
+ *
+ * @param {string} ingredientName The name of the ingredient to retrieve allergens for.
+ * @returns {Promise<Array<string>>} A promise that resolves to an array of allergen names associated with the ingredient.
+ * If no allergens are found, a warning message is logged and null is returned.
+ */
+export async function getAllergens(ingredientName) {
+  const rows = await sql`
+    SELECT a.name
+    FROM allergen_map am
+    JOIN allergens a
+      ON a.allergen_id = am.allergen_id
+    JOIN ingredients i
+      ON i.ingredient_id = am.ingredient_id
+    WHERE LOWER(i.ingredient_name) = LOWER(${ingredientName});
+  `;
+
+  if (rows.length === 0) {
+    console.warn(`Found no allergens for ${ingredientName}!`);
+    return null;
+  }
+
+  return rows.map((row) => row.name);
 }
