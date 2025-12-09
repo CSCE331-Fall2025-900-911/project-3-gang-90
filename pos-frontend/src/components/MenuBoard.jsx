@@ -19,6 +19,7 @@ export default function MenuBoard() {
       try {
         const res = await fetch(server + '/api/menu/');
         const data = await res.json();
+        console.log("API DATA:", data);
         const toTitle = (str = "") =>
           str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
         const items = Array.isArray(data)
@@ -43,7 +44,6 @@ export default function MenuBoard() {
     <main style={{ background: '#e0e0e0', minHeight: '100vh', width: '100vw', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start' }}>
       <div className="top-bar" style={{ width: '100%', marginBottom: 0 }}>
         <h1 style={{ fontSize: '2rem', letterSpacing: 1 }}>Menu Board</h1>
-        <div className="time" style={{ fontSize: '1rem' }}>5:00 PM</div>
       </div>
       <div style={{
         width: '100vw',
