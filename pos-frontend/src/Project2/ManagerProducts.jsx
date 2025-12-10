@@ -281,34 +281,6 @@ function ManagerProductsContent() {
   );
 }
 
-async function handleDelete() {
-  if (!product) return;
-
-  try {
-    const isSeasonal = product.id < 0;
-    const itemId = Math.abs(product.id);
-
-    const url = isSeasonal ? `${API_BASE}/seasonalMenu/${itemId}` : `${API_BASE}/menu/${itemId}`;
-
-    const res = await fetch(url, {
-      method: "DELETE",
-    });
-
-    if (!res.ok) {
-      alert("Failed to delete item");
-      return;
-    }
-
-    if (onSave) {
-      onSave({ ...product, _deleted: true });
-    }
-    
-    onClose();
-  } catch (err) {
-    console.error(err);
-    alert("Error deleting itemm");
-  }
-}
 
 
 function ItemEditorDialog({ open, product, onClose, onSave }) 
@@ -334,6 +306,35 @@ function ItemEditorDialog({ open, product, onClose, onSave })
     loadItemIngredients(product);
     loadAllIngredients();
   }, [product]);
+
+  async function handleDelete() {
+    if (!product) return;
+
+    try {
+      const isSeasonal = product.id < 0;
+      const itemId = Math.abs(product.id);
+
+      const url = isSeasonal ? `${API_BASE}/seasonalMenu/${itemId}` : `${API_BASE}/menu/${itemId}`;
+
+      const res = await fetch(url, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        alert("Failed to delete item");
+        return;
+      }
+
+      if (onSave) {
+        onSave({ ...product, _deleted: true });
+      }
+      
+      onClose();
+    } catch (err) {
+      console.error(err);
+      alert("Error deleting itemm");
+    }
+  }
 
   async function loadItemIngredients(prod) {
     try {
