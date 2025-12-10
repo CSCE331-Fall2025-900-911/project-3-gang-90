@@ -38,6 +38,8 @@ function getComparator(order, orderBy) {
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
+
+const API_ROUTE = import.meta.env.VITE_SERVER;
 function ReportTableHead(props) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
   const createSortHandler = (property) => (event) => { onRequestSort(event, property); };
@@ -129,7 +131,7 @@ export default function ReportTable({ refreshSignal }) {
         const now = new Date();
         const todayStr = now.toDateString();
 
-        const res = await fetch(`http://localhost:3000/api/transactions?page=0&pageSize=200`);
+        const res = await fetch(`${API_ROUTE}/api/transactions?page=0&pageSize=200`);
         const json = await res.json();
         const data = Array.isArray(json) ? json : json?.data;
         if (Array.isArray(data)) {
