@@ -85,8 +85,8 @@ export default function Cashier() {
       .join(" ");
   }
 
-  function openDrinkMods(name, price, category) {
-    setCurrentDrink({ name, price, basePrice: price, category });
+  function openDrinkMods(id, name, price, category) {
+    setCurrentDrink({ id, name, price, basePrice: price, category });
     setCurrentMods([]);
     setShowMods(true);
   }
@@ -119,10 +119,8 @@ export default function Cashier() {
 
   function addDrinkToOrder() {
     if (!currentDrink) return;
-    const { name, price, category } = currentDrink;
+    const { id, name, price, category } = currentDrink;
     const mods = [...currentMods];
-    const found = menu.find(m => m.name === name && (Number(m.price) === Number(currentDrink.basePrice)));
-    const id = found ? found.id : undefined;
     setOrderItems(items => [...items, { name, price, mods, id, category, quantity: 1 }]);
     setShowMods(false);
     setCurrentDrink(null);
@@ -178,17 +176,16 @@ export default function Cashier() {
 
   function confirmCharge() {
     if (!customerName) return;
-    const transaction = {
+    const items = orderItems
+      .filter(it => it.id != null)
+      .map(it => ({ id: it.id }));
+    const body = {
       customerName,
       transactionTime: new Date().toISOString(),
       employeeId: cashierID || 1,
-      totalPrice: Number(subtotal),
+      totalPrice: Number((Number(subtotal || 0) * 1.0825).toFixed(2)),
+      items
     };
-    const item = orderItems.map((item) => ({
-      itemId: item.id || item.name,
-      mods: item.mods || [],
-      price: item.price
-    }));
     const controller = new AbortController();
     const timeout = setTimeout(() => {
       console.warn("Fetch timed out");
@@ -201,7 +198,7 @@ export default function Cashier() {
         "Content-Type": "application/json",
       },
       signal: controller.signal,
-      body: JSON.stringify({ transaction, item }),
+      body: JSON.stringify(body),
     })
       .then((res) => {
         clearTimeout(timeout);
@@ -282,7 +279,7 @@ export default function Cashier() {
                   key={idx}
                   className="drink-button"
                   onClick={() =>
-                    openDrinkMods(toTitleCase(item.name), item.price, item.category || item.type || "Drink")
+                    openDrinkMods(item.id ?? item.item_id, toTitleCase(item.name), item.price, item.category || item.type || "Drink")
                   }
                   style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', padding: '12px' }}
                 >
