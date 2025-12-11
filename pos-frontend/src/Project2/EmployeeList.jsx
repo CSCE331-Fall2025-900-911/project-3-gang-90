@@ -16,6 +16,7 @@ export default function EmployeeList() {
     try {
       const response = await fetch(server + "/api/employees");
       const data = await response.json();
+      //console.log(data);
       setEmployees(data);
     } catch (err) {
       setEmployees([]);
@@ -38,6 +39,7 @@ export default function EmployeeList() {
   }
 
   async function deleteEmployee(id) {
+    //console.log(id);
     await fetch(server + `/api/employees/${id}`, { method: "DELETE" });
     loadEmployees();
   }
@@ -66,15 +68,15 @@ export default function EmployeeList() {
 
             <tbody>
               {employees.map(emp => (
-                <tr key={emp.id}>
-                  <td>{emp.id}</td>
+                <tr key={emp.employee_id}>
+                  <td>{emp.employee_id}</td>
                   <td>{emp.name}</td>
                   <td>{emp.role}</td>
                   <td>${emp.pay}</td>
                   <td>
                     <button
                       className="delete-btn"
-                      onClick={() => deleteEmployee(emp.id)}
+                      onClick={() => deleteEmployee(emp.employee_id)}
                     >
                       Delete
                     </button>
