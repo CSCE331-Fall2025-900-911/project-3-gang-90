@@ -21,8 +21,8 @@ export default function UsageReport(){
         const startDay = new Date();
         const endDay = new Date();
 
-        startDay.setDate(startDay.getDate()-2);
-        endDay.setDate(endDay.getDate()-1);
+        startDay.setDate(startDay.getDate());
+        endDay.setDate(endDay.getDate()+1);
 
         const databaseStart = startDay.toISOString().split("T")[0];
         const databaseEnd = endDay.toISOString().split("T")[0];
@@ -40,8 +40,8 @@ export default function UsageReport(){
         const now = new Date();
 
 
-        const startOfMonth = new Date(now.getFullYear(), now.getMonth() -1, now.getDay());
-        const endOfMonth = new Date(now.getFullYear(), now.getMonth(), now.getDay());
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth() -1, now.getDate());
+        const endOfMonth = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
 
 
         const databaseStart = startOfMonth.toISOString().split("T")[0];
@@ -59,9 +59,11 @@ export default function UsageReport(){
         const endDay = new Date();
 
         startDay.setDate(startDay.getDate()-30);
-
+        endDate.setDate(endDate.getDate()+1);
         const databaseStart = startDay.toISOString().split("T")[0];
         const databaseEnd = endDay.toISOString().split("T")[0];
+        console.log(databaseEnd);
+        console.log(databaseStart);
         
         setEndDate(databaseEnd);
         setBeginDate(databaseStart);
@@ -74,9 +76,11 @@ export default function UsageReport(){
         const endDay = new Date();
 
         startDay.setDate(startDay.getDate()-7);
-
+        endDate.setDate(endDate.getDate()+1);
         const databaseStart = startDay.toISOString().split("T")[0];
         const databaseEnd = endDay.toISOString().split("T")[0];
+        console.log(databaseEnd);
+        console.log(databaseStart);
         
         setEndDate(databaseEnd);
         setBeginDate(databaseStart);

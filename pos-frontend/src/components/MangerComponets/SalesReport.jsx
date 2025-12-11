@@ -123,11 +123,13 @@ export default function SalesReport(){
         const startDay = new Date();
         const endDay = new Date();
 
-        startDay.setDate(startDay.getDate()-1);
-
+        startDay.setDate(startDay.getDate());
+        endDay.setDate(endDay.getDate()+1);
         const databaseStart = startDay.toISOString().split("T")[0];
         const databaseEnd = endDay.toISOString().split("T")[0];
 
+        console.log(databaseEnd);
+        console.log(databaseStart);
         setEndDate(databaseEnd);
         setBeginDate(databaseStart);
 
@@ -139,13 +141,14 @@ export default function SalesReport(){
                 const now = new Date();
 
 
-        const startOfMonth = new Date(now.getFullYear(), now.getMonth() -1, now.getDay());
-        const endOfMonth = new Date(now.getFullYear(), now.getMonth(), now.getDay());
-
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth() -1, now.getDate());
+        const endOfMonth = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
+        console.log(now.getDate());
 
         const databaseStart = startOfMonth.toISOString().split("T")[0];
         const databaseEnd = endOfMonth.toISOString().split("T")[0];
-
+        console.log(databaseEnd);
+        console.log(databaseStart);
         setEndDate(databaseEnd);
         setBeginDate(databaseStart);
         setRefresh(!refresh);
@@ -156,10 +159,12 @@ export default function SalesReport(){
         const endDay = new Date();
 
         startDay.setDate(startDay.getDate()-30);
-
+        endDay.setDate(endDay.getDate()+1);
         const databaseStart = startDay.toISOString().split("T")[0];
         const databaseEnd = endDay.toISOString().split("T")[0];
         
+        console.log(databaseEnd);
+        console.log(databaseStart);
         setEndDate(databaseEnd);
         setBeginDate(databaseStart);
 
@@ -171,10 +176,12 @@ export default function SalesReport(){
         const endDay = new Date();
 
         startDay.setDate(startDay.getDate()-7);
+        endDay.setDate(endDay.getDate()+1);
 
         const databaseStart = startDay.toISOString().split("T")[0];
         const databaseEnd = endDay.toISOString().split("T")[0];
-        
+        console.log(databaseEnd);
+        console.log(databaseStart);
         setEndDate(databaseEnd);
         setBeginDate(databaseStart);
 
