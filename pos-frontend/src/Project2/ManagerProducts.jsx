@@ -71,7 +71,7 @@ function ManagerProductsContent() {
     try {
       setLoading(true);
       setError(null);
-      const res = await fetch(`${API_BASE}/seasonalMenu`);
+      const res = await fetch(`${API_BASE}/seasonal-menu`);
       if (!res.ok) throw new Error("Failed to load seasonal menu");
       const data = await res.json();
       setProducts(
@@ -124,7 +124,7 @@ function ManagerProductsContent() {
     try {
       const body = { name: n, price: priceNum, quantity: qtyNum, category: c };
       const url = season
-        ? `${API_BASE}/menu/seasonal`
+        ? `${API_BASE}/seasonal-menu`
         : `${API_BASE}/menu`;
 
       const res = await fetch(url, {
@@ -314,7 +314,7 @@ function ItemEditorDialog({ open, product, onClose, onSave })
       const isSeasonal = product.id < 0;
       const itemId = Math.abs(product.id);
 
-      const url = isSeasonal ? `${API_BASE}/seasonalMenu/${itemId}` : `${API_BASE}/menu/${itemId}`;
+      const url = isSeasonal ? `${API_BASE}/seasonal-menu/${itemId}` : `${API_BASE}/menu/${itemId}`;
 
       const res = await fetch(url, {
         method: "DELETE",
