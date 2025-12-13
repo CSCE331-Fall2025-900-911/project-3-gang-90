@@ -1,4 +1,6 @@
 import { transactions as transactionQueries } from "../../db/index.js";
+import { sql } from "../../config/db.js";
+import { checkStockByItemId, decrementStockByItemId } from "../../db/queries/helpers.js";
 
 
 /**
@@ -112,13 +114,58 @@ export async function createTransactionWithItems({
     throw new Error("items must be an array when creating a transaction");
   }
 
-  return await transactionQueries.addTransactionAndDetails(
-    {
-      customerName,
-      transactionTime,
-      employeeId,
-      totalPrice,
-    },
-    items,
-  );
+  if (items.length === 0) {
+    throw new Error("items must not be empty when creating a transaction");
+  }
+
+  for (const it of items) {
+    if (!it || it.itemId == null) {
+      throw new Error("Each item must be an object with itemId");
+    }
+  }
+
+  // Do inventory + transaction writes atomically.
+  return await sql.begin(async (tx) => {
+    // 1) Stock check (fail fast)
+    for (const { itemId } of items) {
+      const stockRows = await checkStockByItemId(itemId, tx);
+
+      if (stockRows.length === 0) {
+        throw new Error(`Item ${itemId} not found, inactive, or has no ingredients mapped`);
+      }
+
+      const outOfStock = stockRows.filter((r) => r.quantity <= 0);
+      if (outOfStock.length > 0) {
+        const names = outOfStock.map((r) => r.name).join(", ");
+        throw new Error(`Insufficient stock for item ${itemId}. Out of stock: ${names}`);
+      }
+    }
+
+    // 2) Decrement stock (uses tx client, so it rolls back if anything below fails)
+    for (const { itemId } of items) {
+      await decrementStockByItemId(itemId, tx);
+    }
+
+    // 3) Create transaction header
+    const inserted = await tx`
+      INSERT INTO transactions (customer_name, transaction_time, employee_id, total_price)
+      VALUES (${customerName}, ${transactionTime}, ${employeeId}, ${totalPrice})
+      RETURNING transaction_id;
+    `;
+
+    const transactionId = inserted?.[0]?.transaction_id;
+    if (transactionId == null) {
+      throw new Error("Failed to create transaction");
+    }
+
+    // 4) Create transaction line items
+    for (const { itemId } of items) {
+      await tx`
+        INSERT INTO transaction_details (transaction_id, item_id)
+        VALUES (${transactionId}, ${itemId});
+      `;
+    }
+
+    return { transaction_id: transactionId };
+  });
 }
