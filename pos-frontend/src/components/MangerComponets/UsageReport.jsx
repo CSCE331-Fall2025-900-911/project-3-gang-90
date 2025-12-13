@@ -59,7 +59,7 @@ export default function UsageReport(){
         const endDay = new Date();
 
         startDay.setDate(startDay.getDate()-30);
-        endDate.setDate(endDate.getDate()+1);
+        endDay.setDate(endDay.getDate()+1);
         const databaseStart = startDay.toISOString().split("T")[0];
         const databaseEnd = endDay.toISOString().split("T")[0];
         console.log(databaseEnd);
@@ -76,7 +76,7 @@ export default function UsageReport(){
         const endDay = new Date();
 
         startDay.setDate(startDay.getDate()-7);
-        endDate.setDate(endDate.getDate()+1);
+        endDay.setDate(endDay.getDate()+1);
         const databaseStart = startDay.toISOString().split("T")[0];
         const databaseEnd = endDay.toISOString().split("T")[0];
         console.log(databaseEnd);
