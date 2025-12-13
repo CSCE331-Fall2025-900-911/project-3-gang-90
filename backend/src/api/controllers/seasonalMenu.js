@@ -30,6 +30,7 @@ export async function createSeasonalMenuItem(req, res, next) {
       name,
       price,
       popularity,
+      category,
     });
 
     return res.status(201).json(item);

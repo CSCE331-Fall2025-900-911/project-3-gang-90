@@ -28,14 +28,14 @@ export async function getSeasonalMenu() {
  * @returns {Promise<Object>} A promise that resolves to an object containing the item_id, name, popularity, and price fields of the new seasonal menu item.
  * @throws {Error} If the name or price of the menu item is not provided.
  */
-export async function createSeasonalMenuItem({ name, popularity = 0, price }) {
+export async function createSeasonalMenuItem({ name, popularity = 0, price, category }) {
   if (!name || price == null) {
     throw new Error("name and price are required to create a seasonal menu item");
   }
 
-  const id = await seasonalMenuQueries.addSeasonalMenuItem(name, popularity, price);
+  const id = await seasonalMenuQueries.addSeasonalMenuItem(name, popularity, price, category);
 
-  return { id, name, popularity, price };
+  return { id, name, popularity, price, category };
 }
 
 /**

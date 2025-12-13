@@ -8,7 +8,7 @@ import { getIngredientsForItem } from "./helpers.js";
  */
 export async function getSeasonalMenu() {
   const rows = await sql`
-    SELECT item_id, item_name, item_popularity, price
+    SELECT item_id, item_name, item_popularity, price, category
     FROM seasonal_menu;
   `;
 
@@ -19,6 +19,7 @@ export async function getSeasonalMenu() {
       name: row.item_name,
       popularity: row.item_popularity,
       price: row.price,
+      category: row.category,
       ingredients: await getIngredientsForItem(row.item_id),
     }))
   );
@@ -33,10 +34,10 @@ export async function getSeasonalMenu() {
  * @returns {Promise<number>} A promise that resolves to the item_id of the created seasonal menu item.
  * @throws {Error} If the insert fails to return an item_id.
  */
-export async function addSeasonalMenuItem(name, popularity, price) {
+export async function addSeasonalMenuItem(name, popularity, price, category = null) {
   const rows = await sql`
     INSERT INTO seasonal_menu (item_name, item_popularity, price, start_time, end_time)
-    VALUES (${name}, ${popularity}, ${price}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + INTERVAL '90 days')
+    VALUES (${name}, ${popularity}, ${price}, ${category}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + INTERVAL '90 days')
     RETURNING item_id;
   `;
 
