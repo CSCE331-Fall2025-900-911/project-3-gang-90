@@ -52,6 +52,34 @@ export default function Cashier() {
     }
   }
 
+  async function decrementIngredients(orderItems) //WIP 
+  {
+    for (const item of orderItems) 
+    {
+      if (!item?.id) continue;
+      const qty = 1; // make this real
+
+      const ingRes = await fetch(`${server}/api/menu/${item.id}/ingredients?seasonal=false`);
+      if (!ingRes.ok) continue;
+
+      const ingredients = await ingRes.json();
+
+      for (const ing of ingredients) 
+      {
+        const ingId = ing.id; // might be wrong
+        if (!ingId) continue;
+
+        await fetch(`${server}/api/ingredients/${ingId}/decrease`, 
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ quantity: qty }),
+        });
+      }
+    }
+  }
+
+
   async function fetchEmployees() {
     try {
       const res = await fetch(server + '/api/employees');
@@ -207,6 +235,7 @@ export default function Cashier() {
         }
         return res.json();
       })
+      .then(() => decrementIngredients(orderItems))
       .then(() => {
         setOrderItems([]);
         setSubtotal(0);
