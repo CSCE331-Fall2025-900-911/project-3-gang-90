@@ -125,10 +125,7 @@
 }
 
 .menu-item.selected {
-<<<<<<< HEAD
   font-weight: bold;
-=======
->>>>>>> sprint-3
   color: #000000;
 }
 
@@ -191,10 +188,7 @@
 .customize-option.selected {
   background-color: #b6b6b6;
   color: #ffffff;
-<<<<<<< HEAD
   font-weight: bold;
-=======
->>>>>>> sprint-3
   border: 2px solid #3a3a3a;
 }
 
@@ -271,6 +265,21 @@
   display: flex;
   padding: 20px 30px;
   gap: 20px;
+}
+
+.quantity-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  font-weight: bold;
+  background: #e5e5e5;
+  border: none;
+  cursor: pointer;
+}
+
+.quantity-btn:hover {
+  background: #d4d4d4;
 }
 
 .managerButtons {

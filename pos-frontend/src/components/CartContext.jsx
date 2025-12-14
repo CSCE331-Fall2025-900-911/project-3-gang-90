@@ -31,8 +31,36 @@ export function CartProvider({ children }) {
     setItemIds([])
   }
 
+  function incrementQuantity(index) {
+    setItems(prev =>
+      prev.map((item, i) =>
+        i === index
+          ? { ...item, quantity: (item.quantity || 1) + 1 }
+          : item
+      )
+    )
+  }
+
+  function decrementQuantity(index) {
+    setItems(prev => {
+      const item = prev[index];
+      if (!item) return prev;
+
+      if ((item.quantity || 1) <= 1) {
+        removeItem(index);
+        return prev;
+      }
+
+      return prev.map((it, i) =>
+        i === index
+          ? { ...it, quantity: (it.quantity || 1) - 1 }
+          : it
+      );
+    });
+  }
+
   return (
-    <CartContext.Provider value={{ items, itemIds, addItem, removeItem, editItem, clearCart }}>
+    <CartContext.Provider value={{ items, itemIds, addItem, removeItem, editItem, clearCart, incrementQuantity, decrementQuantity }}>
       {children}
     </CartContext.Provider>
   )

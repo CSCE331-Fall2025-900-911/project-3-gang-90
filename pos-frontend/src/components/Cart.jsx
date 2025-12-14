@@ -6,7 +6,7 @@ import { useRecommendation } from './RecommendationContext'
 let server = import.meta.env.VITE_SERVER;
 
 export default function Cart() {
-  const { items, itemIds, removeItem, clearCart } = useCart()
+  const { items, itemIds, removeItem, clearCart, incrementQuantity, decrementQuantity } = useCart()
   const navigate = useNavigate()
   const [showModal, setShowModal] = useState(false)
   const [name, setName] = useState('')
@@ -124,7 +124,23 @@ export default function Cart() {
                     </p>
                   </div>
                   <div className="cart-item-actions">
-                    <a className="cart-item-action cursor-pointer" onClick={() => removeItem(idx)}>Remove</a>
+                    <div className="cart-item-actions flex items-center gap-3">
+                      <button
+                        className="quantity-btn"
+                        onClick={() => decrementQuantity(idx)}
+                        aria-label="Decrease quantity"
+                      >
+                        −
+                      </button>
+
+                      <button
+                        className="quantity-btn"
+                        onClick={() => incrementQuantity(idx)}
+                        aria-label="Increase quantity"
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
