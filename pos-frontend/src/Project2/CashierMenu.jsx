@@ -85,8 +85,8 @@ export default function Cashier() {
       .join(" ");
   }
 
-  function openDrinkMods(name, price, category) {
-    setCurrentDrink({ name, price, basePrice: price, category });
+  function openDrinkMods(id, name, price, category) {
+    setCurrentDrink({ id, name, price, basePrice: price, category });
     setCurrentMods([]);
     setShowMods(true);
   }
@@ -119,7 +119,7 @@ export default function Cashier() {
 
   function addDrinkToOrder() {
     if (!currentDrink) return;
-    const { name, price, category, id } = currentDrink;
+    const { id, name, price, category } = currentDrink;
     const mods = [...currentMods];
     setOrderItems(items => [...items, { name, price, mods, id, category, quantity: 1 }]);
     setShowMods(false);
