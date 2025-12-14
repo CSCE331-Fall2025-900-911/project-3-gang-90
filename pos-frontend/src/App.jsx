@@ -19,6 +19,7 @@ import MenuBoard from './components/MenuBoard'
 import CashierMenu from './Project2/CashierMenu'
 import EmployeeList from './Project2/EmployeeList'
 import ManagerProducts from "./Project2/ManagerProducts"
+import ManagerIngredients from "./Project2/ManagerIngredients"
 import SalesReport from './components/MangerComponets/SalesReport'
 import ZReport from './Project2/ZReport'
 import XReport from './Project2/XReport'
@@ -49,6 +50,7 @@ export default function App() {
             <Route path="/reportx" element={<XReport />} />
             <Route path="/reportz" element ={<ZReport/>} />
             <Route path="/products" element={<ManagerProducts />} />
+            <Route path="/ingredients" element={<ManagerIngredients />} />
             <Route path="/salesReport" element={<SalesReport/>}/>
             <Route path="/cashier" element={<CashierMenu />} />
             <Route path="/usageReport" element={<UsageReport/>}/>
