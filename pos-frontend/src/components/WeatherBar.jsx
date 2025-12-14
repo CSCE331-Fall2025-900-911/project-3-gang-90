@@ -32,10 +32,13 @@ export default function WeatherBar(){
         }
 
         const getLocation = async ()=>{
+        getWeather(96.354304, 30.6118656);
         if ("geolocation" in navigator) {
         /* geolocation is available */
             //console.log("in geolocation");
             let geoAllowed = false;
+           
+
             navigator.geolocation.getCurrentPosition((positions)=>{
                 //send to fetch
                 geoAllowed = true;
