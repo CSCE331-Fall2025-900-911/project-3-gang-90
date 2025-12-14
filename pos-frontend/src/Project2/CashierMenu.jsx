@@ -314,7 +314,7 @@ export default function Cashier() {
                 const matchesCategory =
                   selectedCategory === "All Categories" ||
                   (selectedCategory === "Seasonal" && item.is_seasonal) ||
-                  (item.category || item.type || "Drink") === selectedCategory;
+                  (toTitleCase(item.category) || toTitleCase(item.type) || "Drink") === selectedCategory;
 
                 const matchesSearch =
                   !searchText ||
