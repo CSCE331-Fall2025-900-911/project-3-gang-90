@@ -26,6 +26,9 @@ export default function Cashier() {
   const [loginID, setLoginID] = useState("");
   const [loginError, setLoginError] = useState("");
 
+  const [searchText, setSearchText] = useState("");
+
+
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
 
   async function fetchMenu() {
@@ -265,6 +268,21 @@ export default function Cashier() {
         <div className="sidebar">
           <button onClick={() => setShowLogin(true)}>Change Cashier</button>
           <div style={{ marginTop: 18, display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}>
+          <div style={{ marginBottom: 16 }}>
+            <input
+              type="text"
+              placeholder="Search drinks..."
+              value={searchText}
+              onChange={e => setSearchText(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '8px 10px',
+                borderRadius: 10,
+                border: '2px solid #3d3d3dff',
+                fontSize: '0.9rem'
+              }}
+            />
+          </div>
             <div style={{ fontWeight: 600, marginBottom: 6 }}>Filter by Category:</div>
             {categories.map((cat, idx) => (
               <button
@@ -292,9 +310,18 @@ export default function Cashier() {
         <div className="drink-menu">
           <div className="drink-grid">
             {menu
-              .filter(item =>
-                selectedCategory === "All Categories" || (selectedCategory === "Seasonal" && item.is_seasonal) || (item.category || item.type || "Drink") === selectedCategory
-              )
+              .filter(item => {
+                const matchesCategory =
+                  selectedCategory === "All Categories" ||
+                  (selectedCategory === "Seasonal" && item.is_seasonal) ||
+                  (item.category || item.type || "Drink") === selectedCategory;
+
+                const matchesSearch =
+                  !searchText ||
+                  (item.name || "").toLowerCase().includes(searchText.toLowerCase());
+
+                return matchesCategory && matchesSearch;
+              })
               .map((item, idx) => (
                 <button
                   key={idx}
