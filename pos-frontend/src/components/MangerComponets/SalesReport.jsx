@@ -104,19 +104,14 @@ export default function SalesReport(){
         }
 
         fetchRows();
-
-<<<<<<< HEAD
     },[refresh]);
 
-    const columns = [
+const columns = [
   { field: 'itemName', headerName: 'Name', width: 500 },
   { field: 'time', headerName: 'Time', width: 230 },
 ];
 
 const paginationModel = { page: 0, pageSize: 5 };
-=======
-        },[refresh]);
->>>>>>> sprint-3
 // const rows = [
 //   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
 //   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
@@ -130,8 +125,6 @@ const paginationModel = { page: 0, pageSize: 5 };
 // ];
 
 
-<<<<<<< HEAD
-=======
     function applyToday(){
         const startDay = new Date();
         const endDay = new Date();
@@ -230,12 +223,7 @@ const paginationModel = { page: 0, pageSize: 5 };
 
         },[refresh]);
 
-        const columns = [
-  { field: 'itemName', headerName: 'Name', width: 500 },
-  { field: 'time', headerName: 'Time', width: 230 },
-];
 
-        const paginationModel = { page: 0, pageSize: 5 };
 // const rows = [
 //   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
 //   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
@@ -258,7 +246,6 @@ const paginationModel = { page: 0, pageSize: 5 };
 
 
     // },[]);
->>>>>>> sprint-3
 
 
     // useEffect({
@@ -290,16 +277,6 @@ const paginationModel = { page: 0, pageSize: 5 };
                     <div className="content-center">
                         <Button onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
                     </div>
-<<<<<<< HEAD
-=======
-
-<<<<<<< HEAD
-                    
-=======
-                    <Button onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
->>>>>>> sprint-3
->>>>>>> ec184a7efefc87b194b501f4863eb07ec142ff0c
-                    
                 </div>
                 <div className="flex">
                     <div className="p-2">
