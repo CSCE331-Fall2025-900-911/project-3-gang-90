@@ -13,11 +13,7 @@ export default function SystemSelect() {
       height="100vh"
     >
       <Stack spacing={3} alignItems="center">
-<<<<<<< HEAD
-        <Typography variant="h4">Select System</Typography>
-=======
         <h1>Select System</h1>
->>>>>>> sprint-3
 
         <Button
           variant="contained"
@@ -42,8 +38,6 @@ export default function SystemSelect() {
         >
           Menu Board View
         </Button>
-<<<<<<< HEAD
-=======
         <Button
           variant="contained"
           size="large"
@@ -51,7 +45,6 @@ export default function SystemSelect() {
         >
           Manger view
         </Button>
->>>>>>> sprint-3
       </Stack>
     </Box>
   );
