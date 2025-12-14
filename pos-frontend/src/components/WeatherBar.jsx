@@ -6,8 +6,8 @@ const WeatherKey = import.meta.env.VITE_WEATHER;
 export default function WeatherBar(){
     const [longitude, setLongitude] = useState("96.33");
     const [latitude, setLatitude] = useState("30.63");
-    const [weather, setWeather] = useState("Weather faild to load");
-    const [weatherDescriptoin, setWeatherDescription] = useState("faild to load");
+    const [weather, setWeather] = useState("Weather failed to load");
+    const [weatherDescriptoin, setWeatherDescription] = useState("Failed to load");
     const [temputure, setTempeture] = useState(0);
 
     useEffect(()=>{
