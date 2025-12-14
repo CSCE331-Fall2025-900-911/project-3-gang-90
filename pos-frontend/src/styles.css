@@ -125,6 +125,10 @@
 }
 
 .menu-item.selected {
+<<<<<<< HEAD
+  font-weight: bold;
+=======
+>>>>>>> sprint-3
   color: #000000;
 }
 
@@ -187,6 +191,10 @@
 .customize-option.selected {
   background-color: #b6b6b6;
   color: #ffffff;
+<<<<<<< HEAD
+  font-weight: bold;
+=======
+>>>>>>> sprint-3
   border: 2px solid #3a3a3a;
 }
 

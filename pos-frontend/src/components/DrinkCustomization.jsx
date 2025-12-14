@@ -105,5 +105,9 @@ export default function DrinkCustomization({ mods, setMods, itemName }) {
         </div>
       </div>
     </div>
+<<<<<<< HEAD
+  )
+=======
   );
+>>>>>>> sprint-3
 }

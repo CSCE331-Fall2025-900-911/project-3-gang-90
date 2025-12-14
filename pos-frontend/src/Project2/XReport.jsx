@@ -1,8 +1,17 @@
+<<<<<<< HEAD
+import React, { useState } from 'react'
+=======
 import React, { useEffect, useMemo, useState } from 'react'
+>>>>>>> sprint-3
 import { Link } from 'react-router-dom'
 import ReportTable from './ReportTable'
 import MangerPage from '../components/MangerComponets/MangerPage'
 
+<<<<<<< HEAD
+
+const XReport = () => {
+  const [refreshKey, setRefreshKey] = useState(0);
+=======
 const API_ROUTE = import.meta.env.VITE_SERVER;
 
 const XReport = () => {
@@ -39,6 +48,7 @@ const XReport = () => {
     }
     fetchTodayTotals();
   }, [refreshKey]);
+>>>>>>> sprint-3
   return (
 <MangerPage
   pageName={"X-Report"}
@@ -51,11 +61,23 @@ child={
           <div className='flex flex-row gap-4 w-full'>
             <div>
               <p className='font-bold'>Total Sales:</p>
+<<<<<<< HEAD
+              {/* change here */}
+              <p className='text-3xl pb-5'>$0.00</p>
+              {/* ----------- */}
+            </div>
+            <div>
+              <p className='font-bold'>Total Transactions:</p>
+              {/* change herer */}
+              <p className='text-3xl pb-5'>0</p>
+              {/* ------------ */}
+=======
               <p className='text-3xl pb-5'>${totalSales.toFixed(2)}</p>
             </div>
             <div>
               <p className='font-bold'>Total Transactions:</p>
               <p className='text-3xl pb-5'>{totalTransactions}</p>
+>>>>>>> sprint-3
             </div>
           </div>
           <p className='font-bold'>Per-Employee Summary:</p>

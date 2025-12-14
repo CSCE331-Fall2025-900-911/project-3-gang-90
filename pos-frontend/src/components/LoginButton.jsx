@@ -21,7 +21,11 @@ export default function LoginButton() {
               if (!id_token) { console.error('No id_token in response'); return }
               // Persist via AuthContext
               await signInWithIdToken(id_token)
+<<<<<<< HEAD
+              navigate("/milktea")
+=======
               navigate("/freshbrew")
+>>>>>>> sprint-3
             }}
             // onError={() => console.log('Google login failed')}
           />

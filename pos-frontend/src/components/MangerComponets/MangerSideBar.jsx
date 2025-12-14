@@ -8,9 +8,15 @@ export default function MangerSideBar(){
 
     return(
         <div className='mangerSideBar' >
+<<<<<<< HEAD
+            <div className='mangerLinkPadding'>
+                <Link className='mangerLink' to="/cashier">Cashier</Link>
+            </div>
+=======
             {/* <div className='mangerLinkPadding'>
                 <Link className='mangerLink' to="/cashier">Cashier</Link>
             </div> */}
+>>>>>>> sprint-3
             <div className='mangerLinkPadding'>
                 <Link className='mangerLink' to="/transactions">Transactions</Link>
             </div>

@@ -145,9 +145,15 @@ export default function Cart() {
           </div>
         </div>
 
+<<<<<<< HEAD
+        <div style={{display:'flex', gap:'10px', marginTop:'20px'}}>
+          <button className="bottom-button" style={{flex:1}} onClick={handleCheckout}>Checkout</button>
+          <Link className="bottom-button" style={{flex:1, textAlign:'center', lineHeight:'38px'}} to="/kiosk">Back to Menu</Link>
+=======
         <div className="flex gap-2.5 mt-5">
           <button className="bottom-button flex-1" onClick={handleCheckout}>Checkout</button>
           <Link className="bottom-button flex-1 text-center leading-[38px]" to="/kiosk">Back to Menu</Link>
+>>>>>>> sprint-3
         </div>
       </div>
       {showModal && (

@@ -10,6 +10,15 @@ export default function WeatherBar(){
     const [weatherDescriptoin, setWeatherDescription] = useState("faild to load");
     const [temputure, setTempeture] = useState(0);
 
+<<<<<<< HEAD
+
+
+
+
+
+
+=======
+>>>>>>> sprint-3
     useEffect(()=>{
         const getWeather = async (longitude, latitude)=>{
             try{
@@ -34,6 +43,17 @@ export default function WeatherBar(){
         const getLocation = async ()=>{
         if ("geolocation" in navigator) {
         /* geolocation is available */
+<<<<<<< HEAD
+            navigator.geolocation.getCurrentPosition((positions)=>{
+                //send to fetch
+                getWeather(positions.coords.longitude, positions.coords.latitude);
+
+            })
+
+        } else {
+        /* geolocation IS NOT available */
+            getWeather("96.33", "30.63");
+=======
             //console.log("in geolocation");
             let geoAllowed = false;
             navigator.geolocation.getCurrentPosition((positions)=>{
@@ -52,6 +72,7 @@ export default function WeatherBar(){
         /* geolocation IS NOT available */
             console.log("in other location");
             getWeather(-96.354304, 30.6118656);
+>>>>>>> sprint-3
         }
 
 

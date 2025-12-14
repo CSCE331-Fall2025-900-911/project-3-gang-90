@@ -105,7 +105,18 @@ export default function SalesReport(){
 
         fetchRows();
 
+<<<<<<< HEAD
+    },[refresh]);
+
+    const columns = [
+  { field: 'itemName', headerName: 'Name', width: 500 },
+  { field: 'time', headerName: 'Time', width: 230 },
+];
+
+const paginationModel = { page: 0, pageSize: 5 };
+=======
         },[refresh]);
+>>>>>>> sprint-3
 // const rows = [
 //   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
 //   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
@@ -119,6 +130,8 @@ export default function SalesReport(){
 // ];
 
 
+<<<<<<< HEAD
+=======
     function applyToday(){
         const startDay = new Date();
         const endDay = new Date();
@@ -245,6 +258,7 @@ export default function SalesReport(){
 
 
     // },[]);
+>>>>>>> sprint-3
 
 
     // useEffect({
@@ -276,8 +290,15 @@ export default function SalesReport(){
                     <div className="content-center">
                         <Button onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
                     </div>
+<<<<<<< HEAD
+=======
 
+<<<<<<< HEAD
                     
+=======
+                    <Button onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
+>>>>>>> sprint-3
+>>>>>>> ec184a7efefc87b194b501f4863eb07ec142ff0c
                     
                 </div>
                 <div className="flex">
