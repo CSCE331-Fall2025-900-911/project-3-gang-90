@@ -119,7 +119,7 @@ export default function Cashier() {
 
   function addDrinkToOrder() {
     if (!currentDrink) return;
-    const { name, price, category } = currentDrink;
+    const { name, price, category, id } = currentDrink;
     const mods = [...currentMods];
     setOrderItems(items => [...items, { name, price, mods, id, category, quantity: 1 }]);
     setShowMods(false);
