@@ -43,6 +43,11 @@ function ManagerProductsContent() {
 
   const safeTrim = (s) => (s == null ? "" : s.trim());
 
+  const toTitleCase = (str) =>
+    str.replace(/\w\S*/g, (txt) =>
+      txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
+    );
+
   const fetchMenu = async () => {
     try {
       setLoading(true);
@@ -53,10 +58,10 @@ function ManagerProductsContent() {
       setProducts(
         data.map((item) => ({
           id: item.id,
-          name: item.name,
+          name: toTitleCase(item.name),
           price: item.price,
           quantity: item.popularity ?? 0,
-          category: item.category,
+          category: toTitleCase(item.category),
         }))
       );
     } catch (e) {

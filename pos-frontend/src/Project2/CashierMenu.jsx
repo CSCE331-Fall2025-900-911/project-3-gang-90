@@ -52,12 +52,17 @@ export default function Cashier() {
     }
   }
 
-  async function decrementIngredients(orderItems) //WIP 
+  const toTitleCase = (str) =>
+    str.replace(/\w\S*/g, (txt) =>
+      txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
+    );
+
+  async function decrementIngredients(orderItems)
   {
     for (const item of orderItems) 
     {
       if (!item?.id) continue;
-      const qty = 1; // make this real
+      const qty = 1;
 
       const ingRes = await fetch(`${server}/api/menu/${item.id}/ingredients?seasonal=false`);
       if (!ingRes.ok) continue;
@@ -66,7 +71,7 @@ export default function Cashier() {
 
       for (const ing of ingredients) 
       {
-        const ingId = ing.id; // might be wrong
+        const ingId = ing.id;
         if (!ingId) continue;
 
         await fetch(`${server}/api/ingredients/${ingId}/decrease`, 
@@ -100,18 +105,10 @@ export default function Cashier() {
     loadMenu();
   }, []);
 
-  // Get unique categories from menu
   const categories = React.useMemo(() => {
-    const cats = menu.map(m => m.category || m.type || "Drink");
+    const cats = menu.map(m => toTitleCase(m.category) || m.type || "Drink");
     return ["All Categories", ...Array.from(new Set(cats))];
   }, [menu]);
-
-  function toTitleCase(str) {
-    return str
-      .split(" ")
-      .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
-      .join(" ");
-  }
 
   function openDrinkMods(id, name, price, category) {
     setCurrentDrink({ id, name, price, basePrice: price, category });
@@ -265,12 +262,6 @@ export default function Cashier() {
       <div className="layout">
 
         <div className="sidebar">
-          {//managerViewVisible && (
-            //<Link to="/products">
-              //Manager View
-            //</Link>
-          //)
-          }
           <button onClick={() => setShowLogin(true)}>Change Cashier</button>
           <div style={{ marginTop: 18, display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}>
             <div style={{ fontWeight: 600, marginBottom: 6 }}>Filter by Category:</div>
@@ -308,13 +299,13 @@ export default function Cashier() {
                   key={idx}
                   className="drink-button"
                   onClick={() =>
-                    openDrinkMods(item.id ?? item.item_id, toTitleCase(item.name), item.price, item.category || item.type || "Drink")
+                    openDrinkMods(item.id ?? item.item_id, toTitleCase(item.name), item.price, toTitleCase(item.category || item.type || "Drink"))
                   }
                   style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', padding: '12px' }}
                 >
                   <span style={{ fontWeight: 600, fontSize: '1.1em', marginBottom: 4 }}>{toTitleCase(item.name)}</span>
                   <span style={{ color: '#2a7b2a', fontWeight: 500, fontSize: '0.95em' }}>${Number(item.price).toFixed(2)}</span>
-                  <span style={{ color: '#555', fontSize: '0.85em', marginTop: 2 }}>{item.category || item.type || "Drink"}</span>
+                  <span style={{ color: '#555', fontSize: '0.85em', marginTop: 2 }}>{toTitleCase(item.category || item.type || "Drink")}</span>
                 </button>
               ))}
           </div>

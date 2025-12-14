@@ -26,6 +26,11 @@ function ManagerIngredientsContent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const toTitleCase = (str) =>
+    str.replace(/\w\S*/g, (txt) =>
+      txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
+    );
+
   const fetchIngredients = async () => {
     try {
       setLoading(true);
@@ -38,7 +43,7 @@ function ManagerIngredientsContent() {
       setIngredients(
         (data ?? []).map((ing) => ({
           id: ing.id ?? ing.ingredient_id,
-          name: ing.name ?? ing.ingredient_name,
+          name: toTitleCase(ing.name ?? ing.ingredient_name),
           quantity: ing.quantity ?? 0,
         }))
       );
@@ -169,7 +174,7 @@ function ManagerIngredientsContent() {
 
                     <TextField
                       size="small"
-                      label="amount"
+                      label="Amount"
                       value={deltaById[ing.id] ?? ""}
                       onChange={(e) => setDelta(ing.id, e.target.value)}
                       sx={{ width: 140 }}
