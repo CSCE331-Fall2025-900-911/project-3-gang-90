@@ -5,18 +5,12 @@ import { AccessibilityProvider } from './components/AccessibilityContext'
 import { Routes, Route, Link } from 'react-router-dom'
 import SystemSelect from "./components/SystemSelect";
 import Home from './components/Home'
-<<<<<<< HEAD
-import MilkTeaMenu from './components/MilkTeaMenu'
-import FruitTeaMenu from './components/FruitTeaMenu'
-import SpecialtyMenu from './components/SpecialtyMenu'
-=======
 import FreshBrewMenu from './components/FreshBrewMenu'
 import MilkySeriesMenu from './components/MilkySeriesMenu'
 import FruitBeverageMenu from './components/FruityBeverageMenu'
 import NonCaffeinatedMenu from './components/NonCaffeinatedMenu'
 import IceBlendedMenu from './components/IceBlendedMenu'
 import MatchaSeriesMenu from './components/MatchaSeriesMenu'
->>>>>>> sprint-3
 import Cart from './components/Cart'
 import EditItem from './components/EditItem'
 import Settings from './components/Settings'
@@ -39,26 +33,17 @@ export default function App() {
   return (
     <AccessibilityProvider>
       <CartProvider>
-<<<<<<< HEAD
-=======
         <RecommendationProvider>
->>>>>>> sprint-3
         <main>
           <Routes>
             <Route path="/" element={<SystemSelect />} />
             <Route path="/kiosk" element={<Home />} />
-<<<<<<< HEAD
-            <Route path="/milktea" element={<MilkTeaMenu />} />
-            <Route path="/fruittea" element={<FruitTeaMenu />} />
-            <Route path="/specialty" element={<SpecialtyMenu />} />
-=======
             <Route path="/freshbrew" element={<FreshBrewMenu />} />
             <Route path="/milkyseries" element={<MilkySeriesMenu />} />
             <Route path="/fruity" element={<FruitBeverageMenu />} />
             <Route path="/noncaffeinated" element={<NonCaffeinatedMenu />} />
             <Route path="/iceblended" element={<IceBlendedMenu />} />
             <Route path="/matcha" element={<MatchaSeriesMenu />} />
->>>>>>> sprint-3
             <Route path="/cart" element={<Cart />} />
             <Route path="/edit/:id" element={<EditItem />} />
             <Route path="/settings" element={<Settings />} />
@@ -68,20 +53,14 @@ export default function App() {
             <Route path="/ingredients" element={<ManagerIngredients />} />
             <Route path="/salesReport" element={<SalesReport/>}/>
             <Route path="/cashier" element={<CashierMenu />} />
-<<<<<<< HEAD
-=======
             <Route path="/usageReport" element={<UsageReport/>}/>
->>>>>>> sprint-3
             <Route path="/employees" element={<EmployeeList />} />
             <Route path="/transactions" element={<Transactions/>}/>
             <Route path="/loginTest" element={<LoginTest />} />
             <Route path="/menuboard" element={<MenuBoard />} />
           </Routes>
         </main>
-<<<<<<< HEAD
-=======
         </RecommendationProvider>
->>>>>>> sprint-3
       </CartProvider>
     </AccessibilityProvider>
   )

@@ -29,7 +29,6 @@ export default function UsageReport(){
         console.log(databaseStart);
         console.log(databaseEnd);
 
-
         setEndDate(databaseEnd);
         setBeginDate(databaseStart);
 
@@ -39,7 +38,6 @@ export default function UsageReport(){
     function applyMonth(){
 
         const now = new Date();
-
 
         const startOfMonth = new Date(now.getFullYear(), now.getMonth() -1, now.getDate());
         const endOfMonth = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);

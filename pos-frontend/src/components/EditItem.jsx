@@ -80,25 +80,17 @@ export default function EditItem() {
         <div className="item-sidebar">
           <div>
             <h1 style={{ fontSize: '2.2rem', fontWeight: 700, marginBottom: 8 }}>{item.item_name}</h1>
-<<<<<<< HEAD
-            <div style={{ fontSize: '1.3rem', fontWeight: 500, marginBottom: 12 }}>Price: ${Number(item.price).toFixed(2)}</div>
-=======
             <div style={{ fontSize: '1.3rem', fontWeight: 500, marginBottom: 12 }}>
               Price: ${getAdjustedPrice(item.price, mods).toFixed(2)}
             </div>
             <div style={{ fontSize: '1.1rem', color: '#555', marginBottom: 8 }}>
               Modifications: {getModsString(mods)}
             </div>
->>>>>>> sprint-3
           </div>
         </div>
 
         <div className="customize-panel" style={{ fontSize: '1.1rem' }}>
-<<<<<<< HEAD
-          <DrinkCustomization />
-=======
           <DrinkCustomization mods={mods} setMods={setMods} itemName={item.item_name}/>
->>>>>>> sprint-3
           <br />
 
           <div className="item-navigation-options" style={{ marginTop: 16 }}>
