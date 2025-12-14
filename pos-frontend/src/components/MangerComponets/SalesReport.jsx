@@ -277,7 +277,7 @@ export default function SalesReport(){
                         <Button onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
                     </div>
 
-                    <Button onClick={()=>{setRefresh(!refresh)}}>Apply!</Button>
+                    
                     
                 </div>
                 <div className="flex">
