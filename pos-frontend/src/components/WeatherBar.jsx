@@ -10,6 +10,11 @@ export default function WeatherBar(){
     const [weatherDescriptoin, setWeatherDescription] = useState("Failed to load");
     const [temputure, setTempeture] = useState(0);
 
+    const toTitleCase = (str) =>
+        str.replace(/\w\S*/g, (txt) =>
+            txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
+        );
+
     useEffect(()=>{
         const getWeather = async (longitude, latitude)=>{
             try{
@@ -19,8 +24,8 @@ export default function WeatherBar(){
             }
             const weatherJson =  await (resp).json();
             console.log(weatherJson);
-            setWeather(weatherJson["weather"][0]["main"]);
-            setWeatherDescription(weatherJson["weather"][0]["description"]);
+            setWeather(toTitleCase(weatherJson["weather"][0]["main"]));
+            setWeatherDescription(toTitleCase(weatherJson["weather"][0]["description"]));
             setTempeture(weatherJson["main"]["temp"])
 
 

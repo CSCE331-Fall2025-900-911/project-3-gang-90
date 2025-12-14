@@ -46,14 +46,94 @@
 }
 
 .top-bar {
-  background-color: #3a3a3a;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
+  background: linear-gradient(180deg, #3f3f3f, #343434);
+  color: #ffffff;
+  height: 120px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 24px 28px;
-  box-shadow: 10 2px 8px rgba(0,0,0,0.25);
-  z-index: 99;
+  padding: 0 32px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+}
+
+.topbar-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.topbar-section.left {
+  justify-content: flex-start;
+}
+
+.topbar-section.center {
+  justify-content: center;
+}
+
+.topbar-section.right {
+  justify-content: flex-end;
+}
+
+.topbar-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.topbar-time {
+  font-size: 1.4rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.weather-wrapper {
+  background: rgba(255,255,255,0.08);
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #f1f1f1;
+}
+
+.topbar-menu {
+  position: absolute;
+  right: 0;
+  top: 44px;
+  background: #ffffff;
+  color: #222;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  min-width: 200px;
+  z-index: 50;
+}
+
+.topbar-menu-header {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.topbar-menu-item {
+  width: 100%;
+  padding: 12px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.topbar-menu-item:hover {
+  background: #f5f5f5;
+}
+
+.topbar-avatar {
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid rgba(255,255,255,0.3);
+  transition: transform 0.15s ease;
+}
+
+.topbar-avatar:hover {
+  transform: scale(1.05);
 }
 
 .panel-container {
