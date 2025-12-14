@@ -43,7 +43,8 @@ export default function Cashier() {
                 ...i,
                 item_name: toTitle(i.name),
                 item_id: i.id,
-                price: Number(i.price)
+                price: Number(i.price),
+                is_seasonal: i.seasonal
               }))
           : [];
       return items;
@@ -107,7 +108,7 @@ export default function Cashier() {
 
   const categories = React.useMemo(() => {
     const cats = menu.map(m => toTitleCase(m.category) || m.type || "Drink");
-    return ["All Categories", ...Array.from(new Set(cats))];
+    return ["All Categories", "Seasonal", ...Array.from(new Set(cats))];
   }, [menu]);
 
   function openDrinkMods(id, name, price, category) {
@@ -292,7 +293,7 @@ export default function Cashier() {
           <div className="drink-grid">
             {menu
               .filter(item =>
-                selectedCategory === "All Categories" || (item.category || item.type || "Drink") === selectedCategory
+                selectedCategory === "All Categories" || (selectedCategory === "Seasonal" && item.is_seasonal) || (item.category || item.type || "Drink") === selectedCategory
               )
               .map((item, idx) => (
                 <button
@@ -306,6 +307,18 @@ export default function Cashier() {
                   <span style={{ fontWeight: 600, fontSize: '1.1em', marginBottom: 4 }}>{toTitleCase(item.name)}</span>
                   <span style={{ color: '#2a7b2a', fontWeight: 500, fontSize: '0.95em' }}>${Number(item.price).toFixed(2)}</span>
                   <span style={{ color: '#555', fontSize: '0.85em', marginTop: 2 }}>{toTitleCase(item.category || item.type || "Drink")}</span>
+                  {item.is_seasonal && (
+                    <span
+                      style={{
+                        marginTop: 4,
+                        fontSize: '0.6rem',
+                        fontWeight: 600,
+                        color: '#b00000'
+                      }}
+                    >
+                      Seasonal
+                    </span>
+                  )}
                 </button>
               ))}
           </div>

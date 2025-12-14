@@ -26,7 +26,8 @@ export default function DrinksMenu() {
                 ...i,
                 item_name: toTitle(i.name),
                 item_id: i.id,
-                price: Number(i.price)
+                price: Number(i.price),
+                is_seasonal: i.seasonal
               }))
           : [];
 
@@ -38,6 +39,9 @@ export default function DrinksMenu() {
     }
     fetchMenu();
   }, []);
+
+  const seasonalItems = items.filter(i => i.is_seasonal)
+  const regularItems = items.filter(i => !i.is_seasonal)
 
   return (
     <main>
@@ -56,33 +60,47 @@ export default function DrinksMenu() {
         </div>
 
         <div className="item-menu">
-          {items.map(i => (
-            <Link
-              key={i.item_id}
-              className="menu-item"
-              to={`/edit/${i.item_id}`}
-            >
-              <div className="item-button">
-                {i.item_name}
-                <span
-                  style={{
-                    float:'right',
-                    fontWeight:'normal',
-                    fontSize:'0.95em',
-                    color:'#2a7b2a',
-                    marginLeft:'12px'
-                  }}
-                >
-                  {typeof i.price === 'number'
-                    ? `$${i.price.toFixed(2)}`
-                    : `$${Number(i.price || 0).toFixed(2)}`
-                  }
-                </span>
-              </div>
-            </Link>
-          ))}
+            {seasonalItems.length > 0 && (
+              <>
+                <h2 className="menu-header">Seasonal Items</h2>
+                <div className="menu-grid">
+                  {seasonalItems.map(i => (
+                    <Link
+                      key={i.item_id}
+                      className="menu-item seasonal"
+                      to={`/edit/${i.item_id}`}
+                    >
+                      <div className="item-button seasonal">
+                        {i.item_name}
+                        <span className="price">${i.price.toFixed(2)}</span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
+  
+            {regularItems.length > 0 && (
+              <>
+                <h2 className="menu-header">Regular Menu</h2>
+                <div className="menu-grid">
+                  {regularItems.map(i => (
+                    <Link
+                      key={i.item_id}
+                      className="menu-item"
+                      to={`/edit/${i.item_id}`}
+                    >
+                      <div className="item-button">
+                        {i.item_name}
+                        <span className="price">${i.price.toFixed(2)}</span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
-      </div>
 
       <Link className="floating-btn settings-btn" to="/settings" title="Settings">
           ⚙️
