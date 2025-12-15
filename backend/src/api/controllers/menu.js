@@ -340,3 +340,36 @@ export async function getRecommendation(req, res, next) {
     return next(err);
   }
 }
+
+export async function updateMenuItem(req, res, next) {
+  try {
+    const id = Number(req.params.id);
+    if (Number.isNaN(id)) {
+      return res.status(400).json({ error: "Invalid item id" });
+    }
+
+    const { name, price, category, seasonal } = req.body;
+
+    if (!name || price == null || !category) {
+      return res.status(400).json({
+        error: "name, price, and category are required",
+      });
+    }
+
+    const item = await menuService.updateMenuItem(
+      id,
+      name,
+      Number(price),
+      category,
+      Boolean(seasonal)
+    );
+
+    if (!item) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+
+    return res.status(200).json(item);
+  } catch (err) {
+    return next(err);
+  }
+}

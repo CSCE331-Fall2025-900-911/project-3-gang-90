@@ -15,6 +15,6 @@ router.patch("/:id/price", menuController.updateMenuPrice);
 router.delete("/:id", menuController.deleteMenuItem);
 router.post("/:id/retire", menuController.retireMenuItem);
 router.get("/:itemName/allergens", menuController.checkAllergens);
-
+router.put("/:id", menuController.updateMenuItem);
 
 export default router;

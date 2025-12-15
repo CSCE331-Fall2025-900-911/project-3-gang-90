@@ -179,3 +179,15 @@ export async function checkAllergens(item) {
 export async function getRecommendation(item, category, limit) {
   return await menuQueries.getRecommendation(item, category, limit);
 }
+
+export async function updateMenuItem(id, name, price, category, isSeasonal) {
+  if (id == null) throw new Error("id required");
+
+  return await menuQueries.updateMenuItem(
+    id,
+    name,
+    price,
+    category,
+    isSeasonal
+  );
+}
