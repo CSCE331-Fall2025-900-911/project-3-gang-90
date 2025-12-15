@@ -29,7 +29,7 @@ export async function getIngredientId(ingredientName) {
   const rows = await sql`
     SELECT ingredient_id
     FROM ingredients
-    WHERE ingredient_name = LOWER(${ingredientName});
+    WHERE ingredient_name = ${ingredientName};
   `;
 
   if (rows.length === 0) {
