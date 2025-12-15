@@ -89,7 +89,7 @@ function ManagerIngredientsContent() {
       const res = await fetch(REFILL_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: ing.name, quantity: amt }),
+        body: JSON.stringify({ name: ing.name.trim(), quantity: amt }),
       });
 
       if (!res.ok) {
