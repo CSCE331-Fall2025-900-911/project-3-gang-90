@@ -51,10 +51,10 @@ export default function WeatherBar(){
                 getWeather(positions.coords.longitude, positions.coords.latitude);
 
             })
-            if(!geoAllowed){
-                //console.log("hello")
-                getWeather(96.354304, 30.6118656);
-            }
+            // if(!geoAllowed){
+            //     //console.log("hello")
+            //     getWeather(96.354304, 30.6118656);
+            // }
 
         } else {
         /* geolocation IS NOT available */
