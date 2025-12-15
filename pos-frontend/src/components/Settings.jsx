@@ -166,7 +166,8 @@ console.log(await res.json());
     //if(loading){
       // if (!window.google || window.googleTranslateInitialized) return;
       // window.googleTranslateInitialized = true;
-
+      
+      //DO NOT MODIFY THIS WILL BREAK IF WRAPED IN ANY BOOLEAN CHEKCING
       console.log("we are in useEffect");
       var addScript = document.createElement("script");
       addScript.setAttribute(
