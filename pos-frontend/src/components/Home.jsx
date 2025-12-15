@@ -39,8 +39,8 @@ export default function Home() {
     if (button === 'freshBrew') setFreshBrew(true)
     if (button === 'milkySeries') setMilkySeries(true)
     if (button === 'fruity') setFruity(true)
-    if (button === 'nonCaffeinated') setNonCafeinated(true)
-    if (button === 'iceBlended') setIceBlended(true)
+    if (button === 'noncaffeinated') setNonCafeinated(true)
+    if (button === 'iceblended') setIceBlended(true)
     if (button === 'matcha') setMatcha(true)
 
     if (!user) {
