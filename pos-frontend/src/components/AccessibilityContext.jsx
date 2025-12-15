@@ -7,8 +7,36 @@ export function useAccessibility() {
   return useContext(AccessibilityContext)
 }
 
+// Defined outside to prevent re-creation on every render
+function ScreenReaderToggleButton() {
+  const { screenReader, setScreenReader } = useAccessibility()
+
+  if (!screenReader) return null
+
+  return (
+    <button
+      style={{
+        position: 'fixed',
+        bottom: '20px',
+        right: '20px',
+        zIndex: 9999,
+        backgroundColor: '#1976d2',
+        color: 'white',
+        border: 'none',
+        borderRadius: '8px',
+        padding: '10px 15px',
+        cursor: 'pointer',
+        boxShadow: '0 2px 6px rgba(0,0,0,0.3)'
+      }}
+      onClick={() => setScreenReader(false)}
+    >
+      Disable Screen Reader
+    </button>
+  )
+}
+
 export function AccessibilityProvider({ children }) {
-    const location = useLocation()
+  const location = useLocation()
   const [spanish, setSpanish] = useState(false)
   const [screenReader, setScreenReader] = useState(false)
   const [magnifier, setMagnifier] = useState(false)
@@ -28,10 +56,12 @@ export function AccessibilityProvider({ children }) {
         const role = el.getAttribute('role') || ''
         if (/goog\S*|google\S*|gtx|translate/i.test(id + ' ' + cls + ' ' + role)) return false
         const text = (el.innerText || el.textContent || '').toLowerCase()
-        if (text.includes('good translation') || text.includes('poor translation') || text === 'option' || text == 'i') return false
+        if (text.includes('good translation') || text.includes('poor translation') || text === 'option' || text === 'i') return false
         return true
       })
+
       selectableRefs.current = elements
+
       function getDeepestText(node) {
         if (!node) return ''
         if (node.nodeType === Node.TEXT_NODE) return node.textContent.trim()
@@ -41,6 +71,7 @@ export function AccessibilityProvider({ children }) {
         })
         return text.trim()
       }
+
       selectableLabels.current = elements.map(el => {
         if (el.getAttribute('aria-label')) return el.getAttribute('aria-label')
         if (el.getAttribute('alt')) return el.getAttribute('alt')
@@ -51,11 +82,17 @@ export function AccessibilityProvider({ children }) {
         return ''
       })
     }
+
     detectSelectables()
+  
+    setCurrentOption(0)
+
     const observer = new window.MutationObserver(() => {
       detectSelectables()
     })
+    
     observer.observe(document.body, { childList: true, subtree: true })
+    
     return () => {
       observer.disconnect()
     }
@@ -69,8 +106,15 @@ export function AccessibilityProvider({ children }) {
 
   useEffect(() => {
     if (!readerActive) return
+
+    if (currentOption >= selectableRefs.current.length && selectableRefs.current.length > 0) {
+        setCurrentOption(0);
+        return;
+    }
+
     const ref = selectableRefs.current[currentOption]
     const label = selectableLabels.current[currentOption]
+
     selectableRefs.current.forEach((el, idx) => {
       if (el) {
         if (idx === currentOption) {
@@ -84,21 +128,26 @@ export function AccessibilityProvider({ children }) {
         }
       }
     })
+
     if (ref) {
       ref.focus()
-      speak(label)
+      speak(label || 'Element')
     }
   }, [readerActive, currentOption])
 
   useEffect(() => {
     if (!readerActive) return
+
     let pressTimer = null
+
     const handleClick = (e) => {
       if (pressTimer) return
+      
       let next = currentOption + 1
       if (next >= selectableRefs.current.length) next = 0
       setCurrentOption(next)
     }
+
     const handleMouseDown = (e) => {
       pressTimer = setTimeout(() => {
         const ref = selectableRefs.current[currentOption]
@@ -106,15 +155,18 @@ export function AccessibilityProvider({ children }) {
         pressTimer = null
       }, 1000)
     }
+
     const handleMouseUp = (e) => {
       if (pressTimer) {
         clearTimeout(pressTimer)
         pressTimer = null
       }
     }
+
     window.addEventListener('click', handleClick, true)
     window.addEventListener('mousedown', handleMouseDown, true)
     window.addEventListener('mouseup', handleMouseUp, true)
+
     return () => {
       window.removeEventListener('click', handleClick, true)
       window.removeEventListener('mousedown', handleMouseDown, true)
@@ -123,13 +175,21 @@ export function AccessibilityProvider({ children }) {
   }, [readerActive, currentOption])
 
   useEffect(() => {
-    setReaderActive(screenReader)
+    setReaderActive(screenReader);
+
     if (!screenReader) {
-      window.speechSynthesis.cancel()
+      window.speechSynthesis.cancel();
+      selectableRefs.current.forEach(el => {
+        if (el) {
+          el.disabled = false;
+          el.tabIndex = 0;
+          el.style.outline = '';
+        }
+      });
     } else {
-      setCurrentOption(0)
+      setCurrentOption(0);
     }
-  }, [screenReader])
+  }, [screenReader]);
 
   return (
     <AccessibilityContext.Provider value={{
@@ -147,6 +207,7 @@ export function AccessibilityProvider({ children }) {
       setReaderActive
     }}>
       {children}
+      <ScreenReaderToggleButton />
     </AccessibilityContext.Provider>
   )
 }

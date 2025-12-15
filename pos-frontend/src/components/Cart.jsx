@@ -191,8 +191,8 @@ export default function Cart() {
         </div>
 
         <div className="flex gap-2.5 mt-5">
-          <button className="bottom-button flex-1" onClick={handleCheckout}>Checkout</button>
           <Link className="bottom-button flex-1 text-center leading-[38px]" to="/kiosk">Back to Menu</Link>
+          <button className="bottom-button flex-1" onClick={handleCheckout}>Checkout</button>
         </div>
       </div>
       {showModal && (
