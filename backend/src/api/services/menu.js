@@ -68,11 +68,11 @@ export async function getItemIngredients(itemId, isSeasonal) {
  * @returns {Promise<Object>} A promise that resolves to an object containing the ingredient_id, item_id, and is_seasonal fields of the added ingredient.
  * @throws {Error} If the item ID or ingredient ID is not provided.
  */
-export async function addIngredientToItem(itemId, ingredientId, isSeasonal = false) {
+export async function addIngredientToItem(itemId, ingredientId) {
   if (itemId == null || ingredientId == null) {
     throw new Error("itemId and ingredientId are required");
   }
-  return await menuQueries.addIngredientToItem(itemId, ingredientId, isSeasonal);
+  return await menuQueries.addIngredientToItem(itemId, ingredientId);
 }
 
 

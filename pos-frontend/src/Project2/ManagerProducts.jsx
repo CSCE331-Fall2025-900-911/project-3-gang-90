@@ -159,7 +159,7 @@ function ManagerProductsContent() {
     try {
       setIngredientsLoading(true);
       const res = await fetch(
-        `${server}/api/menu/${itemId}/ingredients?seasonal=${editingProduct.seasonal}`
+        `${server}/api/menu/${itemId}/ingredients`
       );
       if (!res.ok) throw new Error();
       const data = await res.json();
@@ -349,6 +349,11 @@ function ItemEditorDialog({open, product, onClose, onSave, itemIngredients, allI
     }
   }
 
+  const toTitleCase = (str = "") =>
+    str.replace(/\w\S*/g, txt =>
+      txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
+    );
+
   async function handleDelete() {
     try {
       const res = await fetch(`${server}/api/menu/${product.id}`, {
@@ -430,8 +435,8 @@ function ItemEditorDialog({open, product, onClose, onSave, itemIngredients, allI
                   itemIngredients.map(ing => (
                     <TableRow key={ing.id}>
                       <TableCell>{ing.id}</TableCell>
-                      <TableCell>{ing.name ?? "Unnamed"}</TableCell>
-                      <TableCell>{ing.category ?? "—"}</TableCell>
+                      <TableCell>{toTitleCase(ing.name ?? "Unnamed")}</TableCell>
+                      <TableCell>{toTitleCase(ing.category ?? "—")}</TableCell>
                       <TableCell>
                         <Button
                           size="small"
@@ -463,7 +468,7 @@ function ItemEditorDialog({open, product, onClose, onSave, itemIngredients, allI
                 {allIngredients.map(ing => (
                   <TableRow key={ing.id}>
                     <TableCell>{ing.id}</TableCell>
-                    <TableCell>{ing.name}</TableCell>
+                    <TableCell>{toTitleCase(ing.name)}</TableCell>
                     <TableCell>{ing.category}</TableCell>
                     <TableCell>
                       <Button

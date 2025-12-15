@@ -132,13 +132,13 @@ export async function addIngredientToItem(req, res, next) {
       return res.status(400).json({ error: "Invalid item id" });
     }
 
-    const { ingredientId, seasonal } = req.body;
+    const { ingredientId } = req.body;
 
     if (ingredientId == null) {
       return res.status(400).json({ error: "ingredientId is required" });
     }
 
-    const mapping = await menuService.addIngredientToItem(id, Number(ingredientId), Boolean(seasonal));
+    const mapping = await menuService.addIngredientToItem(id, Number(ingredientId));
 
 
     return res.status(201).json(mapping);

@@ -95,11 +95,11 @@ export async function getItemIngredients(id, isSeasonal) {
  * @param {boolean} isSeasonal Whether the ingredient is seasonal or not.
  * @returns {Promise<Object>} A promise that resolves to an object containing the ingredient_id, item_id, and is_seasonal fields of the added ingredient.
  */
-export async function addIngredientToItem(itemId, ingredientId, isSeasonal = false) {
+export async function addIngredientToItem(itemId, ingredientId) {
   const rows = await sql`
-    INSERT INTO ingredients_map (ingredient_id, item_id, is_seasonal)
-    VALUES (${ingredientId}, ${itemId}, ${isSeasonal})
-    RETURNING ingredient_id, item_id, is_seasonal;
+    INSERT INTO ingredients_map (ingredient_id, item_id)
+    VALUES (${ingredientId}, ${itemId})
+    RETURNING ingredient_id, item_id;
   `;
 
   return rows[0];
