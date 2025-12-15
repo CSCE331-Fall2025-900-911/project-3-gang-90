@@ -73,20 +73,14 @@ export async function getItemId(itemName) {
  * @param {number} id The item_id of the menu item to retrieve the ingredients for.
  * @returns {Promise<Array<Object>>} A promise that resolves to an array of objects containing the ingredient_id, ingredient_name, quantity, and category fields of all ingredients associated with the given menu item.
  */
-export async function getItemIngredients(id) {
-  const rows = await sql`
-        SELECT i.ingredient_id, i.ingredient_name, i.quantity, i.category
-        FROM ingredients i
-        JOIN ingredients_map m ON m.ingredient_id = i.ingredient_id
-        WHERE m.item_id = ${id};
-    `;
-
-  return rows.map((row) => ({
-    id: row.ingredient_id,
-    name: row.ingredient_name,
-    quantity: row.quantity,
-    category: row.category,
-  }));
+export async function getItemIngredients(id, isSeasonal) {
+  return await sql`
+    SELECT i.ingredient_id, i.ingredient_name, i.quantity, i.category
+    FROM ingredients i
+    JOIN ingredients_map m ON m.ingredient_id = i.ingredient_id
+    WHERE m.item_id = ${id}
+    ${isSeasonal !== undefined ? sql`AND m.is_seasonal = ${isSeasonal}` : sql``}
+  `;
 }
 
 /**
@@ -97,11 +91,12 @@ export async function getItemIngredients(id) {
  * @param {boolean} isSeasonal Whether the ingredient is seasonal or not.
  * @returns {Promise<Object>} A promise that resolves to an object containing the ingredient_id, item_id, and is_seasonal fields of the added ingredient.
  */
-export async function addIngredientToItem(itemId, ingredientId) {
+export async function addIngredientToItem(itemId, ingredientId, isSeasonal = false) {
   const rows = await sql`
-        INSERT INTO ingredients_map (ingredient_id, item_id, is_seasonal) VALUES (${ingredientId}, ${itemId})
-        RETURNING ingredient_id, item_id, is_seasonal;
-    `;
+    INSERT INTO ingredients_map (ingredient_id, item_id, is_seasonal)
+    VALUES (${ingredientId}, ${itemId}, ${isSeasonal})
+    RETURNING ingredient_id, item_id, is_seasonal;
+  `;
 
   return rows[0];
 }
@@ -135,13 +130,23 @@ export async function removeIngredientFromItem(itemId, ingredientId) {
  * @param {number} price The price of the menu item to add.
  * @returns {Promise<number>} A promise that resolves to the item_id of the added menu item.
  */
-export async function addMenuItem(name, popularity, price, isSeasonal = false) {
+export async function addMenuItem(name, price, category, isSeasonal = false) {
   const res = await sql`
-        INSERT INTO menu (item_name, item_popularity, price)
-        VALUES (${name}, ${popularity}, ${price}, ${isSeasonal}) RETURNING item_id;
+        INSERT INTO menu (item_name, price, category, is_seasonal)
+        VALUES (${name}, ${price}, ${category}, ${isSeasonal}) RETURNING item_id;
     `;
 
   return res[0].item_id;
+}
+
+export async function updateMenuPrice(id, price) {
+  const rows = await sql`
+    UPDATE menu
+    SET price = ${price}
+    WHERE item_id = ${id}
+    RETURNING item_id;
+  `;
+  return rows[0] ?? null;
 }
 
 /**
@@ -150,18 +155,17 @@ export async function addMenuItem(name, popularity, price, isSeasonal = false) {
  * @param {number} id The item_id of the menu item to update.
  * @param {number} price The new price of the menu item.
  */
-export async function updateMenuPrice(id, price) {
+export async function updateMenuItem(id, name, price, category, isSeasonal) {
   const rows = await sql`
-        UPDATE menu
-        SET price = ${price}
-        WHERE item_id = ${id};
-    `;
-  if (rows.length === 0) {
-    return null;
-  } else if (rows.length > 1) {
-    console.warn(`Found ${rows.length} items with id ${id}!`);
-  }
-
+    UPDATE menu
+    SET
+      item_name = ${name},
+      price = ${price},
+      category = ${category},
+      is_seasonal = ${isSeasonal}
+    WHERE item_id = ${id}
+    RETURNING item_id;
+  `;
   return rows[0];
 }
 

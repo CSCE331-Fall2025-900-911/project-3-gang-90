@@ -52,14 +52,12 @@ export async function getItemIdByName(name) {
  * @returns {Promise<Array<number>>} A promise that resolves to an array of ingredient IDs.
  * @throws {Error} If the item ID is not provided.
  */
-export async function getItemIngredients(itemId) {
+export async function getItemIngredients(itemId, isSeasonal) {
   if (itemId == null) {
     throw new Error("Item id is required");
   }
-
-  return await menuQueries.getItemIngredients(itemId);
+  return await menuQueries.getItemIngredients(itemId, isSeasonal);
 }
-
 
 /**
  * Adds an ingredient to a menu item.
@@ -70,12 +68,11 @@ export async function getItemIngredients(itemId) {
  * @returns {Promise<Object>} A promise that resolves to an object containing the ingredient_id, item_id, and is_seasonal fields of the added ingredient.
  * @throws {Error} If the item ID or ingredient ID is not provided.
  */
-export async function addIngredientToItem(itemId, ingredientId) {
+export async function addIngredientToItem(itemId, ingredientId, isSeasonal = false) {
   if (itemId == null || ingredientId == null) {
     throw new Error("itemId and ingredientId are required");
   }
-
-  return await menuQueries.addIngredientToItem(itemId, ingredientId);
+  return await menuQueries.addIngredientToItem(itemId, ingredientId, isSeasonal);
 }
 
 
@@ -106,14 +103,11 @@ export async function removeIngredientFromItem(itemId, ingredientId) {
  * @returns {Promise<Object>} A promise that resolves to an object containing the item_id, name, popularity, and price fields of the new menu item.
  * @throws {Error} If the name or price of the menu item is not provided.
  */
-export async function createMenuItem({ name, popularity = 0, price }) {
-  if (!name || price == null) {
-    throw new Error("name and price are required to create a menu item");
+export async function addMenuItem(name, price, category, isSeasonal = false) {
+  if (!name || price == null || !category) {
+    throw new Error("name, price, and category are required");
   }
-
-  // popularity is optional; defaults to 0
-  const itemId = await menuQueries.addMenuItem(name, popularity, price);
-  return { id: itemId, name, popularity, price };
+  return await menuQueries.addMenuItem(name, price, category, isSeasonal);
 }
 
 
@@ -127,10 +121,9 @@ export async function createMenuItem({ name, popularity = 0, price }) {
  */
 export async function updateMenuPriceById(id, price) {
   if (id == null || price == null) {
-    throw new Error("id and price are required to update menu price");
+    throw new Error("id and price are required");
   }
-
-  await menuQueries.updateMenuPrice(id, price);
+  return await menuQueries.updateMenuPrice(id, price);
 }
 
 
@@ -142,11 +135,8 @@ export async function updateMenuPriceById(id, price) {
  * @returns {Promise<void>} A promise that resolves when the delete is complete.
  */
 export async function deleteMenuItem(id) {
-  if (id == null) {
-    throw new Error("Item id is required to delete a menu item");
-  }
-
-  await menuQueries.deleteItem(id);
+  if (id == null) throw new Error("Item id required");
+  return await menuQueries.deleteItem(id);
 }
 
 
@@ -159,11 +149,8 @@ export async function deleteMenuItem(id) {
  * @returns {Promise<void>} A promise that resolves when the retire is complete.
  */
 export async function retireMenuItem(id) {
-  if (id == null) {
-    throw new Error("Item id is required to retire a menu item");
-  }
-
-  await menuQueries.retireItem(id);
+  if (id == null) throw new Error("Item id required");
+  return await menuQueries.retireItem(id);
 }
 
 /**

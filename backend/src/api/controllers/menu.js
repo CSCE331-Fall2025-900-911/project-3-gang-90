@@ -100,23 +100,24 @@ export async function getItemIngredients(req, res, next) {
  */
 export async function createMenuItem(req, res, next) {
   try {
-    const { name, price, popularity } = req.body;
+    const { name, price, category, seasonal } = req.body;
 
-    const item = await menuService.createMenuItem({
-      name,
-      price,
-      popularity,
-    });
-
-    return res.status(201).json(item);
-  } catch (err) {
-    if (err.message === "name and price are required to create a menu item") {
-      return res.status(400).json({ error: err.message });
+    if (!name || price == null || !category) {
+      return res.status(400).json({ error: "name, price, and category are required" });
     }
+
+    const id = await menuService.addMenuItem(
+      name,
+      Number(price),
+      category,
+      Boolean(seasonal)
+    );
+
+    return res.status(201).json({ id });
+  } catch (err) {
     return next(err);
   }
 }
-
 /**
  * Adds an ingredient to a menu item.
  *
@@ -131,20 +132,15 @@ export async function addIngredientToItem(req, res, next) {
       return res.status(400).json({ error: "Invalid item id" });
     }
 
-    const { ingredientId } = req.body;
+    const { ingredientId, seasonal } = req.body;
 
     if (ingredientId == null) {
       return res.status(400).json({ error: "ingredientId is required" });
     }
-    const ingredientIdNum = Number(ingredientId);
-    if (Number.isNaN(ingredientIdNum)) {
-      return res.status(400).json({ error: "Invalid ingredient id" });
-    }
 
-    const mapping = await menuService.addIngredientToItem(
-      id,
-      ingredientId
-    );
+    const mapping = await menuService.addIngredientToItem(id, Number(ingredientId), Boolean(seasonal));
+
+
     return res.status(201).json(mapping);
   } catch (err) {
     return next(err);
@@ -326,7 +322,10 @@ export async function getRecommendation(req, res, next) {
   try {
     const itemName = req.params.name;
     const category = req.params.category;
-    const limit = req.params.limit;
+    const limit = Number(req.params.limit);
+    if (Number.isNaN(limit)) {
+      return res.status(400).json({ error: "Invalid limit" });
+    }
 
     if (!itemName || !category || !limit) {
       return res.status(400).json({ error: "Missing required parameters" });
