@@ -123,13 +123,49 @@ export function AccessibilityProvider({ children }) {
   }, [readerActive, currentOption])
 
   useEffect(() => {
-    setReaderActive(screenReader)
+    setReaderActive(screenReader);
+
     if (!screenReader) {
-      window.speechSynthesis.cancel()
+      window.speechSynthesis.cancel();
+
+      selectableRefs.current.forEach(el => {
+        if (el) {
+          el.disabled = false;
+          el.tabIndex = 0;
+          el.style.outline = '';
+        }
+      });
     } else {
-      setCurrentOption(0)
+      setCurrentOption(0);
     }
-  }, [screenReader])
+  }, [screenReader]);
+
+  function ScreenReaderToggleButton() {
+    const { screenReader, setScreenReader } = useAccessibility()
+
+    if (!screenReader) return null
+
+    return (
+      <button
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          zIndex: 9999,
+          backgroundColor: '#1976d2',
+          color: 'white',
+          border: 'none',
+          borderRadius: '8px',
+          padding: '10px 15px',
+          cursor: 'pointer',
+          boxShadow: '0 2px 6px rgba(0,0,0,0.3)'
+        }}
+        onClick={() => setScreenReader(false)}
+      >
+        Disable Screen Reader
+      </button>
+    )
+  }
 
   return (
     <AccessibilityContext.Provider value={{
@@ -147,6 +183,7 @@ export function AccessibilityProvider({ children }) {
       setReaderActive
     }}>
       {children}
+      <ScreenReaderToggleButton />
     </AccessibilityContext.Provider>
   )
 }
