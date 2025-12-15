@@ -105,8 +105,7 @@ export default function Cart() {
   return (
     <div className="regular-container relative">
       <div className="top-bar">
-        <h1>Your Cart</h1>
-        <div className="time">5:00 PM</div>
+        <h1 style={{fontSize: "2rem"}}>Your Cart</h1>
       </div>
       <div className="p-5 flex flex-col min-h-[60vh] justify-between">
         {visible && suggestions.length > 0 && (
