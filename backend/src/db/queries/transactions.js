@@ -182,6 +182,19 @@ export async function addTransactionAndDetails(transaction, items) {
           INSERT INTO transaction_details (transaction_id, item_id)
           VALUES (${created.id}, ${item.id});
         `;
+
+        // decrement inventory for all ingredients mapped to this item since for some reason it wasnt working
+        const ingRows = await sqlTx`
+          SELECT ingredient_id FROM ingredients_map WHERE item_id = ${item.id};
+        `;
+        for (const r of ingRows) {
+          // subtract 1 unit per mapped ingredient by default
+          await sqlTx`
+            UPDATE ingredients
+            SET quantity = GREATEST(quantity - 1, 0)
+            WHERE ingredient_id = ${r.ingredient_id};
+          `;
+        }
       }
     }
 

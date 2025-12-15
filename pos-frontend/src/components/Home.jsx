@@ -39,8 +39,8 @@ export default function Home() {
     if (button === 'freshBrew') setFreshBrew(true)
     if (button === 'milkySeries') setMilkySeries(true)
     if (button === 'fruity') setFruity(true)
-    if (button === 'nonCaffeinated') setNonCafeinated(true)
-    if (button === 'iceBlended') setIceBlended(true)
+    if (button === 'noncaffeinated') setNonCafeinated(true)
+    if (button === 'iceblended') setIceBlended(true)
     if (button === 'matcha') setMatcha(true)
 
     if (!user) {
@@ -60,7 +60,7 @@ export default function Home() {
     if (freshBrew) navigate('/freshbrew')
     if (milkySeries) navigate('/milkyseries')
     if (fruity) navigate('/fruity')
-    if (nonCaffeinated) navigate('/noncaffeinated')
+    if (nonCafeinated) navigate('/noncaffeinated')
     if (iceBlended) navigate('/iceblended')
     if (matcha) navigate('/matcha')
   }
@@ -110,11 +110,11 @@ export default function Home() {
                 Fruity Beverage
               </button>
 
-              <button className="menu-option font-bold" onClick={() => handleLoginLogic('nonCaffeinated')}>
+              <button className="menu-option font-bold" onClick={() => handleLoginLogic('noncaffeinated')}>
                 Non-Caffeinated
               </button>
 
-              <button className="menu-option font-bold" onClick={() => handleLoginLogic('iceBlended')}>
+              <button className="menu-option font-bold" onClick={() => handleLoginLogic('iceblended')}>
                 Ice Blended
               </button>
 

@@ -43,7 +43,8 @@ function ManagerIngredientsContent() {
       setIngredients(
         (data ?? []).map((ing) => ({
           id: ing.id ?? ing.ingredient_id,
-          name: toTitleCase(ing.name ?? ing.ingredient_name),
+
+          name: ing.name ?? ing.ingredient_name,
           quantity: ing.quantity ?? 0,
         }))
       );
@@ -89,7 +90,7 @@ function ManagerIngredientsContent() {
       const res = await fetch(REFILL_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: ing.name, quantity: amt }),
+        body: JSON.stringify({ name: ing.name.trim(), quantity: amt }),
       });
 
       if (!res.ok) {
@@ -164,7 +165,7 @@ function ManagerIngredientsContent() {
           ) : (
             ingredients.map((ing) => (
               <TableRow key={ing.id}>
-                <TableCell>{ing.name}</TableCell>
+                <TableCell>{toTitleCase(ing.name)}</TableCell>
                 <TableCell>{ing.quantity}</TableCell>
                 <TableCell>
                   <Stack direction="row" spacing={1} alignItems="center">
