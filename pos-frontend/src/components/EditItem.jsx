@@ -42,6 +42,7 @@ export default function EditItem() {
         console.error(e)
       }
     }
+    console.log(id);
     fetchItem()
   }, [id])
 
@@ -103,7 +104,7 @@ export default function EditItem() {
               style={{ fontSize: '1.1rem', fontWeight: 700, border: 'none' }}
               onClick={() => {
                 addItem({
-                  id: item.item_id,
+                  id: id,
                   name: item.item_name,
                   mods: getModsString(mods),
                   quantity,
