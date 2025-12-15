@@ -163,7 +163,7 @@ console.log(await res.json());
     );
   };
   useEffect(() => {
-    if(loading){
+    //if(loading){
       // if (!window.google || window.googleTranslateInitialized) return;
       // window.googleTranslateInitialized = true;
 
@@ -176,7 +176,7 @@ console.log(await res.json());
       document.body.appendChild(addScript);
       window.googleTranslateElementInit = googleTranslateElementInit;
       setLoading(false);
-    }
+    //}
   }, []);
   
 
