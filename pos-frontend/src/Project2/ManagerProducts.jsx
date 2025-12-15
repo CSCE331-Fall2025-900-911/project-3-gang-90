@@ -68,7 +68,7 @@ function ManagerProductsContent() {
           id: item.id,
           name: toTitleCase(item.name),
           price: Number(item.price),
-          category: toTitleCase(item.category),
+          category: item.category,
           seasonal: Boolean(item.seasonal),
           popularity: item.popularity ?? 0,
         }))
