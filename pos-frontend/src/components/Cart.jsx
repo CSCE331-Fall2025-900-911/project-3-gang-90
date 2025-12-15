@@ -20,8 +20,36 @@ export default function Cart() {
     setShowModal(true)
   }
 
+  async function decrementIngredients(orderItems)
+  {
+    for (const item of orderItems) 
+    {
+      if (!item?.id) continue;
+      const qty = 1;
+
+      const ingRes = await fetch(`${server}/api/menu/${item.id}/ingredients?seasonal=false`);
+      if (!ingRes.ok) continue;
+
+      const ingredients = await ingRes.json();
+
+      for (const ing of ingredients) 
+      {
+        const ingId = ing.id;
+        if (!ingId) continue;
+
+        await fetch(`${server}/api/ingredients/${ingId}/decrease`, 
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ quantity: qty }),
+        });
+      }
+    }
+  }
+
   async function submitTransaction(customerName) {
     const transactionTime = new Date().toISOString();
+    console.log("ItemIDs: ", itemIds);
     const items = itemIds.map((id) => ({ id }));
     const body = {
       customerName,
@@ -47,7 +75,8 @@ export default function Cart() {
         signal: controller.signal,
         body: JSON.stringify(body),
       });
-
+      console.log("Items: ", items);
+      decrementIngredients(items);
       clearTimeout(timeout);
 
       if (!response.ok) {
