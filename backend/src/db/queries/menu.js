@@ -75,7 +75,11 @@ export async function getItemId(itemName) {
  */
 export async function getItemIngredients(id, isSeasonal) {
   return await sql`
-    SELECT i.ingredient_id, i.ingredient_name, i.quantity, i.category
+    SELECT 
+      i.ingredient_id AS id,
+      i.ingredient_name AS name,
+      i.quantity,
+      i.category
     FROM ingredients i
     JOIN ingredients_map m ON m.ingredient_id = i.ingredient_id
     WHERE m.item_id = ${id}

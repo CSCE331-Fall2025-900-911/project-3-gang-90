@@ -40,6 +40,7 @@ function ManagerProductsContent() {
 
   const [itemIngredients, setItemIngredients] = useState([]);
   const [allIngredients, setAllIngredients] = useState([]);
+  const [ingredientsLoading, setIngredientsLoading] = useState(false);
 
   const toTitleCase = (str = "") =>
     str.replace(/\w\S*/g, txt =>
@@ -121,7 +122,7 @@ function ManagerProductsContent() {
           id: created.id,
           name: toTitleCase(body.name),
           price: body.price,
-          category: toTitleCase(body.category),
+          category: body.category,
           seasonal,
           popularity: 0,
         },
@@ -135,6 +136,8 @@ function ManagerProductsContent() {
   }
 
   function openEditor(product) {
+    setItemIngredients([]);
+    setAllIngredients([]);
     setEditingProduct(product);
     setEditorOpen(true);
   }
@@ -154,12 +157,17 @@ function ManagerProductsContent() {
 
   async function fetchItemIngredients(itemId) {
     try {
-      const res = await fetch(`${server}/api/menu/${itemId}/ingredients`);
+      setIngredientsLoading(true);
+      const res = await fetch(
+        `${server}/api/menu/${itemId}/ingredients?seasonal=${editingProduct.seasonal}`
+      );
       if (!res.ok) throw new Error();
       const data = await res.json();
       setItemIngredients(data);
     } catch {
       setItemIngredients([]);
+    } finally {
+      setIngredientsLoading(false);
     }
   }
 
@@ -176,11 +184,21 @@ function ManagerProductsContent() {
 
   async function handleAddIngredient(ingredientId) {
     if (!editingProduct) return;
-    await fetch(`${server}/api/menu/${editingProduct.id}/ingredients`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ingredientId }),
-    });
+
+    const res = await fetch(
+      `${server}/api/menu/${editingProduct.id}/ingredients`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ingredientId }),
+      }
+    );
+
+    if (!res.ok) {
+      alert("Failed to add ingredient");
+      return;
+    }
+
     fetchItemIngredients(editingProduct.id);
   }
 
@@ -255,7 +273,7 @@ function ManagerProductsContent() {
               <TableRow key={p.id}>
                 <TableCell>{p.name}</TableCell>
                 <TableCell>${p.price.toFixed(2)}</TableCell>
-                <TableCell>{p.category}</TableCell>
+                <TableCell>{toTitleCase(p.category)}</TableCell>
                 <TableCell>{p.seasonal ? "Yes" : "No"}</TableCell>
                 <TableCell>
                   <Button size="small" onClick={() => openEditor(p)}>
@@ -269,7 +287,7 @@ function ManagerProductsContent() {
       </Table>
 
       <ItemEditorDialog
-        open={editorOpen}
+        open={editorOpen && Boolean(editingProduct)}
         product={editingProduct}
         onClose={closeEditor}
         onSave={handleEditorSave}
@@ -277,12 +295,13 @@ function ManagerProductsContent() {
         allIngredients={allIngredients}
         onAddIngredient={handleAddIngredient}
         onRemoveIngredient={handleRemoveIngredient}
+        ingredientsLoading={ingredientsLoading}
       />
     </div>
   );
 }
 
-function ItemEditorDialog({open, product, onClose, onSave, itemIngredients, allIngredients, onAddIngredient, onRemoveIngredient}) {
+function ItemEditorDialog({open, product, onClose, onSave, itemIngredients, allIngredients, onAddIngredient, onRemoveIngredient, ingredientsLoading}) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
@@ -395,7 +414,13 @@ function ItemEditorDialog({open, product, onClose, onSave, itemIngredients, allI
                 </TableRow>
               </TableHead>
               <TableBody>
-                {itemIngredients.length === 0 ? (
+                {ingredientsLoading ? (
+                  <TableRow>
+                    <TableCell colSpan={4} align="center">
+                      Loading ingredients...
+                    </TableCell>
+                  </TableRow>
+                ) : itemIngredients.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={4} align="center">
                       No ingredients yet.
@@ -405,8 +430,8 @@ function ItemEditorDialog({open, product, onClose, onSave, itemIngredients, allI
                   itemIngredients.map(ing => (
                     <TableRow key={ing.id}>
                       <TableCell>{ing.id}</TableCell>
-                      <TableCell>{ing.name}</TableCell>
-                      <TableCell>{ing.category}</TableCell>
+                      <TableCell>{ing.name ?? "Unnamed"}</TableCell>
+                      <TableCell>{ing.category ?? "—"}</TableCell>
                       <TableCell>
                         <Button
                           size="small"
